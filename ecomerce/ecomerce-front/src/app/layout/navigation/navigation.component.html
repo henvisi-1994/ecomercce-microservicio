@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light pl-5 pr-5">
+  <div class="navbar-brand logo">
+    <a href="/"><img src="assets/images/logo1.png" alt=""></a>
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="search">
+      <div class="search-text">
+        <input class="serch" type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"(keypress)="pulsar($event)" [(ngModel)]="search" />
+    </div>
+    </div>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item" *ngFor="let categoria of categorias">
+        <a class="nav-link" routerLink="/categoria/{{categoria.id_cat}}">{{categoria.nomb_cat}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/categoria/otras">Otras</a>
+      </li>
+    </ul>
+    <div class="header-right">
+      <div class="search">
+        <div class="cart box_1" *ngIf="isAuth">
+          <a routerLink="/cart">
+          <h3>
+            <img src="assets/images/cart.png" alt=""/>
+            <div class="total">
+           <!--<span class="simpleCart_total"><span class="badge badge-danger">1</span></span>--></div>
+            </h3>
+          </a>
+          <p>
+            <a routerLink="/cart"  class="simpleCart_empty">Carrito de Compras</a>
+          </p>
+
+        </div>
+        <div class="head-signin" *ngIf="!isAuth">
+          <h5><a routerLink="/login" ><i class="hd-dign"></i>Iniciar sesion</a></h5>
+        </div>
+        <div class="head-signin" *ngIf="isempleado">
+          <h5><a routerLink="/admin" ><i class="hd-dign"></i>Panel de Administracion</a></h5>
+        </div>
+        <div class="head-signin" *ngIf="isAuth">
+          <h5><a (click)="logout()"><i class="hd-dign"></i>Cerrar Sesion</a></h5>
+        </div>
+                   <div class="clearfix"> </div>
+      </div>
+    </div>
+  </div>
+</nav>

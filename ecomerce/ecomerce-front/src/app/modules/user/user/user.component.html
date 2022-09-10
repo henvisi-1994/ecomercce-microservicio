@@ -1,0 +1,77 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Usuarios</h1>
+      </div><!-- /.col -->
+
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<button class="btn btn-primary mb-4" (click)="open(userModal)">Nuevo</button>
+  <br>
+  <!—Ventana Modal -->
+    <ng-template #userModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Usuarios</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="">Nombre</label>
+            <input type="text" name="name" [(ngModel)]="user.name" class="form-control"
+              placeholder="Ingrese nombre de la user">
+          </div>
+          <div class="form-group">
+            <label for="">Password</label>
+            <input type="password" name="name" [(ngModel)]="user.password" class="form-control"
+              placeholder="Ingrese password de la user">
+          </div>
+          <div class="form-group">
+            <label for="">Email</label>
+            <input type="email" name="apellido" [(ngModel)]="user.email" class="form-control"
+              placeholder="Ingrese email">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+        <button type="button" class="btn  btn-primary"(click)="saveUser()">Guardar</button>
+      </div>
+    </ng-template>
+    <!--Cierre Ventana Modal  -->
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Email</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+        <tr *ngFor="let user of users">
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>
+            <div *ngIf="user.estado_user=='I'" class="badge badge-danger">Inactivo</div>
+            <div *ngIf="user.estado_user=='P'" class="badge badge-warning">Pendiente</div>
+            <div *ngIf="user.estado_user=='A'"class="badge badge-success">Activo</div>
+          </td>
+          <td>
+            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+            <button class="btn btn-warning" (click)="editUser(user)"><i class="fa fa-edit"></i></button>
+            &nbsp;
+            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+            <button class="btn btn-danger" (click)="borrarUser(user.id)"><i
+                class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+

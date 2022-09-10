@@ -1,0 +1,135 @@
+/*--footer strat here--*/
+.footer {
+  background: #000;
+  padding: 3em 0em;
+}
+.footer-grid ul {
+  padding: 0em;
+  list-style: none;
+}
+.footer-grid ul li {
+  margin: 0.5em 0em;
+}
+select.country {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: 300;
+  color: #D2D1D1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  -ms-appearance: none;
+}
+select.country:hover{
+color:#0071BC;
+}
+.footer-grid ul li a {
+  font-size: 1em;
+  color: #fff;
+  display: block;
+}
+.footer-grid ul li a:hover {
+  color:#0071BC;
+}
+.copy-rights {
+  text-align: center;
+  margin-top: 3em;
+}
+.copy-rights p {
+  font-size: 1em;
+  color: #fff;
+}
+.copy-rights p a{
+  color: #fff;
+}
+.copy-rights p a:hover{
+  color:#0071BC;
+}
+.footer-grid-icon ul {
+ padding:0px;
+ list-style:none;
+}
+.footer-grid-icon {
+  padding: 0px;
+}
+.footer-grid-icon ul li {
+  display: inline-block;
+  border: 1px solid #555;
+  margin-right: 0.2em;
+}
+.footer-grid-icon ul li a{
+display: block;
+line-height: 0px;
+}
+.footer-grid-icon ul li a span{
+  background: url('assets/images/ftr-icons.png')no-repeat;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+      margin: 0.5em 0.5em;
+}
+.footer-grid-icon ul li {
+  display: inline-block;
+}
+.footer-grid-icon ul li a span.u-tub {
+  background-position: 0px 0px;
+}
+.footer-grid-icon ul li a span.instro {
+  background-position: -31px 0px;
+}
+.footer-grid-icon ul li a span.twitter {
+  background-position: -63px 0px;
+}
+.footer-grid-icon ul li a span.fb {
+  background-position: -95px 0px;
+}
+.footer-grid-icon ul li a span.print {
+  background-position: -127px 0px;
+}
+.footer-grid-icon ul li a span.u-tub:hover{
+  background-position: 0px -32px;
+}
+.footer-grid-icon ul li a span.instro:hover {
+  background-position: -31px -32px;
+}
+.footer-grid-icon ul li a span.twitter:hover {
+  background-position: -63px -32px;
+}
+.footer-grid-icon ul li a span.fb:hover {
+  background-position: -95px -32px;
+}
+.footer-grid-icon ul li a span.print:hover {
+  background-position: -127px -32px;
+}
+.footer-grid-icon input[type="text"] {
+  font-size: 1em;
+  color: #555;
+  border: none;
+  outline: none;
+  width: 65%;
+  margin-top: 1em;
+  border-bottom: 1px solid #555;
+  padding:0.5em 1em 0.5em 2em;
+}
+.footer-grid-icon input.email-ftr {
+  background: url('assets/images/mail.png')no-repeat 3px 10px;
+}
+.footer-grid-icon input[type="submit"] {
+  font-size: 1em;
+  color: #fff;
+  background: #0071BC;
+  border: none;
+  padding: 0.5em 1em;
+  outline: none;
+}
+.footer-grid-icon input[type="submit"]:hover {
+  background:#094293;
+   transition: 0.5s all;
+-webkit-transition: 0.5s all;
+-moz-transition: 0.5s all;
+-o-transition: 0.5s all;
+}
+/*--footer end here--*/

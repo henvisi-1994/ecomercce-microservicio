@@ -1,0 +1,34 @@
+<div class="footer">
+  <div class="container">
+    <div class="row footer-main">
+      <div class="col-sm  footer-grid">
+        <ul>
+          <li *ngFor="let categoria of categorias">
+            <a routerLink="/categoria/{{categoria.id_cat}}">{{categoria.nomb_cat}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm  footer-grid">
+        <ul>
+          <li><a  routerLink="/login">Iniciar sesion</a></li>
+          <li><a routerLink="/cart">Carrito de Compras</a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm footer-grid-icon">
+        <ul>
+          <li><a href="#"><span class="u-tub"> </span></a></li>
+          <li><a href="#"><span class="instro"> </span></a></li>
+          <li><a href="#"><span class="twitter"> </span></a></li>
+          <li><a href="#"><span class="fb"> </span></a></li>
+          <li><a href="#"><span class="print"> </span></a></li>
+        </ul>
+        <form>
+          <input class="email-ftr" type="text" value="Newsletter" onfocus="this.value = '';"
+            onblur="if (this.value == '') {this.value = 'Newsletter';}">
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

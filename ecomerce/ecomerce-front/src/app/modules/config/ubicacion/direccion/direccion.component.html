@@ -1,0 +1,104 @@
+<button class="btn btn-primary mb-4" (click)="open(direccionModal)">Nuevo</button>
+  <br>
+  <!—Ventana Modal -->
+    <ng-template #direccionModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Direccion</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="">Direccion</label>
+            <input type="text" name="direcion	" [(ngModel)]="direccion.direcion	" class="form-control"
+              placeholder="Ingrese nombre de la direccion">
+          </div>
+          <div class="form-group">
+            <label for="">Calle</label>
+            <input type="text" name="calle	" [(ngModel)]="direccion.calle	" class="form-control"
+              placeholder="Ingrese calle ">
+          </div>
+          <div class="form-group">
+            <label for="">Numero</label>
+            <input type="text" name="numero	" [(ngModel)]="direccion.numero	" class="form-control"
+              placeholder="Ingrese numero de la direccion">
+          </div>
+          <div class="form-group">
+            <label for="">Piso</label>
+            <input type="text" name="piso	" [(ngModel)]="direccion.piso	" class="form-control"
+              placeholder="Ingrese número de piso ">
+          </div>
+          <div class="form-group">
+            <label for="">Telefono</label>
+            <input type="text" name="telefono	" [(ngModel)]="direccion.telefono	" class="form-control"
+              placeholder="Ingrese telefono de la direccion">
+          </div>
+          <div class="form-group">
+            <label for="">Movil</label>
+            <input type="text" name="movil	" [(ngModel)]="direccion.movil	" class="form-control"
+              placeholder="Ingrese numero de movil">
+          </div>
+          <div class="form-group">
+            <label for="">Cuidad</label>
+            <select name="ciudad" id="" [(ngModel)]="direccion.id_ciudad" class="form-control" >
+              <option  *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">Estado</label>
+            <select name="direccion" id="" [(ngModel)]="direccion.estado_direccion" class="form-control" >
+              <option value="A">Activo</option>
+              <option value="P">Pendiente</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+        <button type="button" class="btn  btn-primary"(click)="saveDireccion()">Guardar</button>
+      </div>
+    </ng-template>
+    <!--Cierre Ventana Modal  -->
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Direccion</th>
+          <th scope="col">Calle</th>
+          <th scope="col">Numero</th>
+          <th scope="col">Piso</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Movil</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+        <tr *ngFor="let direccion of direcciones">
+          <td>{{direccion.direcion}}</td>
+          <td>{{direccion.calle}}</td>
+          <td>{{direccion.numero}}</td>
+          <td>{{direccion.piso}}</td>
+          <td>{{direccion.telefono}}</td>
+          <td>{{direccion.movil}}</td>
+          <td>
+            <div *ngIf="direccion.estado_direccion=='I'" class="badge badge-danger">Inactivo</div>
+            <div *ngIf="direccion.estado_direccion=='P'" class="badge badge-warning">Pendiente</div>
+            <div *ngIf="direccion.estado_direccion=='A'"class="badge badge-success">Activo</div>
+          </td>
+          <td>
+            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+            <button class="btn btn-warning" (click)="editDireccion(direccion)"><i class="fa fa-edit"></i></button>
+            &nbsp;
+            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+            <button class="btn btn-danger" (click)="borrarDireccion(direccion.id_direccion)"><i
+                class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+

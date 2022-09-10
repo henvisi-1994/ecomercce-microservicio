@@ -1,0 +1,183 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Producto</h1>
+      </div><!-- /.col -->
+
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<button class="btn btn-primary mb-4" (click)="open(productoModal)">Nuevo</button>
+  <br>
+  <!—Ventana Modal -->
+    <ng-template #productoModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Producto</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="">Codigo</label>
+            <input type="text" name="codigo_prod" [(ngModel)]="producto.codigo_prod" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Codigo de Barras</label>
+            <input type="text" name="codbarra_prod" [(ngModel)]="producto.codbarra_prod" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Imagen</label>
+            <div class="col-md-8 imagen">
+              <input type="file" (change)="onFileChange($event)" name="file" accept="image/*" class="text-justify" />
+              <img *ngIf="image" class="img-fluid img-thumbnail img " src="{{ image }}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">Descripcion</label>
+            <input type="text" name="descripcion_prod" [(ngModel)]="producto.descripcion_prod" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Presentación</label>
+            <input type="text" name="present_prod	" [(ngModel)]="producto.present_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Precio</label>
+            <input type="text" name="precio_prod	" [(ngModel)]="producto.precio_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Stock Minimo</label>
+            <input type="text" name="stockmin_prod	" [(ngModel)]="producto.stockmin_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Stock Maximo</label>
+            <input type="text" name="stockmax_prod	" [(ngModel)]="producto.stockmax_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Stock </label>
+            <input type="text" name="stock_prod	" [(ngModel)]="producto.stock_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Fecha de Ingreso </label>
+            <input type="date" name="fechaing_prod	" [(ngModel)]="producto.fechaing_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Fecha de Elaboración </label>
+            <input type="date" name="fechaelab_prod	" [(ngModel)]="producto.fechaelab_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Fecha de Caducidad </label>
+            <input type="date" name="fechacad_prod	" [(ngModel)]="producto.fechacad_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="aplicaiva_prod" name="aplicaiva_prod" [(ngModel)]="producto.aplicaiva_prod	">
+            <label class="form-check-label" for="exampleCheck1">IVA</label>
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="aplicaice_prod" name="aplicaice_prod" [(ngModel)]="producto.aplicaice_prod	">
+            <label class="form-check-label" for="exampleCheck1">ICE</label>
+          </div>
+          <div class="form-group">
+            <label for="">Utilidad </label>
+            <input type="text" name="util_prod	" [(ngModel)]="producto.util_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+          <div class="form-group">
+            <label for="">Comision </label>
+            <input type="text" name="comision_prod	" [(ngModel)]="producto.comision_prod	" class="form-control"
+              placeholder="Ingrese nombre de la producto">
+          </div>
+
+          <div class="form-group">
+            <label for="">Observacion</label>
+            <input type="text" name="apellido" [(ngModel)]="producto.observ_prod" class="form-control"
+              placeholder="Ingrese Observacion">
+          </div>
+          <div class="form-group">
+            <label for="">Estado</label>
+            <select name="producto" id="" [(ngModel)]="producto.estado_prod" class="form-control" >
+              <option value="A">Activo</option>
+              <option value="P">Pendiente</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">Bodega</label>
+            <select name="bodega" id="" [(ngModel)]="producto.id_bod" class="form-control" >
+              <option  *ngFor="let bodega of bodegas" value="{{bodega.id_bod}}">{{bodega.nombre_bod	}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">Marca</label>
+            <select name="bodega" id="" [(ngModel)]="producto.id_marca" class="form-control" >
+              <option  *ngFor="let marca of marcas" value="{{marca.id_marca}}">{{marca.nomb_marca		}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">Categoria</label>
+            <select name="bodega" id="" [(ngModel)]="producto.id_cat" class="form-control" >
+              <option  *ngFor="let categoria of categorias" value="{{categoria.id_cat}}">{{categoria.nomb_cat	}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+        <button type="button" class="btn  btn-primary"(click)="saveProducto()">Guardar</button>
+      </div>
+    </ng-template>
+    <!--Cierre Ventana Modal  -->
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Codigo de Barra</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Stock Minimo</th>
+          <th scope="col">Stok Maximo</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Observacion</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+        <tr *ngFor="let producto of productos">
+          <td>{{producto.codigo_prod}}</td>
+          <td>{{producto.descripcion_prod}}</td>
+          <td>{{producto.precio_prod}}</td>
+          <td>{{producto.stockmin_prod}}</td>
+          <td>{{producto.stockmax_prod}}</td>
+          <td>{{producto.stock_prod}}</td>
+          <td>{{producto.observ_prod}}</td>
+          <td>
+            <div *ngIf="producto.estado_prod=='I'" class="badge badge-danger">Inactivo</div>
+            <div *ngIf="producto.estado_prod=='P'" class="badge badge-warning">Pendiente</div>
+            <div *ngIf="producto.estado_prod=='A'"class="badge badge-success">Activo</div>
+          </td>
+          <td>
+            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+            <button class="btn btn-warning" (click)="editProducto(producto)"><i class="fa fa-edit"></i></button>
+            &nbsp;
+            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+            <button class="btn btn-danger" (click)="borrarProducto(producto.id_prod)"><i
+                class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+

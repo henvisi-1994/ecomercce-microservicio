@@ -1,0 +1,78 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Categoría</h1>
+      </div><!-- /.col -->
+
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<button class="btn btn-primary mb-4" (click)="open(categoriaModal)">Nuevo</button>
+  <br>
+  <!—Ventana Modal -->
+    <ng-template #categoriaModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Categoria</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="">Nombre</label>
+            <input type="text" name="nomb_cat" [(ngModel)]="categoria.nomb_cat" class="form-control"
+              placeholder="Ingrese nombre de la categoria">
+          </div>
+          <div class="form-group">
+            <label for="">Observacion</label>
+            <input type="text" name="apellido" [(ngModel)]="categoria.observ_cat" class="form-control"
+              placeholder="Ingrese Observacion">
+          </div>
+          <div class="form-group">
+            <label for="">Estado</label>
+            <select name="categoria" id="" [(ngModel)]="categoria.estado_cat" class="form-control" >
+              <option value="A">Activo</option>
+              <option value="P">Pendiente</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+        <button type="button" class="btn  btn-primary"(click)="saveCategoria()">Guardar</button>
+      </div>
+    </ng-template>
+    <!--Cierre Ventana Modal  -->
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Observación</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+        <tr *ngFor="let categoria of categorias">
+          <td>{{categoria.nomb_cat}}</td>
+          <td>{{categoria.observ_cat}}</td>
+          <td>
+            <div *ngIf="categoria.estado_cat=='I'" class="badge badge-danger">Inactivo</div>
+            <div *ngIf="categoria.estado_cat=='P'" class="badge badge-warning">Pendiente</div>
+            <div *ngIf="categoria.estado_cat=='A'"class="badge badge-success">Activo</div>
+          </td>
+          <td>
+            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+            <button class="btn btn-warning" (click)="editCategoria(categoria)"><i class="fa fa-edit"></i></button>
+            &nbsp;
+            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+            <button class="btn btn-danger" (click)="borrarCategoria(categoria.id_cat)"><i
+                class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
