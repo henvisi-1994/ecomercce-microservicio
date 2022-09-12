@@ -1,0 +1,119 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Bodega</h1>
+      </div><!-- /.col -->
+
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<button class="btn btn-primary mb-4" (click)="open(bodegaModal)">Nuevo</button>
+  <br>
+  <!—Ventana Modal -->
+    <ng-template #bodegaModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Bodega</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="">Nombre</label>
+            <input type="text" name="nombre_bod" [(ngModel)]="bodega.nombre_bod" class="form-control"
+              placeholder="Ingrese nombre de la bodega">
+          </div>
+          <div class="form-group">
+            <label for="">Telefono</label>
+            <input type="text" name="telef_bod" [(ngModel)]="bodega.telef_bod" class="form-control"
+              placeholder="Ingrese telefono">
+          </div>
+          <div class="form-group">
+            <label for="">Celular</label>
+            <input type="text" name="cel_bod" [(ngModel)]="bodega.cel_bod" class="form-control"
+              placeholder="Ingrese numero de celular">
+          </div>
+          <div class="form-group">
+            <label for="">Nombre de Contacto</label>
+            <input type="text" name="nomb_contac_bod" [(ngModel)]="bodega.nomb_contac_bod" class="form-control"
+              placeholder="Ingrese nombre de contacto de bodega">
+          </div>
+          <div class="form-group">
+            <label for="">Fecha de Inicio</label>
+            <input type="date" name="fechaini_bod" [(ngModel)]="bodega.fechaini_bod" class="form-control"
+              placeholder="Ingrese fecha de Inicio">
+          </div>
+          <div class="form-group">
+            <label for="">Feacha de Fin</label>
+            <input type="date" name="fechafin_bod" [(ngModel)]="bodega.fechafin_bod" class="form-control"
+              placeholder="Ingrese fecha de fin">
+          </div>
+          <div class="form-group">
+            <label for="">Cuidad</label>
+            <select name="ciudad" id="" [(ngModel)]="bodega.id_ciudad" class="form-control" >
+              <option  *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">Direcion</label>
+            <select name="direccion" id="" [(ngModel)]="bodega.id_direccion" class="form-control" >
+              <option  *ngFor="let direccion of direcciones" value="{{direccion.id_direccion}}">{{direccion.direcion}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="">Estado</label>
+            <select name="estado" id="" [(ngModel)]="bodega.estado_bod" class="form-control" >
+              <option value="A">Activo</option>
+              <option value="P">Pendiente</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+        <button type="button" class="btn  btn-primary"(click)="saveBodega()">Guardar</button>
+      </div>
+    </ng-template>
+    <!--Cierre Ventana Modal  -->
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Celular</th>
+          <th scope="col">Contacto</th>
+          <th scope="col">Fecha de Inicio</th>
+          <th scope="col">Fecha de Fin</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+        <tr *ngFor="let bodega of bodegas">
+          <td>{{bodega.nombre_bod}}</td>
+          <td>{{bodega.telef_bod}}</td>
+          <td>{{bodega.cel_bod}}</td>
+          <td>{{bodega.nomb_contac_bod}}</td>
+          <td>{{bodega.fecha_inicio}}</td>
+          <td>{{bodega.fecha_fin}}</td>
+          <td>
+            <div *ngIf="bodega.estado_bod=='I'" class="badge badge-danger">Inactivo</div>
+            <div *ngIf="bodega.estado_bod=='P'" class="badge badge-warning">Pendiente</div>
+            <div *ngIf="bodega.estado_bod=='A'"class="badge badge-success">Activo</div>
+          </td>
+          <td>
+            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+            <button class="btn btn-warning" (click)="editBodega(bodega)"><i class="fa fa-edit"></i></button>
+            &nbsp;
+            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+            <button class="btn btn-danger" (click)="borrarBodega(bodega.id_bod)"><i
+                class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+

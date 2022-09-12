@@ -1,0 +1,57 @@
+<!--start-ckeckout-->
+<div class="ckeckout">
+  <div class="container">
+    <div class="ckeckout-top">
+    <div class=" cart-items heading">
+     <h1>Mis Compras</h1>
+         <div class="in-check" >
+      <ul class="unit">
+        <li><span class="pr-6">Item</span></li>
+        <li><span class="pl-5">Producto</span></li>
+        <li><span class="pl-5">Precio</span></li>
+        <li><span>Cantidad</span></li>
+        <div class="clearfix"> </div>
+      </ul>
+      <ul class="cart-header simpleCart_shelfItem" *ngFor="let producto of productos" >
+        <div class="close1" (click)="deleteDetalle(producto.id_detalle_ped)"> </div>
+          <li class="ring-in mr-5"><a><img src="{{producto.imagen_prod}}"  class="img-responsive" alt=""></a>
+          </li>
+          <li><span class="ml-3">{{producto.present_prod}}</span></li>
+          <li><span class="item_price">${{producto.total_detalle}}</span></li>
+          <li><span class="item_price">{{producto.cantidad}}</span></li>
+        <div class="clearfix"> </div>
+      </ul>
+      <div class="row" *ngIf="productos.length>0">
+        <!-- accepted payments column -->
+        <div class="col-6">
+
+        </div>
+        <!-- /.col -->
+        <div class="col-6">
+          <div class="table-responsive">
+            <table class="table">
+              <tr>
+                <th style="width:50%">Subtotal:</th>
+                <td>${{subtotal}}</td>
+              </tr>
+              <tr>
+                <th>IVA (12%)</th>
+                <td>${{IVA}}</td>
+              </tr>
+              <tr>
+                <th>Total:</th>
+                <td>${{total}}</td>
+              </tr>
+            </table>
+          </div>
+          <button class="btn btn-primary"(click)="pagarPedido(productos[0].id_pedido)">Pagar</button>
+        </div>
+        <!-- /.col -->
+      </div>
+
+    </div>
+    </div>
+   </div>
+  </div>
+</div>
+<!--end-ckeckout-->

@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-header d-flex p-0">
+    <h3 class="card-title p-3">Ubicación</h3>
+    <ul class="nav nav-pills ml-auto p-2">
+      <li class="nav-item"><a class="nav-link active" href="#pais" data-toggle="tab">Pais</a></li>
+      <li class="nav-item"><a class="nav-link" href="#provincia" data-toggle="tab">Provincia</a></li>
+      <li class="nav-item"><a class="nav-link" href="#ciudad" data-toggle="tab">Ciudad</a></li>
+      <li class="nav-item"><a class="nav-link" href="#direccion" data-toggle="tab">Direccion</a></li>
+    </ul>
+  </div><!-- /.card-header -->
+  <div class="card-body">
+    <div class="tab-content">
+      <div class="tab-pane active" id="pais">
+        <app-pais></app-pais>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="provincia">
+        <app-provincia></app-provincia>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="ciudad">
+      <app-ciudad></app-ciudad>
+      </div>
+      <div class="tab-pane" id="direccion">
+        <app-direccion></app-direccion>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+  </div><!-- /.card-body -->
+</div>

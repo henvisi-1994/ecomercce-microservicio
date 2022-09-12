@@ -1,0 +1,73 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Tipo de Identificación</h1>
+      </div><!-- /.col -->
+
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<button class="btn btn-primary mb-4" (click)="open(tipoIdentificacionModal)">Nuevo</button>
+  <br>
+  <!—Ventana Modal -->
+    <ng-template #tipoIdentificacionModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Tipo de Identificación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="">Nombre</label>
+            <input type="text" name="nombre_tipo_ident" [(ngModel)]="tipoIdentificacion.nombre_tipo_ident" class="form-control"
+              placeholder="Ingrese tipo de identificacion">
+          </div>
+          <div class="form-group">
+            <label for="">Estado</label>
+            <select name="tipoIdentificacion" id="" [(ngModel)]="tipoIdentificacion.estado_tipo_ident" class="form-control" >
+              <option value="A">Activo</option>
+              <option value="P">Pendiente</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+        <button type="button" class="btn  btn-primary"(click)="saveTipoIdentificacion()">Guardar</button>
+      </div>
+    </ng-template>
+    <!--Cierre Ventana Modal  -->
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Observación</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+        <tr *ngFor="let tipoIdentificacion of tiposIdentificacion">
+          <td>{{tipoIdentificacion.nombre_tipo_ident}}</td>
+          <td>
+            <div *ngIf="tipoIdentificacion.estado_tipo_ident=='I'" class="badge badge-danger">Inactivo</div>
+            <div *ngIf="tipoIdentificacion.estado_tipo_ident=='P'" class="badge badge-warning">Pendiente</div>
+            <div *ngIf="tipoIdentificacion.estado_tipo_ident=='A'"class="badge badge-success">Activo</div>
+          </td>
+          <td>
+            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+            <button class="btn btn-warning" (click)="editTipoIdentificacion(tipoIdentificacion)"><i class="fa fa-edit"></i></button>
+            &nbsp;
+            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+            <button class="btn btn-danger" (click)="borrarTipoIdentificacion(tipoIdentificacion.id_tipo_ident)"><i
+                class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+

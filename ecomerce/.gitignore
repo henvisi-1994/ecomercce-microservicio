@@ -1,0 +1,37 @@
+
+# Compiled output
+/ecomerce-front/dist
+/ecomerce-front/tmp
+/ecomerce-front/out-tsc
+/ecomerce-front/bazel-out
+/ecomerce-front/# Node
+/ecomerce-front/node_modules
+/ecomerce-front/npm-debug.log
+/ecomerce-front/yarn-error.log
+/ecomerce-front/# IDEs and editors
+/ecomerce-front/.idea/
+/ecomerce-front/.project
+/ecomerce-front/.classpath
+/ecomerce-front/.c9/
+/ecomerce-front/*.launch
+/ecomerce-front/.settings/
+/ecomerce-front/*.sublime-workspace
+/ecomerce-front/# Visual Studio Code
+/ecomerce-front/.vscode/*
+/ecomerce-front/!.vscode/settings.json
+/ecomerce-front/!.vscode/tasks.json
+/ecomerce-front/!.vscode/launch.json
+/ecomerce-front/!.vscode/extensions.json
+/ecomerce-front/.history/*
+/ecomerce-front/# Miscellaneous
+/ecomerce-front/.angular/cache
+/ecomerce-front/.sass-cache/
+/ecomerce-front/connect.lock
+/ecomerce-front/coverage
+/ecomerce-front/libpeerconnection.log
+/ecomerce-front/testem.log
+/ecomerce-front/typings
+
+# System files
+.DS_Store
+Thumbs.db

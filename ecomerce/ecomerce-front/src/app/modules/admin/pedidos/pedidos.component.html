@@ -1,0 +1,81 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Pedidos</h1>
+      </div><!-- /.col -->
+
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Cliente</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Monto</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+    <tr *ngFor="let pedido of pedidos">
+      <td>{{pedido.nombre_persona}} {{pedido.apellido_persona}}</td>
+      <td>{{pedido.fecha_inicio}}</td>
+      <td>{{pedido.total}}</td>
+      <td>
+        <div *ngIf="pedido.estado_ped=='I'" class="badge badge-danger">Pendiente</div>
+        <div *ngIf="pedido.estado_ped=='P'" class="badge badge-success">Pagado</div>
+        <div *ngIf="pedido.estado_ped=='E'" class="badge badge-warning">Enviado</div>
+        <div *ngIf="pedido.estado_ped=='R'" class="badge badge-success">Recivido</div>
+      </td>
+      <td>
+        <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+        <button class="btn btn-info" (click)="getDetalle(pedido.id_pedido)"><i class="fa fa-info"></i></button>
+        &nbsp;
+        <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+        <button *ngIf="pedido.estado_ped=='P'"  class="btn btn-warning" (click)="enviarPedido(pedido.id_pedido)"><i class="fa fa-check"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!—Ventana Modal -->
+  <ng-template #detallePedidoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Detalle de Compra</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+          <tr *ngFor="let producto of detallepedidos">
+            <td>{{producto.present_prod }}</td>
+            <td><img src="{{producto.imagen_prod}}" class="img-responsive" width="100" alt=""></td>
+            <td>{{producto.descripcion_prod}}</td>
+            <td>{{producto.cantidad}}</td>
+            <td *ngIf="producto.aplicaiva_prod==0">${{producto.precio_prod}}</td>
+            <td *ngIf="producto.aplicaiva_prod==1">${{calcularIVA(producto.precio_prod)}}</td>
+            <td>${{producto.total_detalle}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+    </div>
+  </ng-template>

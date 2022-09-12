@@ -1,0 +1,103 @@
+<div class="hold-transition register-page">
+  <div class="register-box">
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <a href="../../index2.html" class="h1"><b>EPTECH</b></a>
+      </div>
+      <div class="card-body">
+        <p class="login-box-msg">Registro</p>
+        <form >
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Nombres</label>
+                <input type="text" name="nombre_persona" [(ngModel)]="persona.nombre_persona" class="form-control"
+                  placeholder="Ingrese nombre de la cliente">
+              </div>
+              <div class="form-group">
+                <label for="">Apellidos</label>
+                <input type="text" name="apellido_persona" [(ngModel)]="persona.apellido_persona" class="form-control"
+                  placeholder="Ingrese apellidos del cliente">
+              </div>
+              <div class="form-group">
+                <label for="">Tipo de Identificacion</label>
+                <select name="tipoidentificacion" id="" [(ngModel)]="persona.id_tipo_ident" class="form-control" >
+                  <option  *ngFor="let tipoIdentificacion  of tiposIdentificacion" value="{{tipoIdentificacion.id_tipo_ident}}">{{tipoIdentificacion.nombre_tipo_ident}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">Número de Identificación</label>
+                <input type="text" name="dni" [(ngModel)]="persona.dni" class="form-control"
+                  placeholder="Ingrese numero de dni">
+              </div>
+              <div class="form-group">
+                <label for="">email</label>
+                <input type="email" name="email" [(ngModel)]="user.email" class="form-control"
+                  placeholder="Ingrese su email">
+              </div>
+              <div  class="form-group">
+                <label for="">Contraseña</label>
+                <input type="password" class="form-control" placeholder="Password"  name="password"  [(ngModel)]="user.password" required minlength="8" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Pais</label>
+                <select name="pais" id="" [(ngModel)]="id_pais" class="form-control"  (change)="onChangePais($event.target)">
+                  <option  *ngFor="let pais of paises" value="{{pais.id_pais}}">{{pais.nombre_pais}}</option>
+                </select>
+              </div>
+              <div *ngIf="id_pais>0" class="form-group">
+                <label for="">Provincia</label>
+                <select name="provincia" id="" [(ngModel)]="id_provincia" class="form-control"  (change)="onChangeProvincia($event.target)">
+                  <option  *ngFor="let provincia of provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia	}}</option>
+                </select>
+              </div>
+              <div *ngIf="id_provincia>0" class="form-group">
+                <label for="">Ciudad</label>
+                <select name="ciudad" id="" [(ngModel)]="user.id_ciudad" class="form-control" >
+                  <option  *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">Direcccion</label>
+                <input type="text" name="direccion" [(ngModel)]="user.direcion" class="form-control"
+                  placeholder="Ingrese numero de dni">
+              </div>
+              <div class="form-group">
+                <label for="">Calle principal</label>
+                <input type="text" name="calle_principal" [(ngModel)]="user.calle" class="form-control"
+                  placeholder="Ingrese numero de dni">
+              </div>
+              <div class="form-group">
+                <label for="">Número de Calle</label>
+                <input type="text" name="num_calle" [(ngModel)]="user.numero" class="form-control"
+                  placeholder="Ingrese numero de dni">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Piso</label>
+                <input type="text" name="piso" [(ngModel)]="user.piso" class="form-control"
+                  placeholder="Ingrese numero de dni">
+              </div>
+              <div class="form-group">
+                <label for="">Telefono</label>
+                <input type="text" name="telefono" [(ngModel)]="user.telefono" class="form-control"
+                  placeholder="Ingrese numero de dni">
+              </div>
+              <div class="form-group">
+                <label for="">Movil</label>
+                <input type="text" name="movil" [(ngModel)]="user.movil" class="form-control"
+                  placeholder="Ingrese numero de dni">
+              </div>
+            </div>
+           <button type="submit" class="btn btn-primary btn-block" (click)="saveUser()">Register</button>
+          </div>
+        </form>
+        <a routerLink="/login"  class="text-center">I already have a membership</a>
+      </div>
+      <!-- /.form-box -->
+    </div><!-- /.card -->
+  </div>
+  </div>

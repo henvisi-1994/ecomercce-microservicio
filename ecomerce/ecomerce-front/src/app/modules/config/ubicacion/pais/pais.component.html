@@ -1,0 +1,63 @@
+<button class="btn btn-primary mb-4" (click)="open(paisModal)">Nuevo</button>
+  <br>
+  <!—Ventana Modal -->
+    <ng-template #paisModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Pais</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="">Nombre</label>
+            <input type="text" name="nombre_pais	" [(ngModel)]="pais.nombre_pais	" class="form-control"
+              placeholder="Ingrese nombre del pais">
+          </div>
+
+          <div class="form-group">
+            <label for="">Estado</label>
+            <select name="pais" id="" [(ngModel)]="pais.estado_pais" class="form-control" >
+              <option value="A">Activo</option>
+              <option value="P">Pendiente</option>
+              <option value="I">Inactivo</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
+        <button type="button" class="btn  btn-primary"(click)="savePais()">Guardar</button>
+      </div>
+    </ng-template>
+    <!--Cierre Ventana Modal  -->
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+        <tr *ngFor="let pais of paises">
+          <td>{{pais.nombre_pais}}</td>
+          <td>
+            <div *ngIf="pais.estado_pais=='I'" class="badge badge-danger">Inactivo</div>
+            <div *ngIf="pais.estado_pais=='P'" class="badge badge-warning">Pendiente</div>
+            <div *ngIf="pais.estado_pais=='A'"class="badge badge-success">Activo</div>
+          </td>
+          <td>
+            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+            <button class="btn btn-warning" (click)="editPais(pais)"><i class="fa fa-edit"></i></button>
+            &nbsp;
+            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+            <button class="btn btn-danger" (click)="borrarPais(pais.id_pais)"><i
+                class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
