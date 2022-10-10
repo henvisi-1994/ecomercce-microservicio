@@ -1,13 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ventas;
 
+use App\Http\Controllers\Controller;
+use App\Services\Ventas\DetallePedidoService;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
-class EstadoPedidoController extends Controller
+class DetallePedidoController extends Controller
 {
-    public function __construct()
+    use ApiResponser;
+    public $detalle_pedido_service;
+    public function __construct(DetallePedidoService $detallePedidoService)
     {
+        $this->detalle_pedido_service = $detallePedidoService;
+        $this->middleware('auth:sanctum');
     }
     /**
      * Display a listing of the resource.
@@ -37,7 +44,7 @@ class EstadoPedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->successResponse($this->detalle_pedido_service->store($request->all()), 201);
     }
 
     /**
@@ -48,7 +55,10 @@ class EstadoPedidoController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->successResponse($this->detalle_pedido_service->show($id));
+    }
+    public function getPedido($id){
+        return $this->successResponse($this->detalle_pedido_service->getPedido($id));
     }
 
     /**
@@ -82,6 +92,6 @@ class EstadoPedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->successResponse($this->detalle_pedido_service->delete($id));
     }
 }

@@ -11,8 +11,6 @@ class DetallePedidoController extends Controller
 {
     public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum');
     }
     /**
      * Display a listing of the resource.
@@ -47,14 +45,14 @@ class DetallePedidoController extends Controller
             'id_pedido' => 'required',
             'cantidad'=>'required',
         ]);
-        $producto=Producto::where('id_prod',$request->id_prod)->first();
+        //$producto=Producto::where('id_prod',$request->id_prod)->first();
         $precio =0;
         $cantidad = $validateData['cantidad'];
-        if ($producto->aplicaiva_prod==1) {
+      /*  if ($producto->aplicaiva_prod==1) {
             $precio = $this->calcularIVA($producto->precio_prod)* $cantidad ;
         } else {
            $precio = $producto->precio_prod* $cantidad ;
-        }
+        }*/
 
         DetallePedido::create([
             'id_prod' => $validateData['id_prod'],

@@ -10,8 +10,7 @@ class CategoriaController extends Controller
 {
     public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['index','show','top','getActivas']);
+
     }
     /**
      * Display a listing of the resource.

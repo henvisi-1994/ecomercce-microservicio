@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Direccion;
 use App\Models\Direcion;
 use App\Models\Persona;
 use App\Models\User;
@@ -14,8 +15,6 @@ class ClienteController extends Controller
 {
     public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['store']);
     }
     /**
      * Display a listing of the resource.
@@ -61,7 +60,7 @@ class ClienteController extends Controller
                 'id_persona',
                 $request->id_persona
             )->first();
-            $direccion = new Direcion();
+            $direccion = new Direccion();
             $direccion->direcion = $request->input('direcion');
             $direccion->calle = $request->input('calle');
             $direccion->numero = $request->input('numero');
@@ -71,17 +70,17 @@ class ClienteController extends Controller
             $direccion->estado_direccion = 'A';
             $direccion->id_ciudad	 = $request->input('id_ciudad');
             $direccion->save();
-            $direccion_last = Direcion::latest('id_direccion')->first();
+            $direccion_last = Direccion::latest('id_direccion')->first();
             $nombre = $persona->nombre_persona;
             $apellido = $persona->apellido_persona;
             $dni = $persona->dni;
-            $username = $nombre . ' ' . $apellido;
+           /* $username = $nombre . ' ' . $apellido;
             User::create([
                 'name' => $username,
                 'email' => $request->email,
                 'password' => Hash::make($dni),
             ]);
-            $usuario = User::latest('id')->first();
+            $usuario = User::latest('id')->first();*/
             $clientes = new Cliente();
             $clientes->id_empresa = $request->input('id_empresa');
             $clientes->id_direccion =$direccion_last->id_direccion;
@@ -90,7 +89,7 @@ class ClienteController extends Controller
             $clientes->estado_cli = $request->input('estado_cli');
             $clientes->fecha_inicio = $request->input('fecha_inicio');
             $clientes->fecha_fin = $request->input('fecha_fin');
-            $clientes->id_usu = $usuario ->id;
+           // $clientes->id_usu = $usuario ->id;
             $clientes->save();
             return;
         } else {

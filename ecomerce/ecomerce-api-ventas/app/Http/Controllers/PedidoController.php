@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Envio;
+use App\Models\EnvioPedido;
 use App\Models\EstadoPedido;
 use App\Models\Pedido;
 use Carbon\Carbon;
@@ -92,7 +93,7 @@ class PedidoController extends Controller
             'fecha_registro' => Carbon::now(),
             'id_pedido' => $data->id_pedido,
         ]);
-        Envio::create([
+        EnvioPedido::create([
             'fecha_inicio_ped' => Carbon::now(),
             'fecha_fin_ped' => Carbon::now(),
             'fecha_registro_env' => Carbon::now(),

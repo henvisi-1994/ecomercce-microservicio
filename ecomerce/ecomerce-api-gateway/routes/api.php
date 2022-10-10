@@ -1,5 +1,17 @@
 <?php
 
+use App\Http\Controllers\Compras\BodegaController;
+use App\Http\Controllers\Compras\CategoriaController;
+use App\Http\Controllers\Compras\MarcaController;
+use App\Http\Controllers\Compras\ProductoController;
+use App\Http\Controllers\Ventas\CiudadController;
+use App\Http\Controllers\Ventas\ClienteController;
+use App\Http\Controllers\Ventas\DetallePedidoController;
+use App\Http\Controllers\Ventas\DirecionController;
+use App\Http\Controllers\Ventas\FormaPagoController;
+use App\Http\Controllers\Ventas\PaisController;
+use App\Http\Controllers\Ventas\PedidoController;
+use App\Http\Controllers\Ventas\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware(['client.credentials'])->group(function () {
+
     /**Compras */
     Route::prefix('categorias')->group(function () {
         Route::get('/', [CategoriaController::class, 'index']);
@@ -107,4 +119,4 @@ Route::middleware(['client.credentials'])->group(function () {
         Route::get('/',[FormaPagoController::class,'index']);
     });
 
-});
+

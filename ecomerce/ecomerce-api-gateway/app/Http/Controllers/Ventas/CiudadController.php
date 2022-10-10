@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ventas;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Services\Ventas\CiudadService;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+
+class CiudadController extends Controller
 {
-    public function __construct()
+    use ApiResponser;
+    public $ciudadService;
+    public function __construct(CiudadService $ciudadService)
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum');
+        $this->ciudadService = $ciudadService;
+        $this->middleware('auth:sanctum')->except(['index']);
     }
     /**
      * Display a listing of the resource.
@@ -21,8 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-       $usuarios = User::all();
-        return $usuarios;
+        return $this->successResponse($this->ciudadService->index());
     }
 
     /**
@@ -43,16 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-        User::create([
-            'name' => $validateData['name'],
-            'email' => $validateData['email'],
-            'password' => Hash::make($validateData['password']),
-        ]);
+        return $this->successResponse($this->ciudadService->store($request->all()), 201);
     }
 
     /**
@@ -86,10 +79,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('users')
-            ->where('id', $id)
-            ->update($request->all());
-        return;
+        return $this->successResponse($this->ciudadService->update($request->all(), $id));
     }
 
     /**
@@ -100,10 +90,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $estado_usuario = 'I';
-        DB::table('usuario')
-            ->where('id', $id)
-            ->update(['estado_usuario' => $estado_usuario]);
-        return;
+        return $this->successResponse($this->ciudadService->delete($id));
     }
 }

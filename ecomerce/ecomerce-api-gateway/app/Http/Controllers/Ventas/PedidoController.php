@@ -1,14 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ventas;
 
+use App\Http\Controllers\Controller;
+use App\Services\Ventas\PedidoService;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
-class EstadoPedidoController extends Controller
+class PedidoController extends Controller
 {
-    public function __construct()
+    use ApiResponser;
+    private $pedidoService;
+    public function __construct(PedidoService $pedidoService)
     {
+        $this->pedidoService = $pedidoService;
+        $this->middleware('auth:sanctum')->except(['index']);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class EstadoPedidoController extends Controller
      */
     public function index()
     {
-        //
+        return $this->successResponse($this->pedidoService->index());
     }
 
     /**
@@ -37,7 +45,7 @@ class EstadoPedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->successResponse($this->pedidoService->store($request->all()), 201);
     }
 
     /**
@@ -82,6 +90,15 @@ class EstadoPedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //  Delete the resource from storage if it exists
+        return $this->successResponse($this->pedidoService->delete($id));
+    }
+    public function Pagar($id)
+    {
+        return $this->successResponse($this->pedidoService->Pagar($id));
+    }
+    public function status(Request $request)
+    {
+        return $this->successResponse($this->pedidoService->status($request->all()));
     }
 }

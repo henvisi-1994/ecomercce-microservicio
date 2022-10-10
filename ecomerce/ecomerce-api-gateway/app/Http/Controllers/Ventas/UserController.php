@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ventas;
 
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-class EstadoPedidoController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('auth:sanctum');
     }
     /**
      * Display a listing of the resource.
@@ -16,7 +21,8 @@ class EstadoPedidoController extends Controller
      */
     public function index()
     {
-        //
+       $usuarios = User::all();
+        return $usuarios;
     }
 
     /**
@@ -37,7 +43,16 @@ class EstadoPedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+        User::create([
+            'name' => $validateData['name'],
+            'email' => $validateData['email'],
+            'password' => Hash::make($validateData['password']),
+        ]);
     }
 
     /**
@@ -71,7 +86,10 @@ class EstadoPedidoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::table('users')
+            ->where('id', $id)
+            ->update($request->all());
+        return;
     }
 
     /**
@@ -82,6 +100,10 @@ class EstadoPedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $estado_usuario = 'I';
+        DB::table('usuario')
+            ->where('id', $id)
+            ->update(['estado_usuario' => $estado_usuario]);
+        return;
     }
 }

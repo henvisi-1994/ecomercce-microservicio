@@ -10,8 +10,6 @@ class ProductoController extends Controller
 {
     public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['index','show','getProductoCategoria','getProductoTop','getProductActivos']);
     }
     /**
      * Display a listing of the resource.

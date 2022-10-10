@@ -47,5 +47,11 @@ class ProductoService
     public function getProductoCategoria($id){
         return $this->performRequest('GET', "/productos/categoria/{$id}");
     }
+    public function getProductoTop(){
+        return $this->performRequest('GET', '/productos/top');
+    }
+    public function show($id){
+        return $this->performRequest('GET', "/productos/{$id}");
+    }
 
 }

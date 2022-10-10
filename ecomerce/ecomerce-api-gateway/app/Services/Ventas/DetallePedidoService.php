@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Ventas;
 
 use App\Traits\ConsumesExternalService;
 
@@ -43,5 +43,8 @@ class DetallePedidoService
     }
     public function getPedido($id){
         return $this->performRequest('GET', "/pedido/detalle/admin/{$id}");
+    }
+    public function show($id){
+        return $this->performRequest('GET', "/pedido/detalle/{$id}");
     }
 }

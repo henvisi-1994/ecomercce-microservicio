@@ -1,14 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Compras;
 
+use App\Http\Controllers\Controller;
+use App\Services\Compras\ProductoService;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
-class EstadoPedidoController extends Controller
+
+class ProductoController extends Controller
 {
-    public function __construct()
+    use ApiResponser;
+    public $productoService;
+    public function __construct(ProductoService $productoService)
     {
+        $this->productoService = $productoService;
+        $this->middleware('auth:sanctum');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +25,10 @@ class EstadoPedidoController extends Controller
      */
     public function index()
     {
-        //
+        return $this->successResponse($this->productoService->index());
+    }
+    public function getProductActivos(){
+        return $this->successResponse($this->productoService->getProductActivos());
     }
 
     /**
@@ -37,9 +49,15 @@ class EstadoPedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->successResponse($this->productoService->store($request->all()), 201);
+    }
+    public function getProductoCategoria($id){
+        return $this->successResponse($this->productoService->getProductoCategoria($id));
     }
 
+public function getProductoTop(){
+    return $this->successResponse($this->productoService->getProductoTop());
+}
     /**
      * Display the specified resource.
      *
@@ -48,7 +66,7 @@ class EstadoPedidoController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->successResponse($this->productoService->show($id));
     }
 
     /**
@@ -71,7 +89,7 @@ class EstadoPedidoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $this->successResponse($this->productoService->update($request->all(), $id));
     }
 
     /**
@@ -82,6 +100,6 @@ class EstadoPedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->successResponse($this->productoService->delete($id));
     }
 }

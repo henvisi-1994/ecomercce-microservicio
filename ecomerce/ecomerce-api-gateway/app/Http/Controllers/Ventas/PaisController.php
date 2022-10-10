@@ -1,13 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ventas;
 
+use App\Http\Controllers\Controller;
+use App\Services\Ventas\PaisService;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
-class EstadoPedidoController extends Controller
+
+class PaisController extends Controller
 {
-    public function __construct()
+    use ApiResponser;
+    public $paisService;
+    public function __construct(PaisService $paisService)
     {
+        $this->paisService = $paisService;
+        $this->middleware('auth:sanctum')->except(['index']);
     }
     /**
      * Display a listing of the resource.
@@ -16,7 +24,7 @@ class EstadoPedidoController extends Controller
      */
     public function index()
     {
-        //
+        return $this->successResponse($this->paisService->index());
     }
 
     /**
@@ -37,7 +45,7 @@ class EstadoPedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->successResponse($this->paisService->store($request->all()), 201);
     }
 
     /**
@@ -71,7 +79,7 @@ class EstadoPedidoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $this->successResponse($this->paisService->update($request->all(), $id));
     }
 
     /**
@@ -82,6 +90,6 @@ class EstadoPedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->successResponse($this->paisService->delete($id));
     }
 }

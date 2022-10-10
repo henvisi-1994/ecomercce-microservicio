@@ -1,14 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Compras;
 
+use App\Http\Controllers\Controller;
+use App\Services\Compras\MarcaService;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
-class EstadoPedidoController extends Controller
+
+class MarcaController extends Controller
 {
-    public function __construct()
+    use ApiResponser;
+    public $marcaService;
+    public function __construct(MarcaService $marcaService)
     {
+        $this->marcaService = $marcaService;
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +25,8 @@ class EstadoPedidoController extends Controller
      */
     public function index()
     {
-        //
+        //return 'hola';
+        return $this->successResponse($this->marcaService->index());
     }
 
     /**
@@ -37,7 +47,7 @@ class EstadoPedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->successResponse($this->marcaService->store($request->all()), 201);
     }
 
     /**
@@ -71,7 +81,7 @@ class EstadoPedidoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $this->successResponse($this->marcaService->update($request->all(), $id));
     }
 
     /**
@@ -82,6 +92,6 @@ class EstadoPedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->successResponse($this->marcaService->delete($id));
     }
 }

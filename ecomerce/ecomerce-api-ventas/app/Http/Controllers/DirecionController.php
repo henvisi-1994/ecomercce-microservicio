@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Direccion;
 use App\Models\Direcion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,8 +11,7 @@ class DirecionController extends Controller
 {
     public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['index']);
+
     }
     /**
      * Display a listing of the resource.
@@ -51,7 +51,7 @@ class DirecionController extends Controller
             'id_ciudad' => 'required',
         ]);
         if ($v) {
-            $direccion = new Direcion();
+            $direccion = new Direccion();
             $direccion->direcion = $request->input('direcion');
             $direccion->calle = $request->input('calle');
             $direccion->numero = $request->input('numero');
