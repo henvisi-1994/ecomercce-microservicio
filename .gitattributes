@@ -1,0 +1,4 @@
+ecomerce-api-gateway/ filter=lfs diff=lfs merge=lfs -text
+ecomerce-api-compras/ filter=lfs diff=lfs merge=lfs -text
+ecomerce-api-ventas/ filter=lfs diff=lfs merge=lfs -text
+ecomerce-front/ filter=lfs diff=lfs merge=lfs -text
