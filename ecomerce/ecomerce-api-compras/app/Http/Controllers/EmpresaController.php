@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Persona;
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PersonaController extends Controller
+class EmpresaController extends Controller
 {
-   /* public function __construct()
+    public function __construct()
     {
         //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['store']);
-    }*/
+        $this->middleware('auth:sanctum')->except(['index']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +20,8 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        //
+       $empresas=Empresa::all();
+       return $empresas;
     }
 
     /**
@@ -42,20 +43,15 @@ class PersonaController extends Controller
     public function store(Request $request)
     {
         $v = $this->validate(request(), [
-
-            'nombre_persona' => 'required',
-            'apellido_persona' => 'required',
-            'dni' => 'required',
-            'id_tipo_ident' => 'required'
+            'razon_social' => 'required|string',
+            'codigo_envio' => 'required|string',
+            'nombre_comercial' => 'required|string',
+            'ruc' => 'required|string|max:13',
         ]);
         if ($v) {
-            $persona = new Persona();
-            $persona->id_tipo_ident = $request->input('id_tipo_ident');
-            $persona->nombre_persona = $request->input('nombre_persona');
-            $persona->apellido_persona	 = $request->input('apellido_persona');
-            $persona->dni = $request->input('dni');
-            $persona->save();
-            return $persona;
+            $empresa = new Empresa();
+            $empresa->create($request->all());
+            return;
         } else {
             return back()->withInput($request->all());
         }
@@ -69,8 +65,7 @@ class PersonaController extends Controller
      */
     public function show($id)
     {
-        $persona = Persona::with('identificacion')->where('id_persona',$id)->first();
-        return $persona;
+        //
     }
 
     /**
@@ -93,9 +88,10 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('persona')
-        ->where('id_persona', $id)
-        ->update($request->all());
+        DB::table('empresa')
+            ->where('id_empresa', $id)
+            ->update($request->all());
+        return;
     }
 
     /**
@@ -106,6 +102,11 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $estado_empresa='I';
+        DB::table('empresa')
+            ->where('id_empresa', $id)
+            ->update(['estado_empresa' => $estado_empresa]
+          );
+        return;
     }
 }

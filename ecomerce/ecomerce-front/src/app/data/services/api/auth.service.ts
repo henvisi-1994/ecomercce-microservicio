@@ -22,7 +22,7 @@ export class AuthService {
   tipoUser(): string{
     if (localStorage.getItem('id_cliente') != undefined) {
       return 'Cliente'
-    } else if(localStorage.getItem('id_empleado') != undefined){
+    } else if(localStorage.getItem('id_rol') === '2'){
       return 'Empleado'
     }else{
       return ''

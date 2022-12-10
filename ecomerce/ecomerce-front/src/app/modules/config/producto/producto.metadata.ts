@@ -18,7 +18,6 @@ comision_prod:number;
 imagen_prod:string;
 observ_prod:string;
 estado_prod:string;
-id_bod:number;
 id_marca:number;
 id_cat:number;
 id_empresa:number;

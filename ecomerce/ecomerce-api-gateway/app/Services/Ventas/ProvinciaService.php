@@ -4,18 +4,18 @@ namespace App\Services\Ventas;
 
 use App\Traits\ConsumesExternalService;
 
-class TipoIdentificacionService
+class ProvinciaService
 {
     use ConsumesExternalService;
 
     /**
-     * The base uri to be used to consume the identificaciones service
+     * The base uri to be used to consume the provincia service
      * @var string
      */
     public $baseUri;
 
     /**
-     * The secret to be used to consume the identificaciones service
+     * The secret to be used to consume the provincia service
      * @var string
      */
     public $secret;
@@ -27,18 +27,19 @@ class TipoIdentificacionService
     }
     public function index()
     {
-        return $this->performRequest('GET', '/identificaciones');
+        return $this->performRequest('GET', '/provincia');
     }
+
     public function store($data)
     {
-        return $this->performRequest('POST', '/identificaciones', $data);
+        return $this->performRequest('POST', '/provincia', $data);
     }
     public function update($data, $id)
     {
-        return $this->performRequest('PUT', "/identificaciones/{$id}", $data);
+        return $this->performRequest('PUT', "/provincia/{$id}", $data);
     }
     public function delete($id)
     {
-        return $this->performRequest('DELETE', "/identificaciones/{$id}");
+        return $this->performRequest('DELETE', "/provincia/{$id}");
     }
 }

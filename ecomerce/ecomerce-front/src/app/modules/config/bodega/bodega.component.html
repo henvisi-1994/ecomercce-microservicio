@@ -58,9 +58,8 @@
           </div>
           <div class="form-group">
             <label for="">Direcion</label>
-            <select name="direccion" id="" [(ngModel)]="bodega.id_direccion" class="form-control" >
-              <option  *ngFor="let direccion of direcciones" value="{{direccion.id_direccion}}">{{direccion.direcion}}</option>
-            </select>
+            <input type="text" name="direccion_bod" [(ngModel)]="bodega.direccion_bod" class="form-control"
+              placeholder="Ingrese direccion de bodega">
           </div>
           <div class="form-group">
             <label for="">Estado</label>

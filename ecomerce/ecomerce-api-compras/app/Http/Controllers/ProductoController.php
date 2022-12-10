@@ -19,20 +19,16 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = DB::table('producto as prod')
-            ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
             ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
             ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-            ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
             ->orderBy("prod.id_prod", "desc")
             ->get();
         return  $productos;
     }
     public function getProductActivos(){
         $productos = DB::table('producto as prod')
-        ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
         ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
         ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-        ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
         ->where('estado_prod','A')
         ->orderBy("prod.id_prod", "desc")
         ->get();
@@ -63,7 +59,6 @@ class ProductoController extends Controller
             'codbarra_prod' => 'required|numeric',
             'id_marca' => 'required',
             'id_cat' => 'required',
-            'id_bod' => 'required',
             'stockmin_prod' => 'required|numeric',
             'stockmax_prod' => 'required|numeric',
             'precio_prod' => 'required|numeric|between:0,9999.99',
@@ -80,8 +75,6 @@ class ProductoController extends Controller
                 $image_name = $url.'storage/'.$path_imagen;
             }
             $producto = new Producto();
-            $producto->id_empresa  =  $request->input('id_empresa');
-            $producto->id_bod =  $request->input('id_bod');
             $producto->codigo_prod =  $request->input('codigo_prod');
             $producto->codbarra_prod =  $request->input('codbarra_prod');
             $producto->descripcion_prod = $request->input('descripcion_prod');
@@ -195,7 +188,6 @@ return  $productos;
             $producto= Producto::where('id_prod',$id)->first();
             $image_name=$producto->imagen_prod;
             }
-            $id_empresa  =  $request->input('id_empresa');
             $id_bod =  $request->input('id_bod');
             $codigo_prod =  $request->input('codigo_prod');
             $codbarra_prod =  $request->input('codbarra_prod');
@@ -225,7 +217,7 @@ return  $productos;
                         'stockmin_prod' => $stockmin_prod, 'id_marca' => $id_marca, 'id_cat' => $id_cat, 'present_prod' => $present_prod,  'precio_prod' => $precio_prod,
                         'stock_prod' => $stock_prod,  'stockmin_prod' => $stockmin_prod,  'stockmax_prod' => $stockmax_prod, 'stock_prod'  => $stock_prod,  'fechaing_prod' => $fechaing_prod, 'fechaelab_prod' => $fechaelab_prod,
                          'fechacad_prod' => $fechacad_prod, 'aplicaiva_prod' => $aplicaiva_prod, 'aplicaice_prod' => $aplicaice_prod,  'util_prod' => $util_prod, 'comision_prod' => $comision_prod,'imagen_prod'=>$imagen_prod,
-                        'observ_prod' => $observ_prod, 'estado_prod' => $estado_prod,'id_bod'=>$id_bod,'id_marca' =>$id_marca,'id_cat'=>$id_cat,'id_empresa'=>$id_empresa]
+                        'observ_prod' => $observ_prod, 'estado_prod' => $estado_prod,'id_bod'=>$id_bod,'id_marca' =>$id_marca,'id_cat'=>$id_cat]
                 );
             return;
         } else {

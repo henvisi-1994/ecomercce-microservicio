@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bodega', function (Blueprint $table) {
-            $table->id('id_bod');
-            $table->string('nombre_bod');
-            $table->char('estado_bod',1);
-            $table->string('telef_bod');
-            $table->string('cel_bod');
-            $table->string('nomb_contac_bod');
+        Schema::create('empresa', function (Blueprint $table) {
+            $table->id('id_empresa');
+            $table->string('razon_social');
+            $table->string('codigo_envio');
+            $table->string('nombre_comercial');
+            $table->string('ruc');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
-            $table->unsignedBigInteger('id_ciudad');
-            $table->text('direccion_bod');
+            $table->char('estado_empresa',1);
         });
     }
 
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bodegas');
+        Schema::dropIfExists('empresas');
     }
 };

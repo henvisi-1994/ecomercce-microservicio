@@ -24,7 +24,7 @@ export class BodegaComponent implements OnInit {
     fechaini_bod: '',
     fechafin_bod: '',
     id_ciudad: 0,
-    id_direccion: 0,
+    direccion_bod: '',
   };
   bodegas: any = [];
   ciudades: any = [];
@@ -75,7 +75,7 @@ export class BodegaComponent implements OnInit {
     this.bodega.fechaini_bod = bodega.fechaini_bod;
     this.bodega.fechafin_bod = bodega.fechafin_bod;
     this.bodega.id_ciudad = bodega.id_ciudad;
-    this.bodega.id_direccion = bodega.id_direcion;
+    this.bodega.direccion_bod = bodega.dirreccion_bod;
     this.edit = true;
     this.open(this.modal);
   }
@@ -123,7 +123,7 @@ export class BodegaComponent implements OnInit {
     this.bodega.fechaini_bod = '';
     this.bodega.fechafin_bod = '';
     this.bodega.id_ciudad = 0;
-    this.bodega.id_direccion = 0;
+    this.bodega.direccion_bod = '';
   }
 
 }

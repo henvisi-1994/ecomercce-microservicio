@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Ventas\PersonaService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Http;
 
 class PersonaController extends Controller
 {
@@ -15,7 +15,7 @@ class PersonaController extends Controller
     public function __construct(PersonaService $personaService)
     {
         $this->personaService = $personaService;
-        $this->middleware('auth:sanctum')->except(['index']);
+        $this->middleware('auth:sanctum')->except(['index','store']);
     }
 
     /**
@@ -46,7 +46,14 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->successResponse($this->personaService->store($request->all()), 201);
+        $persona = Http::withHeaders(['Authorization' => config('services.ventas.secret')])
+        ->post('http://localhost:8001/api/persona', [
+            'nombre_persona' => $request->nombre_persona,
+            'apellido_persona' => $request->apellido_persona,
+            'dni' => $request->dni,
+            'id_tipo_ident' => $request->id_tipo_ident,
+        ]);
+        return $persona;
     }
 
     /**

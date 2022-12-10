@@ -7,6 +7,7 @@ use App\Models\Direccion;
 use App\Models\Direcion;
 use App\Models\Persona;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -49,52 +50,16 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $v = $this->validate(request(), [
-            'estado_cli' => 'required',
-            'email' => 'required|string|email|max:255|unique:users',
-            'fecha_inicio' => 'required',
-            'fecha_fin' => 'required',
-        ]);
-        if ($v) {
-            $persona = Persona::where(
-                'id_persona',
-                $request->id_persona
-            )->first();
-            $direccion = new Direccion();
-            $direccion->direcion = $request->input('direcion');
-            $direccion->calle = $request->input('calle');
-            $direccion->numero = $request->input('numero');
-            $direccion->piso = $request->input('piso');
-            $direccion->telefono = $request->input('telefono');
-            $direccion->movil = $request->input('movil');
-            $direccion->estado_direccion = 'A';
-            $direccion->id_ciudad	 = $request->input('id_ciudad');
-            $direccion->save();
-            $direccion_last = Direccion::latest('id_direccion')->first();
-            $nombre = $persona->nombre_persona;
-            $apellido = $persona->apellido_persona;
-            $dni = $persona->dni;
-           /* $username = $nombre . ' ' . $apellido;
-            User::create([
-                'name' => $username,
-                'email' => $request->email,
-                'password' => Hash::make($dni),
-            ]);
-            $usuario = User::latest('id')->first();*/
-            $clientes = new Cliente();
-            $clientes->id_empresa = $request->input('id_empresa');
-            $clientes->id_direccion =$direccion_last->id_direccion;
-            $clientes->id_persona = $request->input('id_persona');
-            $clientes->tipo_cli = $request->input('tipo_cli');
-            $clientes->estado_cli = $request->input('estado_cli');
-            $clientes->fecha_inicio = $request->input('fecha_inicio');
-            $clientes->fecha_fin = $request->input('fecha_fin');
-           // $clientes->id_usu = $usuario ->id;
-            $clientes->save();
-            return;
-        } else {
-            return back()->withInput($request->all());
-        }
+            $cliente = new Cliente();
+            $cliente->id_direccion = $request->input('id_direccion');
+            $cliente->id_persona = $request->input('id_persona');
+            $cliente->tipo_cli = $request->input('tipo_cli');
+            $cliente->estado_cli = 'A';
+            $cliente->fecha_inicio = Carbon::now();
+            $cliente->fecha_fin = Carbon::now();
+            $cliente ->id_usu = $request->input('id_usu');
+            $cliente->save();
+            return $cliente;
     }
 
     /**
@@ -105,7 +70,10 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        //
+        $cliente = Cliente::where('id_cliente', $id)
+        ->orwhere('id_usu', $id)
+        ->first();
+        return $cliente;
     }
 
     /**
@@ -135,39 +103,24 @@ class ClienteController extends Controller
             'fecha_fin' => 'required',
         ]);
         if ($v) {
-            $id_empresa = $request->input('id_empresa');
-            $id_persona = $request->input('id_persona');
-            $observ_cli = $request->input('observ_cli');
-            $estado_cli = $request->input('estado_cli');
-            $fecha_inicio = $request->input('fecha_inicio');
-            $fecha_fin = $request->input('fecha_fin');
-            $id_direccion= $request->input('id_direccion');
-            $direcion  =  $request->input('direcion');
-            $calle  =  $request->input('calle');
-            $numero  =  $request->input('numero');
-            $piso  =  $request->input('piso');
-            $telefono  =  $request->input('telefono');
-            $movil  =  $request->input('movil');
-            $id_ciudad	  =  $request->input('id_ciudad	');
-            $estado_direccion  =  $request->input('estado_direccion');
-            $email= $request->input('email');
-            $id_usu= $request->input('id_usu');
-            DB::table('direccion')
-            ->where('id_direccion',  $id_direccion)
-            ->update(['direcion'=>$direcion,'calle'=>$calle,'numero'=>$numero,'piso'=>$piso,'telefono'=>$telefono,'movil'=>$movil,'id_ciudad'=>$id_ciudad,'estado_direccion'=>$estado_direccion]);
-            DB::table('cliente')
-                ->where('id_cliente', $id)
-                ->update([
-                    'observ_cli' => $observ_cli,
-                    'estado_cli' => $estado_cli,
-                    'fecha_inicio' => $fecha_inicio,
-                    'fecha_fin' => $fecha_fin,
-                    'id_empresa' => $id_empresa,
-                    'id_persona' => $id_persona,
-                ]);
-                DB::table('users')
-                ->where('id', $id_usu)
-                ->update(['email'=>$email]);
+            $cliente = Cliente::where('id_cliente', $id)->first();
+            $direccion = Direccion::where('id_direccion', $cliente->id_direccion)->first();
+            $cliente->id_empresa = $request->input('id_empresa');
+            $cliente->id_persona = $request->input('id_persona');
+            $cliente->observ_cli = $request->input('observ_cli');
+            $cliente->estado_cli = $request->input('estado_cli');
+            $cliente->fecha_inicio = $request->input('fecha_inicio');
+            $cliente->fecha_fin = $request->input('fecha_fin');
+            $cliente->save();
+            $direccion->direccion  =  $request->input('direcion');
+            $direccion->calle  =  $request->input('calle');
+            $direccion->numero  =  $request->input('numero');
+            $direccion->piso  =  $request->input('piso');
+            $direccion->telefono  =  $request->input('telefono');
+            $direccion->movil  =  $request->input('movil');
+            $direccion->id_ciudad	  =  $request->input('id_ciudad	');
+            $direccion->estado_direccion  =  $request->input('estado_direccion');
+            $direccion->save();
             return;
         } else {
             return back()->withInput($request->all());

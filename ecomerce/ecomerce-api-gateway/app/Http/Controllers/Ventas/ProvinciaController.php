@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ventas;
 
-use App\Models\Persona;
+use App\Http\Controllers\Controller;
+use App\Services\Ventas\ProvinciaService;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class PersonaController extends Controller
+class ProvinciaController extends Controller
 {
-   /* public function __construct()
+    use ApiResponser;
+    public $provinciaService;
+    public function __construct(ProvinciaService $provinciaService)
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['store']);
-    }*/
+        $this->provinciaService = $provinciaService;
+        $this->middleware('auth:sanctum')->except(['index']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +23,8 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        //
+        $provincias = $this->provinciaService->index();
+        return $this->successResponse($provincias);
     }
 
     /**
@@ -41,22 +45,16 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        $v = $this->validate(request(), [
-
-            'nombre_persona' => 'required',
-            'apellido_persona' => 'required',
-            'dni' => 'required',
-            'id_tipo_ident' => 'required'
+        $v =$this->validate(request(), [
+            'nombre_provincia' => 'required',
+            'estado_prov' => 'required'
         ]);
-        if ($v) {
-            $persona = new Persona();
-            $persona->id_tipo_ident = $request->input('id_tipo_ident');
-            $persona->nombre_persona = $request->input('nombre_persona');
-            $persona->apellido_persona	 = $request->input('apellido_persona');
-            $persona->dni = $request->input('dni');
-            $persona->save();
-            return $persona;
-        } else {
+        if ($v)
+        {
+            return $this->provinciaService->store($request->all());
+        }
+        else
+        {
             return back()->withInput($request->all());
         }
     }
@@ -69,8 +67,8 @@ class PersonaController extends Controller
      */
     public function show($id)
     {
-        $persona = Persona::with('identificacion')->where('id_persona',$id)->first();
-        return $persona;
+
+
     }
 
     /**
@@ -93,9 +91,7 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('persona')
-        ->where('id_persona', $id)
-        ->update($request->all());
+        return $this->successResponse($this->provinciaService->update($request->all(), $id));
     }
 
     /**
@@ -106,6 +102,6 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
+     //   return $this->successResponse($this->provinciaService->destroy($id));
     }
 }

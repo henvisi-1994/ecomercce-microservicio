@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Persona;
+use App\Models\Provincia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PersonaController extends Controller
+class ProvinciaController extends Controller
 {
-   /* public function __construct()
+    public function __construct()
     {
         //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['store']);
-    }*/
+        $this->middleware('auth:sanctum')->except(['index']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +20,11 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        //
+        $provincias = DB::table('provincia as p')
+        ->join('pais', 'p.id_pais', '=', 'pais.id_pais')
+        ->orderBy("p.id_provincia","desc")
+        ->get();
+        return $provincias;
     }
 
     /**
@@ -41,23 +45,22 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        $v = $this->validate(request(), [
-
-            'nombre_persona' => 'required',
-            'apellido_persona' => 'required',
-            'dni' => 'required',
-            'id_tipo_ident' => 'required'
+         $v =$this->validate(request(), [
+            'nombre_provincia' => 'required',
+            'estado_prov' => 'required'
         ]);
-        if ($v) {
-            $persona = new Persona();
-            $persona->id_tipo_ident = $request->input('id_tipo_ident');
-            $persona->nombre_persona = $request->input('nombre_persona');
-            $persona->apellido_persona	 = $request->input('apellido_persona');
-            $persona->dni = $request->input('dni');
-            $persona->save();
-            return $persona;
-        } else {
-            return back()->withInput($request->all());
+        if ($v)
+        {
+            $provincias= new Provincia();
+            $provincias->nombre_provincia = $request->nombre_provincia;
+            $provincias->id_pais = $request->id_pais;
+            $provincias->estado_prov = $request->estado_prov;
+            $provincias->save();
+            return;
+        }
+        else
+        {
+          return back()->withInput($request->all());
         }
     }
 
@@ -69,8 +72,7 @@ class PersonaController extends Controller
      */
     public function show($id)
     {
-        $persona = Persona::with('identificacion')->where('id_persona',$id)->first();
-        return $persona;
+        //
     }
 
     /**
@@ -93,9 +95,21 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('persona')
-        ->where('id_persona', $id)
-        ->update($request->all());
+        $v =$this->validate(request(), [
+            'nombre_provincia' => 'required',
+            'estado_prov' => 'required'
+        ]);
+        if ($v)
+        {
+            DB::table('provincia')
+            ->where('id_provincia', $id)
+            ->update($request->all() );
+        return;
+      }
+      else
+        {
+          return back()->withInput($request->all());
+        }
     }
 
     /**
@@ -106,6 +120,11 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $estado_prov= 'I';
+        DB::table('provincia')
+            ->where('id_provincia', $id)
+            ->update(['estado_prov' => $estado_prov]
+          );
+        return;
     }
 }

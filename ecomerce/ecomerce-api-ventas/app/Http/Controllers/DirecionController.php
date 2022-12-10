@@ -52,7 +52,7 @@ class DirecionController extends Controller
         ]);
         if ($v) {
             $direccion = new Direccion();
-            $direccion->direcion = $request->input('direcion');
+            $direccion->direccion = $request->input('direcion');
             $direccion->calle = $request->input('calle');
             $direccion->numero = $request->input('numero');
             $direccion->piso = $request->input('piso');
@@ -61,7 +61,7 @@ class DirecionController extends Controller
             $direccion->estado_direccion = $request->input('estado_direccion');
             $direccion->id_ciudad	 = $request->input('id_ciudad');
             $direccion->save();
-            return;
+            return $direccion;
         } else {
             return back()->withInput($request->all());
         }

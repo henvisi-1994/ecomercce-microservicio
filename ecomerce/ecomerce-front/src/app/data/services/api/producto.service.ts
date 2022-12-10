@@ -44,7 +44,6 @@ export class ProductoService {
     form.append('comision_prod', newProducto.comision_prod.toString());
     form.append('observ_prod', newProducto.observ_prod);
     form.append('estado_prod', newProducto.estado_prod);
-    form.append('id_bod', newProducto.id_bod.toString());
     form.append('id_marca', newProducto.id_marca.toString());
     form.append('id_cat', newProducto.id_cat.toString());
     form.append('id_empresa', newProducto.id_empresa.toString());
@@ -71,7 +70,6 @@ export class ProductoService {
     formUpdate.append('comision_prod', newProducto.comision_prod.toString());
     formUpdate.append('observ_prod', newProducto.observ_prod);
     formUpdate.append('estado_prod', newProducto.estado_prod);
-    formUpdate.append('id_bod', newProducto.id_bod.toString());
     formUpdate.append('id_marca', newProducto.id_marca.toString());
     formUpdate.append('id_cat', newProducto.id_cat.toString());
     formUpdate.append('id_empresa', newProducto.id_empresa.toString());

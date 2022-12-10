@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { environment } from 'environments/environment.prod';
 import { UsuarioService } from '@data/services/api/usuario.service';
 
+
 @Component({
   selector: 'app-empleados',
   templateUrl: './empleados.component.html',
@@ -60,7 +61,9 @@ export class EmpleadosComponent implements OnInit {
     this.tipoidentificacionservice.getallTipoIdentificaciones().subscribe(tiposIdentificacion => this.tiposIdentificacion = tiposIdentificacion);
   }
   getEmpleados() {
-    this.empleadoService.getallEmpleadoes().subscribe(empleados => this.empleados = empleados);
+    this.empleadoService.getallEmpleadoes().subscribe(empleados => {
+      this.empleados = empleados
+    });
   }
   geEmpresas(){
     this.empresaservice.getallEmpresas().subscribe(empresas=> this.empresas=empresas);
@@ -93,7 +96,6 @@ export class EmpleadosComponent implements OnInit {
       let resultUser = this.users.filter((usuario: string | any) => {
         return usuario.id === empleado.id_usu;
       });
-      console.log(resultUser);
       let usuario = resultUser[0];
       this.empleado.id_empleado = empleado.id_empleado;
       this.empleado.id_empresa = empleado.id_empresa;
@@ -101,15 +103,24 @@ export class EmpleadosComponent implements OnInit {
       this.empleado.id_cargo = empleado.id_cargo,
       this.empleado.id_persona = empleado.id_persona,
       this.empleado.email= usuario.email;
-      this.persona.nombre_persona=empleado.nombre_persona,
-      this.persona.apellido_persona=empleado.apellido_persona,
-      this.persona.id_tipo_ident= empleado.id_tipo_ident;
-      this.persona.dni=empleado.dni;
+      this.persona.id_persona=empleado.id_persona,
+      this.persona.nombre_persona=empleado.persona.nombre_persona,
+      this.persona.apellido_persona=empleado.persona.apellido_persona,
+      this.persona.id_tipo_ident= empleado.persona.id_tipo_ident;
+      this.persona.dni=empleado.persona.dni;
         this.empleado.estado_empl = empleado.estado_empl;
       this.edit = true;
       this.open(this.modal);
     }
     public borrarEmpleado(id_empleado: number) {
+      this.empleadoService.deleteEmpleado(id_empleado).subscribe((res: any) => {
+        this.getEmpleados();
+        Swal.fire({
+          title:'Empleado',
+          text:'Empleado Eliminado Exitosamente',
+          icon:'success'
+        });
+      });
 
     }
     public saveEmpleado() {

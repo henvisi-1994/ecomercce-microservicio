@@ -38,7 +38,6 @@ export class ProductoComponent implements OnInit {
     imagen_prod: '',
     observ_prod: '',
     estado_prod: '',
-    id_bod: 0,
     id_marca: 0,
     id_cat: 0,
     id_empresa:  environment.id_empresa,
@@ -130,7 +129,6 @@ export class ProductoComponent implements OnInit {
       this.producto.comision_prod = producto.comision_prod,
       this.producto.imagen_prod = producto.imagen_prod,
       this.producto.observ_prod = producto.observ_prod,
-      this.producto.id_bod = producto.id_bod,
       this.producto.id_marca = producto.id_marca,
       this.producto.id_cat = producto.id_cat,
       this.producto.id_empresa = producto.id_empresa,
@@ -205,7 +203,6 @@ export class ProductoComponent implements OnInit {
     this.producto.comision_prod = 0
     this.producto.imagen_prod = ''
     this.producto.observ_prod = ''
-    this.producto.id_bod = 0
     this.producto.id_cat = 0
     this.producto.id_marca = 0
     this.producto.id_empresa = 0

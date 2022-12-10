@@ -82,10 +82,10 @@
       <tbody>
         <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
         <tr *ngFor="let empleado of empleados">
-          <td>{{empleado.dni}}</td>
-          <td>{{empleado.nombre_persona}}</td>
-          <td>{{empleado.apellido_persona}}</td>
-          <td>{{empleado.nomb_cargo}}</td>
+          <td>{{empleado.persona.dni}}</td>
+          <td>{{empleado.persona.nombre_persona}}</td>
+          <td>{{empleado.persona.apellido_persona}}</td>
+          <td>{{empleado.cargo.nomb_cargo}}</td>
           <td>
             <div *ngIf="empleado.estado_empl=='I'" class="badge badge-danger">Inactivo</div>
             <div *ngIf="empleado.estado_empl=='P'" class="badge badge-warning">Pendiente</div>

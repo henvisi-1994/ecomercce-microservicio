@@ -20,8 +20,6 @@ class BodegaController extends Controller
     public function index()
     {
         $bodegas = DB::table('bodega as b')
-            ->join('direccion', 'b.id_direccion', '=', 'direccion.id_direccion')
-            ->join('ciudad', 'b.id_ciudad', '=', 'ciudad.id_ciudad')
             ->orderBy('b.id_bod', 'desc')
             ->get();
         return $bodegas;
@@ -46,7 +44,7 @@ class BodegaController extends Controller
     {
         $v = $this->validate(request(), [
             'nombre_bod' => 'required',
-            'id_direccion' => 'required',
+            'direccion_bod' => 'required',
             'telef_bod' => 'required',
             'cel_bod' => 'required',
             'estado_bod' => 'required',
@@ -58,7 +56,7 @@ class BodegaController extends Controller
             $bodegas = new Bodega();
             $bodegas->id_ciudad = $request->input('id_ciudad');
             $bodegas->nombre_bod = $request->input('nombre_bod');
-            $bodegas->id_direccion = $request->input('id_direccion');
+            $bodegas->direccion_bod = $request->input('direccion_bod');
             $bodegas->telef_bod = $request->input('telef_bod');
             $bodegas->cel_bod = $request->input('cel_bod');
             $bodegas->estado_bod = $request->input('estado_bod');
@@ -105,7 +103,7 @@ class BodegaController extends Controller
     {
         $v = $this->validate(request(), [
             'nombre_bod' => 'required',
-            'id_direcion' => 'required',
+            'direccion_bod' => 'required',
             'telef_bod' => 'required',
             'cel_bod' => 'required',
             'estado_bod' => 'required',
@@ -116,7 +114,7 @@ class BodegaController extends Controller
         if ($v) {
             $id_ciudad = $request->input('id_ciudad');
             $nombre_bod = $request->input('nombre_bod');
-            $id_direcion = $request->input('id_direcion');
+            $direccion_bod = $request->input('direccion_bod');
             $telef_bod = $request->input('telef_bod');
             $cel_bod = $request->input('cel_bod');
             $estado_bod = $request->input('estado_bod');
@@ -127,7 +125,7 @@ class BodegaController extends Controller
                 ->where('id_bod', $id)
                 ->update([
                     'nombre_bod' => $nombre_bod,
-                    'id_direcion' => $id_direcion,
+                    'direccion_bod' => $direccion_bod,
                     'telef_bod' => $telef_bod,
                     'cel_bod' => $cel_bod,
                     'estado_bod' => $estado_bod,

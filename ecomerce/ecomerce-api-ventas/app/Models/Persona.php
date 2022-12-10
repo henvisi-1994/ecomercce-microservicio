@@ -18,4 +18,7 @@ class Persona extends Model
        'dni',
        'id_tipo_ident'
     ];
+    public function identificacion(){
+        return $this->hasOne(TipoIdentificacion::class, 'id_tipo_ident','id_tipo_ident');
+    }
 }

@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Persona;
+use App\Models\Cargo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PersonaController extends Controller
+class CargoController extends Controller
 {
-   /* public function __construct()
+    public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['store']);
-    }*/
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +18,8 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        //
+       $usuarios = Cargo::all();
+        return $usuarios;
     }
 
     /**
@@ -41,24 +40,22 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        $v = $this->validate(request(), [
-
-            'nombre_persona' => 'required',
-            'apellido_persona' => 'required',
-            'dni' => 'required',
-            'id_tipo_ident' => 'required'
+        $validateData = $request->validate([
+            'id_emp' => 'required',
+            'nomb_cargo' => 'required|string|max:255',
+            'observ_cargo' => 'required|string|max:255',
+            'estado_cargo' => 'required|string|max:1',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
         ]);
-        if ($v) {
-            $persona = new Persona();
-            $persona->id_tipo_ident = $request->input('id_tipo_ident');
-            $persona->nombre_persona = $request->input('nombre_persona');
-            $persona->apellido_persona	 = $request->input('apellido_persona');
-            $persona->dni = $request->input('dni');
-            $persona->save();
-            return $persona;
-        } else {
-            return back()->withInput($request->all());
-        }
+        Cargo::create([
+            'id_emp' => $validateData['id_emp'],
+            'nomb_cargo' => $validateData['nomb_cargo'],
+            'observ_cargo' => $validateData['observ_cargo'],
+            'estado_cargo' => $validateData['estado_cargo'],
+            'fecha_inicio' => $validateData['fecha_inicio'],
+            'fecha_fin' => $validateData['fecha_fin'],
+        ]);
     }
 
     /**
@@ -69,8 +66,7 @@ class PersonaController extends Controller
      */
     public function show($id)
     {
-        $persona = Persona::with('identificacion')->where('id_persona',$id)->first();
-        return $persona;
+        //
     }
 
     /**
@@ -93,9 +89,9 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('persona')
-        ->where('id_persona', $id)
-        ->update($request->all());
+        Cargo::where('id_cargo', $id)
+            ->update($request->all());
+        return;
     }
 
     /**
@@ -106,6 +102,10 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $estado_cargo = 'I';
+        DB::table('cargo')
+            ->where('id_cargo', $id)
+            ->update(['estado_cargo' => $estado_cargo]);
+        return;
     }
 }
