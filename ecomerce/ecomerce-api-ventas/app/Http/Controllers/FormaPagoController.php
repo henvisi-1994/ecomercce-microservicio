@@ -44,8 +44,8 @@ class FormaPagoController extends Controller
             'nomb_formapago' => 'required|string'
         ]);
         if ($v) {
-            $formulario = new FormaPago();
-            $formulario->create($request->all());
+            $formaPago = new FormaPago();
+            $formaPago->create($request->all());
             return;
         } else {
             return back()->withInput($request->all());

@@ -24,10 +24,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = DB::table('cliente as c')
-            ->join('empresa', 'c.id_empresa', '=', 'empresa.id_empresa')
-            ->join('persona', 'c.id_persona', '=', 'persona.id_persona')
-            ->orderBy('c.id_cliente', 'desc')
+        $clientes =Cliente::with('persona','direccion')
+            ->orderBy('id_cliente', 'desc')
             ->get();
         return $clientes;
     }
@@ -70,7 +68,8 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        $cliente = Cliente::where('id_cliente', $id)
+        $cliente = Cliente::with('persona','direccion')
+        ->where('id_cliente', $id)
         ->orwhere('id_usu', $id)
         ->first();
         return $cliente;
@@ -136,8 +135,7 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         $estado_cli = 'I';
-        DB::table('cliente')
-            ->where('id_cliente', $id)
+        Cliente::where('id_cliente', $id)
             ->update(['estado_cli' => $estado_cli]);
         return;
     }

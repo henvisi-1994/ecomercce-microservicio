@@ -21,4 +21,12 @@ class Pedido extends Model
         'id_cliente',
         'id_formapago'
     ];
+    public function cliente()
+    {
+        return $this->hasOne('App\Models\Cliente', 'id_cliente','id_cliente');
+    }
+    public function formapago()
+    {
+        return $this->hasOne('App\Models\FormaPago', 'id_formapago','id_formapago');
+    }
 }

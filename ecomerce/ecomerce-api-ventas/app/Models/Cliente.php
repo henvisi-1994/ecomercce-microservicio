@@ -20,4 +20,12 @@ class Cliente extends Model
        'id_direccion',
        'id_usu'
     ];
+    public function persona()
+    {
+        return $this->hasOne(Persona::class, 'id_persona');
+    }
+    public function direccion()
+    {
+        return $this->hasOne(Direccion::class, 'id_direccion');
+    }
 }

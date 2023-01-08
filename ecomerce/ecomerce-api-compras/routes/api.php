@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     });
     Route::prefix('productos')->group(function () {
         Route::get('/', [ProductoController::class, 'index']);
-        Route::get('/activo', [ProductoController::class, 'getProductActivos']);
+        Route::get('/activos', [ProductoController::class, 'getProductActivos']);
         Route::get('/top', [ProductoController::class, 'getProductoTop']);
         Route::get('/{id}', [ProductoController::class, 'show']);
         Route::get('/categoria/{id}', [ProductoController::class, 'getProductoCategoria']);

@@ -101,8 +101,7 @@ class ProvinciaController extends Controller
         ]);
         if ($v)
         {
-            DB::table('provincia')
-            ->where('id_provincia', $id)
+           Provincia::where('id_provincia', $id)
             ->update($request->all() );
         return;
       }
@@ -121,8 +120,7 @@ class ProvinciaController extends Controller
     public function destroy($id)
     {
         $estado_prov= 'I';
-        DB::table('provincia')
-            ->where('id_provincia', $id)
+        Provincia::where('id_provincia', $id)
             ->update(['estado_prov' => $estado_prov]
           );
         return;

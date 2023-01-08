@@ -10,7 +10,6 @@ class TipoIdentificacionController extends Controller
 {
     public function __construct()
     {
-
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +18,7 @@ class TipoIdentificacionController extends Controller
      */
     public function index()
     {
-       $tipo_identificacionnes = TipoIdentificacion::all();
+        $tipo_identificacionnes = TipoIdentificacion::all();
         return $tipo_identificacionnes;
     }
 
@@ -82,8 +81,7 @@ class TipoIdentificacionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('tipo_identificacion')
-            ->where('id_tipo_ident', $id)
+        TipoIdentificacion::where('id_tipo_ident', $id)
             ->update($request->all());
         return;
     }
@@ -97,8 +95,7 @@ class TipoIdentificacionController extends Controller
     public function destroy($id)
     {
         $estado_tipo_ident = 'I';
-        DB::table('tipo_identificacion')
-            ->where('id_tipo_ident', $id)
+        TipoIdentificacion::where('id_tipo_ident', $id)
             ->update(['estado_tipo_ident' => $estado_tipo_ident]);
         return;
     }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Envio;
+use App\Models\Cliente;
+use App\Models\DetallePedido;
 use App\Models\EnvioPedido;
 use App\Models\EstadoPedido;
 use App\Models\Pedido;
@@ -10,31 +11,23 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Nette\Utils\Strings;
-use PayPal\Api\Amount;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Transaction;
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Exception\PayPalConnectionException;
+use Srmklive\PayPal\Facades\PayPal;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
 
 class PedidoController extends Controller
 {
-    private $apiContext;
+    private $provider;
     public function __construct()
     {
-        $payPalConfig = Config::get('paypal');
-        $this->apiContext = new ApiContext(
-            new OAuthTokenCredential(
-                $payPalConfig['client_id'], // ClientID
-                $payPalConfig['sercret'] // ClientSecret
-            )
-        );
+        $this->provider =  new PayPalClient;
+
+        $this->provider = PayPal::setProvider();
+
+        $this->provider->setApiCredentials(config('paypal'));
+
+        $this->provider->setAccessToken($this->provider->getAccessToken());
     }
     /**
      * Display a listing of the resource.
@@ -156,24 +149,18 @@ class PedidoController extends Controller
         DB::table('pedido')
         ->where('id_pedido', $id)
         ->update(['estado_ped' => 'P']);
-        $pedido = DB::table('pedido')
-        ->join('forma_pago', 'pedido.id_formapago', '=', 'forma_pago.id_formapago')
-        ->where('pedido.id_pedido',$id)
+        $pedido = Pedido::with('cliente', 'forma_pago')
+        ->where('id_pedido',$id)
         ->first();
-        $detalle = DB::table('detalle_pedido')
-        ->join('producto', 'detalle_pedido.id_prod', '=', 'producto.id_prod')
-        ->where('detalle_pedido.id_pedido',$id)
+        $detalle = DetallePedido::with('pedido')
+        ->where('id_pedido',$id)
         ->get();
-        $cliente = DB::select('SELECT persona.nombre_persona,persona.apellido_persona,persona.dni,users.email,direccion.direcion from
-        cliente inner join persona on cliente.id_persona=persona.id_persona
-        inner JOIN users ON cliente.id_usu=users.id
-        INNER JOIN direccion ON cliente.id_direccion=direccion.id_direccion
-        where id_cliente = :id', ['id' => $pedido->id_cliente])[0];
+        $cliente = Cliente::with('persona','direccion')->where('id_pedido',$id)->first();
         $num_comprobante=$pedido->id_pedido;
         $email=$cliente->email;
-        $nomb_usuario=$cliente->nombre_persona.' '.$cliente->apellido_persona;
+        $nomb_usuario=$cliente->persona->nombre_persona.' '.$cliente->persona->apellido_persona;
         $credenciales = [
-            'forma_pago'=>$pedido->nomb_formapago,
+            'forma_pago'=>$pedido->forma_pago->nomb_formapago,
             'cliente' => $cliente,
             'fecha' => $pedido->fecha_registro_ped,
             'num_comprobante' => $num_comprobante,
@@ -189,59 +176,10 @@ class PedidoController extends Controller
             $msj->subject('Comprobante de Pago');
             $msj->attachData($pdf->output(),$nombre_archivo);
         });
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-        $pedido = Pedido::where('id_pedido', $id)->first();
-        $precio = $pedido->total;
-        $amount = new Amount();
-        $amount->setTotal($precio);
-        $amount->setCurrency('USD');
 
-        $transaction = new Transaction();
-        $transaction->setAmount($amount);
 
-        $callbackUrl = url('/pedido/status');
-
-        $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl($callbackUrl)->setCancelUrl($callbackUrl);
-
-        $payment = new Payment();
-
-        $payment
-            ->setIntent('sale')
-            ->setPayer($payer)
-            ->setTransactions([$transaction])
-            ->setRedirectUrls($redirectUrls);
-        try {
-            $payment->create($this->apiContext);
-            //echo $payment;
-            return redirect()->away($payment->getApprovalLink());
-        } catch (PayPalConnectionException $ex) {
-            return $ex->getData();
-        }
     }
-    public function status(Request $request)
-    {
-        $paymentid = $request->input('paymentid');
-        $payerId = $request->input('PayerID');
-        $token = $request->input('token');
-        if (!$paymentid || $payerId) {
-            return 'Pago fallido';
-        }
-        $payment = Payment::get($paymentid,$this->apiContext);
 
-        $execution = new PaymentExecution();
-        $execution->setPayerId($payerId);
-
-        $result = $payment->execute($execution,$this->apiContext);
-        $status ='';
-        if ($result->getState() === 'approved') {
-           $status ='Gracias, El pago atravez de Paypal se ha realizado correctamente';
-        }else{
-            $status ='Lo sentimos, El pago atravez de Paypal se ha podido realizar correctamente';
-        }
-        return $status;
-    }
     public function enviar($id)
     {
         DB::table('estado_pedido')
@@ -254,5 +192,46 @@ class PedidoController extends Controller
         DB::table('pedido')
             ->where('id_pedido', $id)
             ->update(['estado_ped' => 'E']);
+    }
+
+       /**
+
+     * Charge a payment and store the transaction.
+
+     *
+
+     * @param  \Illuminate\Http\Request  $request
+
+     */
+
+     public function success(Request $request)
+     {
+
+         // Once the transaction has been approved, we need to complete it.
+          if ($request->input('token') && $request->input('PayerID')) {
+
+             $order_id = $request->input('token');
+
+             $order = $this->provider->authorizePaymentOrder($order_id);
+              return view('Nes.planes.pagoexitoso');
+
+         } else {
+              return response()->json(['mensaje' => 'Transaction is declined']);
+
+         }
+
+     }
+      /**
+
+     * Error Handling.
+
+     */
+
+    public function error()
+
+    {
+
+        return 'User cancelled the payment.';
+
     }
 }

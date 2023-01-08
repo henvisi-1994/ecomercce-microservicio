@@ -18,20 +18,11 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = DB::table('producto as prod')
-            ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
-            ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-            ->orderBy("prod.id_prod", "desc")
-            ->get();
+       $productos = Producto::get();
         return  $productos;
     }
     public function getProductActivos(){
-        $productos = DB::table('producto as prod')
-        ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
-        ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-        ->where('estado_prod','A')
-        ->orderBy("prod.id_prod", "desc")
-        ->get();
+    $productos = Producto::where('estado_prod','A')->get();
         return $productos;
     }
 
@@ -132,13 +123,8 @@ return  $productos;
      */
     public function show($id)
     {
-        $productos = DB::table('producto as prod')
-            ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
-            ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
-            ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-            ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
-            ->where('prod.id_prod',$id)
-            ->orderBy("prod.id_prod", "desc")
+    $productos = Producto::where('prod.id_prod',$id)
+    ->orderBy("id_prod", "desc")
             ->first();
         return  $productos;
     }

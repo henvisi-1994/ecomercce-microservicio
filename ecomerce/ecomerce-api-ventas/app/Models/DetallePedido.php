@@ -18,4 +18,9 @@ class DetallePedido extends Model
        'cantidad',
        'total_detalle'
     ];
+
+    public function pedido()
+    {
+        return $this->hasOne(Pedido::class, 'id_pedido','id_pedido');
+    }
 }

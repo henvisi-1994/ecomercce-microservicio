@@ -18,9 +18,7 @@ class CiudadController extends Controller
      */
     public function index()
     {
-       $ciudades = DB::table('ciudad as c')
-        ->join('provincia', 'c.id_provincia', '=', 'provincia.id_provincia')
-        ->orderBy("c.id_ciudad","desc")
+       $ciudades = Ciudad::with('provincia')->orderBy("id_ciudad","desc")
         ->get();
         return $ciudades;
     }
@@ -91,8 +89,7 @@ class CiudadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::table('ciudad')
-            ->where('id_ciudad', $id)
+        Ciudad::where('id_ciudad', $id)
             ->update($request->all());
         return;
     }
@@ -106,8 +103,7 @@ class CiudadController extends Controller
     public function destroy($id)
     {
         $estado_ciudad = 'I';
-        DB::table('ciudad')
-            ->where('id_ciudad', $id)
+       Ciudad::where('id_ciudad', $id)
             ->update(['estado_ciudad' => $estado_ciudad]);
         return;
     }

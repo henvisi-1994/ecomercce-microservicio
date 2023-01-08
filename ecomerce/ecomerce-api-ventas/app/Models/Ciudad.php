@@ -17,4 +17,8 @@ class Ciudad extends Model
        'id_provincia',
        'estado_ciudad'
     ];
+    public function provincia()
+    {
+        return $this->hasOne(Provincia::class, 'id_provincia');
+    }
 }
