@@ -123,7 +123,7 @@ return  $productos;
      */
     public function show($id)
     {
-    $productos = Producto::where('prod.id_prod',$id)
+    $productos = Producto::where('id_prod',$id)
     ->orderBy("id_prod", "desc")
             ->first();
         return  $productos;
