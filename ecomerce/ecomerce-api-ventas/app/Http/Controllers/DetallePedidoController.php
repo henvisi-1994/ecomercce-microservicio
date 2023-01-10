@@ -75,8 +75,8 @@ class DetallePedidoController extends Controller
     public function show($id)
     {
         $cart = DB::table('detalle_pedido as dp')
-        ->join('pedido', 'dp.id_pedido', '=', 'pedido.id_pedido')
-        ->join('producto', 'dp.id_prod', '=', 'producto.id_prod')
+      //  ->join('pedido', 'dp.id_pedido', '=', 'pedido.id_pedido')
+     //   ->join('producto', 'dp.id_prod', '=', 'producto.id_prod')
         ->where('pedido.id_cliente',$id)
         ->where('pedido.estado_ped','I')
         ->get();
@@ -84,8 +84,8 @@ class DetallePedidoController extends Controller
     }
     public function getPedido($id){
         $detalle = DB::table('detalle_pedido as dp')
-        ->join('pedido', 'dp.id_pedido', '=', 'pedido.id_pedido')
-        ->join('producto', 'dp.id_prod', '=', 'producto.id_prod')
+       ->join('pedido', 'dp.id_pedido', '=', 'pedido.id_pedido')
+       // ->join('producto', 'dp.id_prod', '=', 'producto.id_prod')
         ->where('pedido.id_pedido',$id)
         ->get();
         return $detalle;

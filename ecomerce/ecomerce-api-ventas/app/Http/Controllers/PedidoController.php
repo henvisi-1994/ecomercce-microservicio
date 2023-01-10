@@ -11,8 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Srmklive\PayPal\Facades\PayPal;
-use Srmklive\PayPal\Services\PayPal as PayPalClient;
+//use Srmklive\PayPal\Facades\PayPal;
+//use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
 
@@ -21,13 +21,13 @@ class PedidoController extends Controller
     private $provider;
     public function __construct()
     {
-        $this->provider =  new PayPalClient;
+       // $this->provider =  new PayPalClient;
 
-        $this->provider = PayPal::setProvider();
+       // $this->provider = PayPal::setProvider();
 
-        $this->provider->setApiCredentials(config('paypal'));
+       // $this->provider->setApiCredentials(config('paypal'));
 
-        $this->provider->setAccessToken($this->provider->getAccessToken());
+     //   $this->provider->setAccessToken($this->provider->getAccessToken());
     }
     /**
      * Display a listing of the resource.
@@ -37,8 +37,8 @@ class PedidoController extends Controller
     public function index()
     {
         $productos = DB::table('pedido as ped')
-            ->join('cliente', 'ped.id_cliente', '=', 'cliente.id_cliente')
-            ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
+           // ->join('cliente', 'ped.id_cliente', '=', 'cliente.id_cliente')
+           // ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
             ->orderBy('ped.id_pedido', 'desc')
             ->get();
         return $productos;
@@ -146,7 +146,7 @@ class PedidoController extends Controller
     }
     public function Pagar($id)
     {
-        DB::table('pedido')
+     /*   DB::table('pedido')
         ->where('id_pedido', $id)
         ->update(['estado_ped' => 'P']);
         $pedido = Pedido::with('cliente', 'forma_pago')
@@ -171,12 +171,12 @@ class PedidoController extends Controller
         $pdf = PDF::loadView('comprobante_pdf', $credenciales);
         $pdf->setPaper('a4', 'portrait');
         /*->save(storage_path('app/public/comprobante/') . $nombre_archivo);*/
-        Mail::send('comprobante', $credenciales, function ($msj) use ($email, $nomb_usuario,$pdf,$nombre_archivo) {
+       /* Mail::send('comprobante', $credenciales, function ($msj) use ($email, $nomb_usuario,$pdf,$nombre_archivo) {
             $msj->to($email, $nomb_usuario);
             $msj->subject('Comprobante de Pago');
             $msj->attachData($pdf->output(),$nombre_archivo);
         });
-
+*/
 
     }
 
