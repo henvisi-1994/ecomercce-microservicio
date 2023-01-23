@@ -27,9 +27,10 @@ export class LoginComponent implements OnInit {
       if (res.is_empleado) {
         localStorage.setItem('id_empleado', res.id_empleado);
         this.router.navigate(['/admin/']);
-      } else {
+      } 
+       if(res.is_empleado){
         localStorage.setItem('id_cliente', res.id_cliente);
-        this.router.navigate(['/']);
+       this.router.navigate(['/']);
       }
       // Guardo el objeto como un string
       localStorage.setItem('user', JSON.stringify(res.User));

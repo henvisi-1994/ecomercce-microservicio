@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ventas;
 use App\Http\Controllers\Controller;
 use App\Services\Ventas\PedidoService;
 use App\Traits\ApiResponser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -45,7 +46,10 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->successResponse($this->pedidoService->store($request->all()), 201);
+        /*return response()->json([
+            'mensaje' => 'Empleado registrado con exito'
+        ]);*/
+        return $this->successResponse($this->pedidoService->store($request->all()), 200);
     }
 
     /**

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('envio', function (Blueprint $table) {
+        Schema::create('envio_pedidos', function (Blueprint $table) {
             $table->id('id_envio');
             $table->date('fecha_inicio_ped');
             $table->date('fecha_fin_ped');
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreign('ciudad_origen')->references('id_ciudad')->on('ciudad')->onDelete('cascade');
             $table->foreign('ciudad_destino')->references('id_ciudad')->on('ciudad')->onDelete('cascade');
             $table->foreign('id_pedido')->references('id_pedido')->on('pedido')->onDelete('cascade');
+             $table->timestamps();
         });
     }
 

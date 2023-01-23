@@ -62,21 +62,16 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'total' => 'required',
-            'estado_ped' => 'required|string|max:1',
-            'id_cliente' => 'required',
-            'id_formapago' => 'required',
-        ]);
+
 
         Pedido::create([
             'fecha_inicio' => Carbon::now(),
             'fecha_ult_mod' => Carbon::now(),
             'fecha_registro_ped' => Carbon::now(),
-            'total' => $validateData['total'],
-            'estado_ped' => $validateData['estado_ped'],
-            'id_cliente' => $validateData['id_cliente'],
-            'id_formapago' => $validateData['id_formapago'],
+            'total' => $request->total ,
+            'estado_ped' => $request->estado_ped,
+            'id_cliente' => $request->id_cliente,
+            'id_formapago' => $request->id_formapago,
         ]);
         $data = Pedido::latest('id_pedido')->first();
         EstadoPedido::create([

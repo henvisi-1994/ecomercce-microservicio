@@ -94,10 +94,10 @@ class ProductoController extends Controller
     }
     public function getProductoCategoria($id){
         $productos = DB::table('producto as prod')
-        ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
+        //->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
         ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
         ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-        ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
+        //->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
         ->where('prod.id_cat',$id)
         ->where('estado_prod','A')
         ->orderBy("prod.id_prod", "desc")
@@ -106,10 +106,10 @@ class ProductoController extends Controller
 }
 public function getProductoTop(){
     $productos = DB::table('producto as prod')
-    ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
+   // ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
     ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
     ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-    ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
+   // ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
     ->orderBy("prod.id_prod", "desc")
     ->where('estado_prod','A')
     ->get() ->take(10);

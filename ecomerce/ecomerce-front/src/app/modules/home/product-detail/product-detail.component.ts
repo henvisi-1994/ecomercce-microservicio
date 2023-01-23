@@ -108,6 +108,7 @@ export class ProductDetailComponent implements OnInit {
         this.saveDetallePedido(id_pedido_sotorage);
       } else {
         this.pedidoservice.savePedido(this.pedido).subscribe((res: any) => {
+          console.log(res);
           let id_pedido = res.id_pedido;
           localStorage.setItem('id_pedido', id_pedido);
           this.saveDetallePedido(id_pedido);

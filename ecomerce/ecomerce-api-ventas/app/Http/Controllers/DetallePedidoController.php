@@ -40,14 +40,9 @@ class DetallePedidoController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'id_prod' => 'required',
-            'id_pedido' => 'required',
-            'cantidad'=>'required',
-        ]);
         //$producto=Producto::where('id_prod',$request->id_prod)->first();
         $precio =0;
-        $cantidad = $validateData['cantidad'];
+        $cantidad = $request->cantidad;
       /*  if ($producto->aplicaiva_prod==1) {
             $precio = $this->calcularIVA($producto->precio_prod)* $cantidad ;
         } else {
@@ -55,8 +50,8 @@ class DetallePedidoController extends Controller
         }*/
 
         DetallePedido::create([
-            'id_prod' => $validateData['id_prod'],
-            'id_pedido' => $validateData['id_pedido'],
+            'id_prod' => $request->id_prod,
+            'id_pedido' => $request->id_pedido,
             'cantidad' => $cantidad,
             'total_detalle'=>$precio
         ]);
