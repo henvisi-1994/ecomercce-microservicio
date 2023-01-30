@@ -23,10 +23,14 @@ class Pedido extends Model
     ];
     public function cliente()
     {
-        return $this->hasOne('App\Models\Cliente', 'id_cliente','id_cliente');
+        return $this->hasOne('App\Models\Cliente', 'id_cliente','id_cliente')->with('persona');
     }
     public function formapago()
     {
         return $this->hasOne('App\Models\FormaPago', 'id_formapago','id_formapago');
+    }
+    public function detalle()
+    {
+        return $this->hasMany('App\Models\DetallePedido', 'id_pedido','id_pedido');
     }
 }

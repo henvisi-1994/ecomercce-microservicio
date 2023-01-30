@@ -36,12 +36,10 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        $productos = DB::table('pedido as ped')
-           // ->join('cliente', 'ped.id_cliente', '=', 'cliente.id_cliente')
-           // ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
-            ->orderBy('ped.id_pedido', 'desc')
+        $pedidos = Pedido::with('cliente','detalle')
+            ->orderBy('id_pedido', 'desc')
             ->get();
-        return $productos;
+        return $pedidos;
     }
 
     /**

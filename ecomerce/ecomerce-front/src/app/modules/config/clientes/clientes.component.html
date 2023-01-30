@@ -139,9 +139,9 @@
       <tbody>
         <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
         <tr *ngFor="let cliente of clientes">
-          <td>{{cliente.dni}}</td>
-          <td>{{cliente.nombre_persona}}</td>
-          <td>{{cliente.apellido_persona}}</td>
+          <td>{{cliente.persona.dni}}</td>
+          <td>{{cliente.persona.nombre_persona}}</td>
+          <td>{{cliente.persona.apellido_persona}}</td>
           <td>{{cliente.tipo_cli}}</td>
           <td>
             <div *ngIf="cliente.estado_cli=='I'" class="badge badge-danger">Inactivo</div>

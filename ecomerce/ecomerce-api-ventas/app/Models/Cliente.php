@@ -22,10 +22,10 @@ class Cliente extends Model
     ];
     public function persona()
     {
-        return $this->hasOne(Persona::class, 'id_persona');
+        return $this->hasOne(Persona::class, 'id_persona','id_persona');
     }
     public function direccion()
     {
-        return $this->hasOne(Direccion::class, 'id_direccion');
+        return $this->hasOne(Direccion::class, 'id_direccion','id_direccion');
     }
 }

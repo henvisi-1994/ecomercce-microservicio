@@ -22,7 +22,7 @@
   <tbody>
     <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
     <tr *ngFor="let pedido of pedidos">
-      <td>{{pedido.nombre_persona}} {{pedido.apellido_persona}}</td>
+      <td>{{pedido.cliente.persona.nombre_persona}} {{pedido.cliente.persona.apellido_persona}}</td>
       <td>{{pedido.fecha_inicio}}</td>
       <td>{{pedido.total}}</td>
       <td>
@@ -63,14 +63,14 @@
         </thead>
         <tbody>
           <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
-          <tr *ngFor="let producto of detallepedidos">
-            <td>{{producto.present_prod }}</td>
-            <td><img src="{{producto.imagen_prod}}" class="img-responsive" width="100" alt=""></td>
-            <td>{{producto.descripcion_prod}}</td>
-            <td>{{producto.cantidad}}</td>
-            <td *ngIf="producto.aplicaiva_prod==0">${{producto.precio_prod}}</td>
-            <td *ngIf="producto.aplicaiva_prod==1">${{calcularIVA(producto.precio_prod)}}</td>
-            <td>${{producto.total_detalle}}</td>
+          <tr *ngFor="let detalle of detallepedidos">
+            <td>{{detalle.producto.present_prod }}</td>
+            <td><img src="{{detalle.producto.imagen_prod}}" class="img-responsive" width="100" alt=""></td>
+            <td>{{detalle.producto.descripcion_prod}}</td>
+            <td>{{detalle.cantidad}}</td>
+            <td *ngIf="detalle.producto.aplicaiva_prod==0">${{detalle.producto.precio_prod}}</td>
+            <td *ngIf="detalle.producto.aplicaiva_prod==1">${{calcularIVA(detalle.producto.precio_prod)}}</td>
+            <td>${{detalle.total_detalle}}</td>
           </tr>
         </tbody>
       </table>

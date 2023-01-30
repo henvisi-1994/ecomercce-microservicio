@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Ventas;
 use App\Http\Controllers\Controller;
 use App\Services\Ventas\DetallePedidoService;
 use App\Traits\ApiResponser;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class DetallePedidoController extends Controller
 {
@@ -58,7 +60,20 @@ class DetallePedidoController extends Controller
         return $this->successResponse($this->detalle_pedido_service->show($id));
     }
     public function getPedido($id){
-        return $this->successResponse($this->detalle_pedido_service->getPedido($id));
+        $client = new Client();
+        $res = $client->request('GET', 'http://localhost:8001/api/pedido/detalle/admin/'.$id);
+        $pedidos =  json_decode($res->getBody());
+        $pedidos= collect($pedidos);
+         $pedidos->map(function ($pedido) {
+           $pedido->producto = $this->producto_pedido($pedido->id_prod);
+        });
+        return $pedidos;
+    }
+    private function producto_pedido($id){
+        $client = new Client();
+        $res = $client->request('GET', 'http://localhost:8002/api/productos/'.$id);
+        $producto =  json_decode($res->getBody());
+        return $producto;
     }
 
     /**
