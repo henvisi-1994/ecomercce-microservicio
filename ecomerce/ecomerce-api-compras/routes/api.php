@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
     Route::prefix('categorias')->group(function () {
         Route::get('/', [CategoriaController::class, 'index']);
-        Route::get('/activa', [CategoriaController::class, 'getActivas']);
+        Route::get('/activas', [CategoriaController::class, 'getActivas']);
         Route::get('/top', [CategoriaController::class, 'top']);
         Route::post('/', [CategoriaController::class, 'store']);
         Route::put('/{id}', [CategoriaController::class, 'update']);

@@ -18,11 +18,12 @@ class ProductoController extends Controller
      */
     public function index()
     {
-       $productos = Producto::get();
+        $productos = Producto::get();
         return  $productos;
     }
-    public function getProductActivos(){
-    $productos = Producto::where('estado_prod','A')->get();
+    public function getProductActivos()
+    {
+        $productos = Producto::where('estado_prod', 'A')->get();
         return $productos;
     }
 
@@ -63,7 +64,7 @@ class ProductoController extends Controller
                 $imagen = $request->file('file');
                 $path_imagen = $imagen->store('public/producto');
                 $path_imagen = str_replace("public/", "", $path_imagen);
-                $image_name = $url.'storage/'.$path_imagen;
+                $image_name = $url . 'storage/' . $path_imagen;
             }
             $producto = new Producto();
             $producto->codigo_prod =  $request->input('codigo_prod');
@@ -92,29 +93,32 @@ class ProductoController extends Controller
             return back()->withInput($request->all());
         }
     }
-    public function getProductoCategoria($id){
+    public function getProductoCategoria($id)
+    {
         $productos = DB::table('producto as prod')
-        //->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
-        ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
-        ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-        //->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
-        ->where('prod.id_cat',$id)
-        ->where('estado_prod','A')
-        ->orderBy("prod.id_prod", "desc")
-        ->get();
-    return  $productos;
-}
-public function getProductoTop(){
-    $productos = DB::table('producto as prod')
-   // ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
-    ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
-    ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
-   // ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
-    ->orderBy("prod.id_prod", "desc")
-    ->where('estado_prod','A')
-    ->get() ->take(10);
-return  $productos;
-}
+            //->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
+            ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
+            ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
+            //->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
+            ->where('prod.id_cat', $id)
+            ->where('estado_prod', 'A')
+            ->orderBy("prod.id_prod", "desc")
+            ->get();
+        return  $productos;
+    }
+
+    public function getProductoTop()
+    {
+        $productos = DB::table('producto as prod')
+            // ->join('empresa', 'prod.id_empresa', '=', 'empresa.id_empresa')
+            ->join('marca', 'prod.id_marca', '=', 'marca.id_marca')
+            ->join('categoria', 'prod.id_cat', '=', 'categoria.id_cat')
+            // ->join('bodega', 'prod.id_bod', '=', 'bodega.id_bod')
+            ->orderBy("prod.id_prod", "desc")
+            ->where('estado_prod', 'A')
+            ->get()->take(10);
+        return  $productos;
+    }
     /**
      * Display the specified resource.
      *
@@ -123,8 +127,8 @@ return  $productos;
      */
     public function show($id)
     {
-    $productos = Producto::where('id_prod',$id)
-    ->orderBy("id_prod", "desc")
+        $productos = Producto::where('id_prod', $id)
+            ->orderBy("id_prod", "desc")
             ->first();
         return  $productos;
     }
@@ -149,70 +153,70 @@ return  $productos;
      */
     public function update(Request $request, $id)
     {
-            $image_name = '';
-            $url = $request->input('url');
-            if ($request->hasFile('file')) {
-                $imagen = $request->file('file');
-                $path_imagen = $imagen->store('public/producto');
-                $path_imagen = str_replace("public/", "", $path_imagen);
-                $image_name = $url.'storage/'.$path_imagen;
-            }else{
-            $producto= Producto::where('id_prod',$id)->first();
-            $image_name=$producto->imagen_prod;
-            }
-            $codigo_prod =  $request->input('codigo_prod');
-            $codbarra_prod =  $request->input('codbarra_prod');
-            $descripcion_prod = $request->input('descripcion_prod');
-            $id_marca =  $request->input('id_marca');
-            $id_cat =  $request->input('id_cat');
-            $present_prod =  $request->input('present_prod');
-            $precio_prod =  $request->input('precio_prod');
-            $stock_prod =  $request->input('stock_prod');
-            $stockmin_prod =  $request->input('stockmin_prod');
-            $stockmax_prod =  $request->input('stockmax_prod');
-            $fechaing_prod =  $request->input('fechaing_prod');
-            $fechaelab_prod =  $request->input('fechaelab_prod');
-            $fechacad_prod =  $request->input('fechacad_prod');
-            $aplicaiva_prod =  $request->input('aplicaiva_prod');
-            $aplicaice_prod =  $request->input('aplicaice_prod');
-            $util_prod =  $request->input('util_prod');
-            $comision_prod =  $request->input('comision_prod');
-            $imagen_prod =   $image_name ;
-            $estado_prod =  $request->input('estado_prod');
-            $observ_prod =  $request->input('observ_prod');
-            DB::table('producto')
-                ->where('id_prod', $id)
-                ->update(
-                    [
-                        'codigo_prod' => $codigo_prod, 
-                        'codbarra_prod' => $codbarra_prod,
-                         'descripcion_prod' => $descripcion_prod, 
-                         'present_prod' => $present_prod, 
-                         'precio_prod' => $precio_prod,
-                        'stockmin_prod' => $stockmin_prod,
-                         'id_marca' => $id_marca, 
-                         'id_cat' => $id_cat, 
-                         'present_prod' => $present_prod,  
-                         'precio_prod' => $precio_prod,
-                        'stock_prod' => $stock_prod, 
-                         'stockmin_prod' => $stockmin_prod,
-                          'stockmax_prod' => $stockmax_prod,
-                           'stock_prod'  => $stock_prod, 
-                            'fechaing_prod' => $fechaing_prod, 
-                            'fechaelab_prod' => $fechaelab_prod,
-                         'fechacad_prod' => $fechacad_prod, 
-                         'aplicaiva_prod' => $aplicaiva_prod, 
-                         'aplicaice_prod' => $aplicaice_prod, 
-                          'util_prod' => $util_prod,
-                           'comision_prod' => $comision_prod,
-                           'imagen_prod'=>$imagen_prod,
-                        'observ_prod' => $observ_prod, 
-                        'estado_prod' => $estado_prod,
-                        'id_marca' =>$id_marca,
-                        'id_cat'=>$id_cat]
-                );
-            return $request->all();
-
+        $image_name = '';
+        $url = $request->input('url');
+        if ($request->hasFile('file')) {
+            $imagen = $request->file('file');
+            $path_imagen = $imagen->store('public/producto');
+            $path_imagen = str_replace("public/", "", $path_imagen);
+            $image_name = $url . 'storage/' . $path_imagen;
+        } else {
+            $producto = Producto::where('id_prod', $id)->first();
+            $image_name = $producto->imagen_prod;
+        }
+        $codigo_prod =  $request->input('codigo_prod');
+        $codbarra_prod =  $request->input('codbarra_prod');
+        $descripcion_prod = $request->input('descripcion_prod');
+        $id_marca =  $request->input('id_marca');
+        $id_cat =  $request->input('id_cat');
+        $present_prod =  $request->input('present_prod');
+        $precio_prod =  $request->input('precio_prod');
+        $stock_prod =  $request->input('stock_prod');
+        $stockmin_prod =  $request->input('stockmin_prod');
+        $stockmax_prod =  $request->input('stockmax_prod');
+        $fechaing_prod =  $request->input('fechaing_prod');
+        $fechaelab_prod =  $request->input('fechaelab_prod');
+        $fechacad_prod =  $request->input('fechacad_prod');
+        $aplicaiva_prod =  $request->input('aplicaiva_prod');
+        $aplicaice_prod =  $request->input('aplicaice_prod');
+        $util_prod =  $request->input('util_prod');
+        $comision_prod =  $request->input('comision_prod');
+        $imagen_prod =   $image_name;
+        $estado_prod =  $request->input('estado_prod');
+        $observ_prod =  $request->input('observ_prod');
+        DB::table('producto')
+            ->where('id_prod', $id)
+            ->update(
+                [
+                    'codigo_prod' => $codigo_prod,
+                    'codbarra_prod' => $codbarra_prod,
+                    'descripcion_prod' => $descripcion_prod,
+                    'present_prod' => $present_prod,
+                    'precio_prod' => $precio_prod,
+                    'stockmin_prod' => $stockmin_prod,
+                    'id_marca' => $id_marca,
+                    'id_cat' => $id_cat,
+                    'present_prod' => $present_prod,
+                    'precio_prod' => $precio_prod,
+                    'stock_prod' => $stock_prod,
+                    'stockmin_prod' => $stockmin_prod,
+                    'stockmax_prod' => $stockmax_prod,
+                    'stock_prod'  => $stock_prod,
+                    'fechaing_prod' => $fechaing_prod,
+                    'fechaelab_prod' => $fechaelab_prod,
+                    'fechacad_prod' => $fechacad_prod,
+                    'aplicaiva_prod' => $aplicaiva_prod,
+                    'aplicaice_prod' => $aplicaice_prod,
+                    'util_prod' => $util_prod,
+                    'comision_prod' => $comision_prod,
+                    'imagen_prod' => $imagen_prod,
+                    'observ_prod' => $observ_prod,
+                    'estado_prod' => $estado_prod,
+                    'id_marca' => $id_marca,
+                    'id_cat' => $id_cat
+                ]
+            );
+        return $request->all();
     }
 
     /**
