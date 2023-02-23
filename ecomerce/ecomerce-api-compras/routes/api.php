@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('/{id}', [ProductoController::class, 'show']);
         Route::get('/categoria/{id}', [ProductoController::class, 'getProductoCategoria']);
         Route::post('/', [ProductoController::class, 'store']);
-        Route::post('/update/{id}', [ProductoController::class, 'update']);
+        Route::put('/{id}', [ProductoController::class, 'update']);
         Route::delete('/{id}', [ProductoController::class, 'destroy']);
     });
     Route::prefix('bodegas')->group(function () {

@@ -131,7 +131,6 @@ export class ProductoComponent implements OnInit {
       this.producto.observ_prod = producto.observ_prod,
       this.producto.id_marca = producto.id_marca,
       this.producto.id_cat = producto.id_cat,
-      this.producto.id_empresa = producto.id_empresa,
       this.edit = true
     this.open(this.modal)
   }

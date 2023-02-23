@@ -1,6 +1,7 @@
 import { DetallePedidoService } from './../../../data/services/api/detalle-pedido.service';
 import { Component, OnInit } from '@angular/core';
 import { PedidoService } from '@data/services/api/pedido.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-car-shop',
@@ -34,7 +35,12 @@ export class CarShopComponent implements OnInit {
   }
   pagarPedido(id_pedido: number) {
     this.pedidoservices.pagarPedido(id_pedido).subscribe((res: any) => {
-      alert('Gracias por compar en StoreEP')
+      Swal.fire({
+        title:'Carrito de Compras',
+        text:  res.mensaje+' con id: '+res.id,
+        icon: 'success'
+      });
+      window.open(res.link, '_blank');
       this.getpedidos();
     })
   }

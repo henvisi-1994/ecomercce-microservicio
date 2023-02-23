@@ -45,7 +45,7 @@ class PedidoService
 
     public function Pagar($id)
     {
-        return $this->performRequest('GET', "/pedido/pagar/{$id}");
+        return $this->performRequest('PUT', "/pedido/pagar/{$id}");
     }
     public function status($data)
     {

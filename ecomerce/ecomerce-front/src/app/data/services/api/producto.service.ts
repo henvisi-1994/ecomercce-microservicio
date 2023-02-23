@@ -72,7 +72,6 @@ export class ProductoService {
     formUpdate.append('estado_prod', newProducto.estado_prod);
     formUpdate.append('id_marca', newProducto.id_marca.toString());
     formUpdate.append('id_cat', newProducto.id_cat.toString());
-    formUpdate.append('id_empresa', newProducto.id_empresa.toString());
     formUpdate.append('stock_prod', newProducto.stock_prod.toString());
     formUpdate.append('url', this.API_URI);
     formUpdate.append('file', file);

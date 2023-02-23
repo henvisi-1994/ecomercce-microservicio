@@ -57,7 +57,14 @@ class DetallePedidoController extends Controller
      */
     public function show($id)
     {
-        return $this->successResponse($this->detalle_pedido_service->show($id));
+        $client = new Client();
+        $res = $client->request('GET', 'http://localhost:8001/api/pedido/detalle/'.$id);
+        $pedidos =  json_decode($res->getBody());
+        $pedidos= collect($pedidos);
+         $pedidos->map(function ($pedido) {
+           $pedido->producto = $this->producto_pedido($pedido->id_prod);
+        });
+        return $pedidos;
     }
     public function getPedido($id){
         $client = new Client();

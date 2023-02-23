@@ -73,6 +73,7 @@ Route::prefix('pedido')->group(function () {
     Route::put('/pagar/{id}', [PedidoController::class, 'Pagar']);
     Route::get('/status', [PedidoController::class, 'status']);
     Route::delete('/{id}', [PedidoController::class, 'destroy']);
+    Route::post('success', [PedidoController::class, 'success'])->name('success.payment');
     Route::prefix('detalle')->group(function () {
         Route::get('admin/{id}', [DetallePedidoController::class, 'getPedido']);
         Route::get('/{id}', [DetallePedidoController::class, 'show']);

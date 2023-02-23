@@ -149,20 +149,6 @@ return  $productos;
      */
     public function update(Request $request, $id)
     {
-        $v = $this->validate(request(), [
-            'codigo_prod' => 'required|string',
-            'precio_prod' => 'required|numeric',
-            'codbarra_prod' => 'required|numeric',
-            'id_marca' => 'required',
-            'id_cat' => 'required',
-            'id_bod' => 'required',
-            'stockmin_prod' => 'required|numeric',
-            'stockmax_prod' => 'required|numeric',
-            'precio_prod' => 'required|numeric|between:0,9999.99',
-            'util_prod' => 'required|numeric|between:0,9999.99',
-            'comision_prod' => 'required|numeric|between:0,9999.99',
-        ]);
-        if ($v) {
             $image_name = '';
             $url = $request->input('url');
             if ($request->hasFile('file')) {
@@ -174,7 +160,6 @@ return  $productos;
             $producto= Producto::where('id_prod',$id)->first();
             $image_name=$producto->imagen_prod;
             }
-            $id_bod =  $request->input('id_bod');
             $codigo_prod =  $request->input('codigo_prod');
             $codbarra_prod =  $request->input('codbarra_prod');
             $descripcion_prod = $request->input('descripcion_prod');
@@ -199,16 +184,35 @@ return  $productos;
                 ->where('id_prod', $id)
                 ->update(
                     [
-                        'codigo_prod' => $codigo_prod, 'codbarra_prod' => $codbarra_prod, 'descripcion_prod' => $descripcion_prod, 'present_prod' => $present_prod, 'precio_prod' => $precio_prod,
-                        'stockmin_prod' => $stockmin_prod, 'id_marca' => $id_marca, 'id_cat' => $id_cat, 'present_prod' => $present_prod,  'precio_prod' => $precio_prod,
-                        'stock_prod' => $stock_prod,  'stockmin_prod' => $stockmin_prod,  'stockmax_prod' => $stockmax_prod, 'stock_prod'  => $stock_prod,  'fechaing_prod' => $fechaing_prod, 'fechaelab_prod' => $fechaelab_prod,
-                         'fechacad_prod' => $fechacad_prod, 'aplicaiva_prod' => $aplicaiva_prod, 'aplicaice_prod' => $aplicaice_prod,  'util_prod' => $util_prod, 'comision_prod' => $comision_prod,'imagen_prod'=>$imagen_prod,
-                        'observ_prod' => $observ_prod, 'estado_prod' => $estado_prod,'id_bod'=>$id_bod,'id_marca' =>$id_marca,'id_cat'=>$id_cat]
+                        'codigo_prod' => $codigo_prod, 
+                        'codbarra_prod' => $codbarra_prod,
+                         'descripcion_prod' => $descripcion_prod, 
+                         'present_prod' => $present_prod, 
+                         'precio_prod' => $precio_prod,
+                        'stockmin_prod' => $stockmin_prod,
+                         'id_marca' => $id_marca, 
+                         'id_cat' => $id_cat, 
+                         'present_prod' => $present_prod,  
+                         'precio_prod' => $precio_prod,
+                        'stock_prod' => $stock_prod, 
+                         'stockmin_prod' => $stockmin_prod,
+                          'stockmax_prod' => $stockmax_prod,
+                           'stock_prod'  => $stock_prod, 
+                            'fechaing_prod' => $fechaing_prod, 
+                            'fechaelab_prod' => $fechaelab_prod,
+                         'fechacad_prod' => $fechacad_prod, 
+                         'aplicaiva_prod' => $aplicaiva_prod, 
+                         'aplicaice_prod' => $aplicaice_prod, 
+                          'util_prod' => $util_prod,
+                           'comision_prod' => $comision_prod,
+                           'imagen_prod'=>$imagen_prod,
+                        'observ_prod' => $observ_prod, 
+                        'estado_prod' => $estado_prod,
+                        'id_marca' =>$id_marca,
+                        'id_cat'=>$id_cat]
                 );
-            return;
-        } else {
-            return back()->withInput($request->all());
-        }
+            return $request->all();
+
     }
 
     /**
