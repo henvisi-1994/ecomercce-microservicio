@@ -37,6 +37,7 @@ export class NavigationComponent implements OnInit {
   logout() {
     localStorage.clear();
     this.isAuth = false;
+    window.location.reload();
   }
    pulsar(e:any) {
     if (e.keyCode === 13 && !e.shiftKey) {

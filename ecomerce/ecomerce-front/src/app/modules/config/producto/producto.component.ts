@@ -1,5 +1,6 @@
 import { ProductoService } from './../../../data/services/api/producto.service';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IProducto } from './producto.metadata'
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core'
 import { BodegaService } from '@data/services/api/bodega.service';
@@ -17,31 +18,8 @@ import { environment } from 'environments/environment.prod';
 export class ProductoComponent implements OnInit {
   closeResult: string | undefined
   file: any;
+  public productoForm: FormGroup;
   image: any = '../../../../../assets/images/upload.png';
-  producto: IProducto = {
-    id_prod: 0,
-    codigo_prod: '',
-    codbarra_prod: '',
-    descripcion_prod: '',
-    present_prod: '',
-    precio_prod: 0,
-    stockmin_prod: 0,
-    stockmax_prod: 0,
-    stock_prod: 0,
-    fechaing_prod: '',
-    fechaelab_prod: '',
-    fechacad_prod: '',
-    aplicaiva_prod: '',
-    aplicaice_prod: '',
-    util_prod: 0,
-    comision_prod: 0,
-    imagen_prod: '',
-    observ_prod: '',
-    estado_prod: '',
-    id_marca: 0,
-    id_cat: 0,
-    id_empresa:  environment.id_empresa,
-  }
   productos: any = [];
 
   bodegas:any = [];
@@ -50,7 +28,30 @@ export class ProductoComponent implements OnInit {
   empresas:any = [ ]
   @ViewChild('productoModal', { static: false }) modal: ElementRef | undefined
   edit = false
-  constructor(private modalProducto: NgbModal, private productService: ProductoService,private bodegaservice:BodegaService,private categoriasaservice:CategoriaService,private empresaservice:EmpresaService, private marcaservice:MarcaService ){ }
+  constructor(private modalProducto: NgbModal, private productService: ProductoService,private bodegaservice:BodegaService,private categoriasaservice:CategoriaService,private empresaservice:EmpresaService, private marcaservice:MarcaService,private formBuilder: FormBuilder ){
+    this.productoForm = this.formBuilder.group({
+      id_prod: [''],
+      codigo_prod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)  ],
+      codbarra_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      descripcion_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      present_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      precio_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      stockmin_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      stockmax_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      stock_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      fechaing_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      fechaelab_prod: [''],
+      fechacad_prod: [''],
+      aplicaiva_prod: ['', Validators.required,Validators.minLength(1), Validators.maxLength(1)],
+      aplicaice_prod: ['',Validators.minLength(1), Validators.maxLength(1)],
+      util_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      comision_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      observ_prod: ['', Validators.required,Validators.minLength(3), Validators.maxLength(255)],
+      estado_prod: ['', Validators.required,Validators.minLength(1), Validators.maxLength(1)],
+      id_marca: ['', Validators.required],
+      id_cat: ['', Validators.required],
+    });
+   }
 
   ngOnInit(): void {
     this.getProductos();
@@ -110,27 +111,26 @@ export class ProductoComponent implements OnInit {
     }
   }
   public editProducto(producto: any) {
-    this.producto.id_prod = producto.id_prod,
-      this.producto.codigo_prod = producto.codigo_prod,
-      this.producto.estado_prod = producto.estado_prod,
-      this.producto.codbarra_prod = producto.codbarra_prod,
-      this.producto.descripcion_prod = producto.descripcion_prod,
-      this.producto.present_prod = producto.present_prod,
-      this.producto.precio_prod = producto.precio_prod,
-      this.producto.stockmin_prod = producto.stockmin_prod,
-      this.producto.stockmax_prod = producto.stockmax_prod,
-      this.producto.stock_prod = producto.stock_prod,
-      this.producto.fechaing_prod = producto.fechaing_prod,
-      this.producto.fechaelab_prod = producto.fechaelab_prod,
-      this.producto.fechacad_prod = producto.fechacad_prod,
-      this.producto.aplicaiva_prod = producto.aplicaiva_prod,
-      this.producto.aplicaice_prod = producto.aplicaice_prod,
-      this.producto.util_prod = producto.util_prod,
-      this.producto.comision_prod = producto.comision_prod,
-      this.producto.imagen_prod = producto.imagen_prod,
-      this.producto.observ_prod = producto.observ_prod,
-      this.producto.id_marca = producto.id_marca,
-      this.producto.id_cat = producto.id_cat,
+    this.productoForm.setValue({id_prod : producto.id_prod,
+      codigo_prod : producto.codigo_prod,
+      estado_prod : producto.estado_prod,
+      codbarra_prod : producto.codbarra_prod,
+      descripcion_prod : producto.descripcion_prod,
+      present_prod : producto.present_prod,
+      precio_prod : producto.precio_prod,
+      stockmin_prod :producto.stockmin_prod,
+      stockmax_prod : producto.stockmax_prod,
+      stock_prod : producto.stock_prod,
+      fechaing_prod : producto.fechaing_prod,
+      fechaelab_prod : producto.fechaelab_prod,
+      fechacad_prod : producto.fechacad_prod,
+      aplicaiva_prod : producto.aplicaiva_prod,
+      aplicaice_prod : producto.aplicaice_prod,
+      util_prod : producto.util_prod,
+      comision_prod : producto.comision_prod,
+      observ_prod : producto.observ_prod,
+      id_marca : producto.id_marca,
+      id_cat : producto.id_cat});
       this.edit = true
     this.open(this.modal)
   }
@@ -145,12 +145,17 @@ export class ProductoComponent implements OnInit {
     })
   }
   public saveProducto() {
-    this.edit ? this.updateProducto() : this.storeProducto()
+    if(!this.productoForm.valid){
+      return;
+    }
+    else{
+      (this.edit ? this.updateProducto() : this.storeProducto());
+    }
   }
   public updateProducto() {
-    this.producto.aplicaiva_prod = this.convertir(this.producto.aplicaiva_prod);
-    this.producto.aplicaice_prod = this.convertir(this.producto.aplicaice_prod);
-    this.productService.updateProducto(this.producto, this.file).subscribe((res: any) => {
+    this.productoForm.controls['aplicaiva_prod'].setValue( this.convertir(this.productoForm.controls['aplicaiva_prod'].value));
+    this.productoForm.controls['aplicaice_prod'].setValue(this.convertir(this.productoForm.controls['aplicaice_prod'].value));
+    this.productService.updateProducto(this.productoForm.value, this.file).subscribe((res: any) => {
       this.modalProducto.dismissAll();
       this.getProductos();
       this.limpiar();
@@ -162,9 +167,9 @@ export class ProductoComponent implements OnInit {
     })
   }
   public storeProducto() {
-    this.producto.aplicaiva_prod = this.convertir(this.producto.aplicaiva_prod);
-    this.producto.aplicaice_prod = this.convertir(this.producto.aplicaice_prod);
-    this.productService.saveProducto(this.producto, this.file).subscribe((res: any) => {
+    this.productoForm.controls['aplicaiva_prod'].setValue( this.convertir(this.productoForm.controls['aplicaiva_prod'].value));
+    this.productoForm.controls['aplicaice_prod'].setValue(this.convertir(this.productoForm.controls['aplicaice_prod'].value));
+    this.productService.saveProducto(this.productoForm.value, this.file).subscribe((res: any) => {
       this.modalProducto.dismissAll();
       this.getProductos();
       this.limpiar();
@@ -183,27 +188,7 @@ export class ProductoComponent implements OnInit {
     }
   }
   private limpiar() {
-    this.producto.id_prod = 0
-    this.producto.codigo_prod = ''
-    this.producto.estado_prod = ''
-    this.producto.codbarra_prod = ''
-    this.producto.descripcion_prod = ''
-    this.producto.present_prod = ''
-    this.producto.precio_prod = 0
-    this.producto.stockmin_prod = 0
-    this.producto.stockmax_prod = 0
-    this.producto.stock_prod = 0
-    this.producto.fechaing_prod = ''
-    this.producto.fechaelab_prod = ''
-    this.producto.fechacad_prod = ''
-    this.producto.aplicaiva_prod = ''
-    this.producto.aplicaice_prod = ''
-    this.producto.util_prod = 0
-    this.producto.comision_prod = 0
-    this.producto.imagen_prod = ''
-    this.producto.observ_prod = ''
-    this.producto.id_cat = 0
-    this.producto.id_marca = 0
-    this.producto.id_empresa = 0
+    this.edit = false
+    this.productoForm.reset();
   }
 }

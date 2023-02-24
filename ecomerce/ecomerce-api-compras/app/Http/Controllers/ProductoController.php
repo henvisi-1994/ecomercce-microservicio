@@ -10,6 +10,7 @@ class ProductoController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('secretKey');
     }
     /**
      * Display a listing of the resource.

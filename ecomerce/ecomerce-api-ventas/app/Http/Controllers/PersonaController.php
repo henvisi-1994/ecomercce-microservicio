@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class PersonaController extends Controller
 {
-   /* public function __construct()
+    public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['store']);
-    }*/
+        $this->middleware('secretKey');
+    }
     /**
      * Display a listing of the resource.
      *

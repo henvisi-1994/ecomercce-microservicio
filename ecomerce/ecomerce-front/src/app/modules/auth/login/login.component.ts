@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { IUser } from './../../user/user/user.metadata';
 import { AuthService } from '@data/services/api/auth.service';
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
       if (res.is_empleado) {
         localStorage.setItem('id_empleado', res.id_empleado);
         this.router.navigate(['/admin/']);
-      } 
+      }
        if(res.is_empleado){
         localStorage.setItem('id_cliente', res.id_cliente);
        this.router.navigate(['/']);
@@ -35,6 +36,12 @@ export class LoginComponent implements OnInit {
       // Guardo el objeto como un string
       localStorage.setItem('user', JSON.stringify(res.User));
 
+    },(err:any)=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Usuario o contraseña incorrectos!',
+      });
     })
   }
 

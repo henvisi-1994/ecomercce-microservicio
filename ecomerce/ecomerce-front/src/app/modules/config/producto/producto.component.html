@@ -12,6 +12,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #productoModal let-modal>
+      <form  [formGroup]="productoForm" (ngSubmit)="saveProducto()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Producto</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -19,15 +20,15 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+
           <div class="form-group">
             <label for="">Codigo</label>
-            <input type="text" name="codigo_prod" [(ngModel)]="producto.codigo_prod" class="form-control"
+            <input type="text" name="codigo_prod" formControlName="codigo_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Codigo de Barras</label>
-            <input type="text" name="codbarra_prod" [(ngModel)]="producto.codbarra_prod" class="form-control"
+            <input type="text" name="codbarra_prod" formControlName="codbarra_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
@@ -39,76 +40,76 @@
           </div>
           <div class="form-group">
             <label for="">Descripcion</label>
-            <input type="text" name="descripcion_prod" [(ngModel)]="producto.descripcion_prod" class="form-control"
+            <input type="text" name="descripcion_prod" formControlName="descripcion_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Presentación</label>
-            <input type="text" name="present_prod	" [(ngModel)]="producto.present_prod	" class="form-control"
+            <input type="text" name="present_prod" formControlName="present_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Precio</label>
-            <input type="text" name="precio_prod	" [(ngModel)]="producto.precio_prod	" class="form-control"
+            <input type="text" name="precio_prod" formControlName="precio_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Stock Minimo</label>
-            <input type="text" name="stockmin_prod	" [(ngModel)]="producto.stockmin_prod	" class="form-control"
+            <input type="text" name="stockmin_prod" formControlName="stockmin_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Stock Maximo</label>
-            <input type="text" name="stockmax_prod	" [(ngModel)]="producto.stockmax_prod	" class="form-control"
+            <input type="text" name="stockmax_prod" formControlName="stockmax_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Stock </label>
-            <input type="text" name="stock_prod	" [(ngModel)]="producto.stock_prod	" class="form-control"
+            <input type="text" name="stock_prod" formControlName="stock_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Fecha de Ingreso </label>
-            <input type="date" name="fechaing_prod	" [(ngModel)]="producto.fechaing_prod	" class="form-control"
+            <input type="date" name="fechaing_prod" formControlName="fechaing_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Fecha de Elaboración </label>
-            <input type="date" name="fechaelab_prod	" [(ngModel)]="producto.fechaelab_prod	" class="form-control"
+            <input type="date" name="fechaelab_prod" formControlName="fechaelab_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Fecha de Caducidad </label>
-            <input type="date" name="fechacad_prod	" [(ngModel)]="producto.fechacad_prod	" class="form-control"
+            <input type="date" name="fechacad_prod" formControlName="fechacad_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="aplicaiva_prod" name="aplicaiva_prod" [(ngModel)]="producto.aplicaiva_prod	">
+            <input type="checkbox" class="form-check-input" id="aplicaiva_prod" name="aplicaiva_prod" formControlName="aplicaiva_prod">
             <label class="form-check-label" for="exampleCheck1">IVA</label>
           </div>
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="aplicaice_prod" name="aplicaice_prod" [(ngModel)]="producto.aplicaice_prod	">
+            <input type="checkbox" class="form-check-input" id="aplicaice_prod" name="aplicaice_prod" formControlName="aplicaice_prod">
             <label class="form-check-label" for="exampleCheck1">ICE</label>
           </div>
           <div class="form-group">
             <label for="">Utilidad </label>
-            <input type="text" name="util_prod	" [(ngModel)]="producto.util_prod	" class="form-control"
+            <input type="text" name="util_prod	" formControlName="util_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
           <div class="form-group">
             <label for="">Comision </label>
-            <input type="text" name="comision_prod	" [(ngModel)]="producto.comision_prod	" class="form-control"
+            <input type="text" name="comision_prod	" formControlName="comision_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
           </div>
 
           <div class="form-group">
             <label for="">Observacion</label>
-            <input type="text" name="apellido" [(ngModel)]="producto.observ_prod" class="form-control"
+            <input type="text" name="apellido" formControlName="observ_prod" class="form-control"
               placeholder="Ingrese Observacion">
           </div>
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="producto" id="" [(ngModel)]="producto.estado_prod" class="form-control" >
+            <select name="producto" id="" formControlName="estado_prod" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
@@ -116,22 +117,22 @@
           </div>
           <div class="form-group">
             <label for="">Marca</label>
-            <select name="bodega" id="" [(ngModel)]="producto.id_marca" class="form-control" >
+            <select name="bodega" id="" formControlName="id_marca" class="form-control" >
               <option  *ngFor="let marca of marcas" value="{{marca.id_marca}}">{{marca.nomb_marca		}}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="">Categoria</label>
-            <select name="bodega" id="" [(ngModel)]="producto.id_cat" class="form-control" >
+            <select name="bodega" id="" formControlName="id_cat" class="form-control" >
               <option  *ngFor="let categoria of categorias" value="{{categoria.id_cat}}">{{categoria.nomb_cat	}}</option>
             </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveProducto()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+    </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">

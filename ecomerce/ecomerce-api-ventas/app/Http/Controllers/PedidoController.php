@@ -25,9 +25,9 @@ class PedidoController extends Controller
     private $autenticacion_sanbox;
     public function __construct()
     {
-       $this->paypal=config('paypal');
-       $this->autenticacion_sanbox= 'Bearer '.$this->tokenPalypal();
-
+        $this->middleware('secretKey');
+        $this->paypal=config('paypal');
+        $this->autenticacion_sanbox= 'Bearer '.$this->tokenPalypal();
     }
     /**
      * Display a listing of the resource.

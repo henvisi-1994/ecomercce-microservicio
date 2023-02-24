@@ -10,7 +10,6 @@ class ProvinciaController extends Controller
 {
     public function __construct()
     {
-        //['index','noticias']
         $this->middleware('auth:sanctum')->except(['index']);
     }
     /**

@@ -10,8 +10,7 @@ class EmpresaController extends Controller
 {
     public function __construct()
     {
-        //['index','noticias']
-        $this->middleware('auth:sanctum')->except(['index']);
+        $this->middleware('secretKey');
     }
     /**
      * Display a listing of the resource.
