@@ -6,12 +6,13 @@ use App\Models\DetallePedido;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class DetallePedidoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('secretKey');
+        $this->middleware('secretKey')->except(['show']);
     }
     /**
      * Display a listing of the resource.
@@ -44,11 +45,13 @@ class DetallePedidoController extends Controller
         //$producto=Producto::where('id_prod',$request->id_prod)->first();
         $precio =0;
         $cantidad = $request->cantidad;
-      /*  if ($producto->aplicaiva_prod==1) {
-            $precio = $this->calcularIVA($producto->precio_prod)* $cantidad ;
+        $producto = Http::withHeaders(['Authorization' =>'vuk$8L9R7C5&'])
+            ->get('http://localhost:8002/api/productos/' .$request->id_prod)->json();
+       if ( $producto['aplicaiva_prod']==1) {
+            $precio = $this->calcularIVA($producto['precio_prod'])* $cantidad ;
         } else {
-           $precio = $producto->precio_prod* $cantidad ;
-        }*/
+           $precio = $producto['precio_prod']* $cantidad ;
+        }
 
         DetallePedido::create([
             'id_prod' => $request->id_prod,

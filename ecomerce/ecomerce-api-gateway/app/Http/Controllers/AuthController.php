@@ -29,6 +29,7 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->estado_user = 'A';
+        $user->id_rol = 2;
         $user->save();
         $direccion = Http::withHeaders(['Authorization' => config('services.ventas.secret')])
             ->post('http://localhost:8001/api/direccion', [

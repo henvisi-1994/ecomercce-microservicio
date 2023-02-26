@@ -10,7 +10,7 @@ class ProductoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('secretKey');
+        $this->middleware('secretKey')->except(['show']);;
     }
     /**
      * Display a listing of the resource.

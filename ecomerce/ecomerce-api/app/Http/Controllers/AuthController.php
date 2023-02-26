@@ -36,7 +36,8 @@ class AuthController extends Controller
             'name' => $username,
             'email' => $validateData['email'],
             'password' => Hash::make($validateData['password']),
-            'estado_user'=>'A'
+            'estado_user'=>'A',
+            'id_rol'=>2
         ]);
         $usuario = User::latest('id')->first();
         $direccion = new Direcion();
