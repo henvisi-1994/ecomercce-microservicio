@@ -12,6 +12,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #cargoModal let-modal>
+      <form [formGroup]="cargoForm" (ngSubmit)="saveCargo()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Cargo</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -19,41 +20,41 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+
           <div class="form-group">
             <label for="">Nombre</label>
-            <input type="text" name="nomb_cargo" [(ngModel)]="cargo.nomb_cargo" class="form-control"
+            <input type="text" name="nomb_cargo" formControlName="nomb_cargo" class="form-control"
               placeholder="Ingrese nombre de la cargo">
           </div>
           <div class="form-group">
             <label for="">Observacion</label>
-            <input type="text" name="apellido" [(ngModel)]="cargo.observ_cargo" class="form-control"
+            <input type="text" name="apellido" formControlName="observ_cargo" class="form-control"
               placeholder="Ingrese Observacion">
           </div>
           <div class="form-group">
             <label for="">Fecha de Inicio</label>
-            <input type="date" name="fechaini_cargo" [(ngModel)]="cargo.fecha_inicio" class="form-control"
+            <input type="date" name="fechaini_cargo" formControlName="fecha_inicio" class="form-control"
               placeholder="Ingrese fecha de inicio">
           </div>
           <div class="form-group">
             <label for="">Fecha de Fin</label>
-            <input type="date" name="fechafin_cargo" [(ngModel)]="cargo.fecha_fin" class="form-control"
+            <input type="date" name="fechafin_cargo" formControlName="fecha_fin" class="form-control"
               placeholder="Ingrese fecha de fin">
           </div>
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="cargo" id="" [(ngModel)]="cargo.estado_cargo" class="form-control" >
+            <select name="cargo" id="" formControlName="estado_cargo" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveCargo()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+    </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">

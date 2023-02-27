@@ -7,6 +7,7 @@ import { IBodega } from './bodega.metadata';
 import { CiudadService } from '@data/services/api/ciudad.service';
 import { DireccionService } from '@data/services/api/direccion.service';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-bodega',
   templateUrl: './bodega.component.html',
@@ -14,24 +15,27 @@ import Swal from 'sweetalert2';
 })
 export class BodegaComponent implements OnInit {
   closeResult: string | undefined;
-  bodega: IBodega = {
-    id_bod: 0,
-    nombre_bod: '',
-    estado_bod: '',
-    telef_bod: '',
-    cel_bod: '',
-    nomb_contac_bod: '',
-    fechaini_bod: '',
-    fechafin_bod: '',
-    id_ciudad: 0,
-    direccion_bod: '',
-  };
+  public bodegaForm: FormGroup;
   bodegas: any = [];
   ciudades: any = [];
   direcciones: any = [];
   @ViewChild('bodegaModal', { static: false }) modal: ElementRef | undefined;
   edit = false;
-  constructor(private modalBodega: NgbModal, private bodegaservice: BodegaService, private ciudadservice: CiudadService, private direccionesservice: DireccionService) { }
+  constructor(private modalBodega: NgbModal, private bodegaservice: BodegaService, private ciudadservice: CiudadService, private direccionesservice: DireccionService, private formBuilder: FormBuilder ) {
+    this.bodegaForm = this.formBuilder.group({
+      id_bod: [''],
+      nombre_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      estado_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      telef_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      cel_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      nomb_contac_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      fechaini_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      fechafin_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      id_ciudad: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      direccion_bod: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+    });
+
+   }
 
   ngOnInit(): void {
     this.getBodegas();
@@ -66,19 +70,21 @@ export class BodegaComponent implements OnInit {
     }
   }
   public editBodega(bodega: any) {
-    this.bodega.id_bod = bodega.id_bod;
-    this.bodega.nombre_bod = bodega.nombre_bod;
-    this.bodega.estado_bod = bodega.estado_bod,
-      this.bodega.telef_bod = bodega.telef_bod;
-    this.bodega.cel_bod = bodega.cel_bod;
-    this.bodega.nomb_contac_bod = bodega.nomb_contac_bod;
-    this.bodega.fechaini_bod = bodega.fechaini_bod;
-    this.bodega.fechafin_bod = bodega.fechafin_bod;
-    this.bodega.id_ciudad = bodega.id_ciudad;
-    this.bodega.direccion_bod = bodega.dirreccion_bod;
-    this.edit = true;
-    this.open(this.modal);
-  }
+    this.bodegaForm.setValue({id_bod : bodega.id_bod,
+    nombre_bod : bodega.nombre_bod,
+    estado_bod : bodega.estado_bod,
+    telef_bod : bodega.telef_bod,
+    cel_bod : bodega.cel_bod,
+    nomb_contac_bod : bodega.nomb_contac_bod,
+    fechaini_bod :bodega.fechaini_bod,
+    fechafin_bod : bodega.fechafin_bod,
+    id_ciudad : bodega.id_ciudad,
+    direccion_bod : bodega.dirreccion_bod,
+
+  })
+  this.edit = true;
+  this.open(this.modal);
+}
   public borrarBodega(id_bod: number) {
     this.bodegaservice.deleteBodega(id_bod).subscribe((res: any) => {
       this.modalBodega.dismissAll();
@@ -90,7 +96,7 @@ export class BodegaComponent implements OnInit {
     (this.edit ? this.updateBodega() : this.storeBodega());
   }
   public updateBodega() {
-    this.bodegaservice.updateBodega(this.bodega).subscribe((res: any) => {
+    this.bodegaservice.updateBodega(this.bodegaForm.value).subscribe((res: any) => {
       this.modalBodega.dismissAll();
       this.getBodegas();
       this.limpiar();
@@ -102,7 +108,7 @@ export class BodegaComponent implements OnInit {
     })
   }
   public storeBodega() {
-    this.bodegaservice.saveBodega(this.bodega).subscribe((res: any) => {
+    this.bodegaservice.saveBodega(this.bodegaForm.value).subscribe((res: any) => {
       this.modalBodega.dismissAll();
       this.getBodegas();
       this.limpiar();
@@ -114,16 +120,8 @@ export class BodegaComponent implements OnInit {
     })
   }
   private limpiar() {
-    this.bodega.id_bod = 0;
-    this.bodega.nombre_bod = '';
-    this.bodega.estado_bod = '',
-      this.bodega.telef_bod = '';
-    this.bodega.cel_bod = '';
-    this.bodega.nomb_contac_bod = '';
-    this.bodega.fechaini_bod = '';
-    this.bodega.fechafin_bod = '';
-    this.bodega.id_ciudad = 0;
-    this.bodega.direccion_bod = '';
+    this.bodegaForm.reset();
+    this.edit = false;
   }
 
 }

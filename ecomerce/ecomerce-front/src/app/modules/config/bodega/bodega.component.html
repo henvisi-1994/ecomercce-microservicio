@@ -12,6 +12,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #bodegaModal let-modal>
+      <form  [formGroup]="bodegaForm" (ngSubmit)="saveBodega()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Bodega</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -19,62 +20,61 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
           <div class="form-group">
             <label for="">Nombre</label>
-            <input type="text" name="nombre_bod" [(ngModel)]="bodega.nombre_bod" class="form-control"
+            <input type="text" name="nombre_bod" formControlName="nombre_bod" class="form-control"
               placeholder="Ingrese nombre de la bodega">
           </div>
           <div class="form-group">
             <label for="">Telefono</label>
-            <input type="text" name="telef_bod" [(ngModel)]="bodega.telef_bod" class="form-control"
+            <input type="text" name="telef_bod" formControlName="telef_bod" class="form-control"
               placeholder="Ingrese telefono">
           </div>
           <div class="form-group">
             <label for="">Celular</label>
-            <input type="text" name="cel_bod" [(ngModel)]="bodega.cel_bod" class="form-control"
+            <input type="text" name="cel_bod" formControlName="cel_bod" class="form-control"
               placeholder="Ingrese numero de celular">
           </div>
           <div class="form-group">
             <label for="">Nombre de Contacto</label>
-            <input type="text" name="nomb_contac_bod" [(ngModel)]="bodega.nomb_contac_bod" class="form-control"
+            <input type="text" name="nomb_contac_bod" formControlName="nomb_contac_bod" class="form-control"
               placeholder="Ingrese nombre de contacto de bodega">
           </div>
           <div class="form-group">
             <label for="">Fecha de Inicio</label>
-            <input type="date" name="fechaini_bod" [(ngModel)]="bodega.fechaini_bod" class="form-control"
+            <input type="date" name="fechaini_bod" formControlName="fechaini_bod" class="form-control"
               placeholder="Ingrese fecha de Inicio">
           </div>
           <div class="form-group">
             <label for="">Feacha de Fin</label>
-            <input type="date" name="fechafin_bod" [(ngModel)]="bodega.fechafin_bod" class="form-control"
+            <input type="date" name="fechafin_bod" formControlName="fechafin_bod" class="form-control"
               placeholder="Ingrese fecha de fin">
           </div>
           <div class="form-group">
             <label for="">Cuidad</label>
-            <select name="ciudad" id="" [(ngModel)]="bodega.id_ciudad" class="form-control" >
+            <select name="ciudad" id="" formControlName="id_ciudad" class="form-control" >
               <option  *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="">Direcion</label>
-            <input type="text" name="direccion_bod" [(ngModel)]="bodega.direccion_bod" class="form-control"
+            <input type="text" name="direccion_bod" formControlName="direccion_bod" class="form-control"
               placeholder="Ingrese direccion de bodega">
           </div>
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="estado" id="" [(ngModel)]="bodega.estado_bod" class="form-control" >
+            <select name="estado" id="" formControlName="estado_bod" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveBodega()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+    </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">

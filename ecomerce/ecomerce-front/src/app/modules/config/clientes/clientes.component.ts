@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { PaisService } from '@data/services/api/pais.service';
 import { CiudadService } from '@data/services/api/ciudad.service';
 import { UsuarioService } from '@data/services/api/usuario.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-clientes',
@@ -22,23 +23,7 @@ import { UsuarioService } from '@data/services/api/usuario.service';
 })
 export class ClientesComponent implements OnInit {
   closeResult: string | undefined;
-  cliente: ICliente = {
-    id_cliente: 0,
-    tipo_cli: '',
-    fecha_inicio: '',
-    fecha_fin: '',
-    email: '',
-    estado_cli: '',
-    id_persona: 0,
-    id_empresa: environment.id_empresa,
-    direcion: '',
-    calle: '',
-    numero: '',
-    piso: '',
-    telefono: '',
-    movil: '',
-    id_ciudad: 0
-  }
+  public clienteForm: FormGroup;
   id_pais: number = 0;
   id_provincia: number = 0;
   id_ciudad: number = 0;
@@ -71,7 +56,26 @@ export class ClientesComponent implements OnInit {
     private ciudadservice: CiudadService,
     private provinciaservice: ProvinciaService,
     private userservice: UsuarioService,
-    private tipoidentificacionservice: TipoIdentificacionService) { }
+    private tipoidentificacionservice: TipoIdentificacionService,
+    private formBuilder: FormBuilder) {
+    this.clienteForm = this.formBuilder.group({
+      id_cliente: [''],
+      tipo_cli: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      fecha_inicio: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      fecha_fin: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      email: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      estado_cli: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      id_persona: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      id_empresa: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      direcion: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      calle: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      numero: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      piso: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      telefono: ['', Validators.required, Validators.minLength(10), Validators.maxLength(15)],
+      movil: ['', Validators.required, Validators.minLength(10), Validators.maxLength(15)],
+      id_ciudad: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     this.getClientes();
@@ -139,21 +143,23 @@ export class ClientesComponent implements OnInit {
     });
     let usuario = resultUser[0];
 
-    this.cliente.id_cliente = cliente.id_cliente;
-    this.cliente.tipo_cli = cliente.tipo_cli;
-    this.cliente.fecha_inicio = cliente.fecha_inicio,
-      this.cliente.fecha_fin = cliente.fecha_fin,
-      this.cliente.estado_cli = cliente.estado_cli;
-    this.cliente.direcion = direccion.direcion;
-    this.cliente.calle = direccion.calle;
-    this.cliente.numero = direccion.numero;
-    this.cliente.piso = direccion.piso;
-    this.cliente.telefono = direccion.telefono;
-    this.cliente.movil = direccion.movil;
-    this.cliente.email = usuario.email;
+    this.clienteForm.setValue({
+      id_liente: cliente.id_cliente,
+      tipo_cli: cliente.tipo_cli,
+      fecha_inicio: cliente.fecha_inicio,
+      fecha_fin: cliente.fecha_fin,
+      estado_cli: cliente.estado_cli,
+      direcion: direccion.direcion,
+      calle: direccion.calle,
+      numero: direccion.numero,
+      piso: direccion.piso,
+      telefono: direccion.telefono,
+      movil: direccion.movil,
+      email: usuario.email,
+    });
     this.persona.nombre_persona = cliente.nombre_persona,
-      this.persona.apellido_persona = cliente.apellido_persona,
-      this.persona.id_tipo_ident = cliente.id_tipo_ident;
+    this.persona.apellido_persona = cliente.apellido_persona,
+    this.persona.id_tipo_ident = cliente.id_tipo_ident;
     this.persona.dni = cliente.dni;
     this.edit = true;
     this.open(this.modal);
@@ -170,7 +176,7 @@ export class ClientesComponent implements OnInit {
     });
   }
   actualizarCliente() {
-    this.clienteservice.updateCliente(this.cliente).subscribe((res: any) => {
+    this.clienteservice.updateCliente(this.clienteForm.value).subscribe((res: any) => {
       this.modalCliente.dismissAll();
       this.getClientes();
       this.limpiar();
@@ -188,8 +194,8 @@ export class ClientesComponent implements OnInit {
     })
   }
   saveCli(id_persona: any) {
-    this.cliente.id_persona = id_persona;
-    this.clienteservice.saveClñiente(this.cliente).subscribe((res: any) => {
+    this.clienteForm.controls['id_persona'] = id_persona;
+    this.clienteservice.saveClñiente(this.clienteForm.value).subscribe((res: any) => {
       this.modalCliente.dismissAll();
       this.getClientes();
       this.limpiar();
@@ -201,10 +207,7 @@ export class ClientesComponent implements OnInit {
     })
   }
   private limpiar() {
-    this.cliente.id_cliente = 0;
-    this.cliente.tipo_cli = "";
-    this.cliente.fecha_inicio = "",
-      this.cliente.estado_cli = "";
+    this.clienteForm.reset();
   }
   onChangePais(event: any) {
     let id_pais = event.value

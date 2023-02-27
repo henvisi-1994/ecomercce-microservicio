@@ -3,6 +3,7 @@ import { ICategoria } from './categoria.metadata';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-categoria',
@@ -11,22 +12,24 @@ import Swal from 'sweetalert2';
 })
 export class CategoriaComponent implements OnInit {
   closeResult: string | undefined;
-  categoria: ICategoria = {
-    id_cat: 0,
-    nomb_cat: '',
-    observ_cat: '',
-    estado_cat: 'I'
-  }
-  categorias:any = [];
+  public categoriaForm: FormGroup;
+  categorias: any = [];
   @ViewChild('categoriaModal', { static: false }) modal: ElementRef | undefined;
   edit = false;
-  constructor(private modalCategoria: NgbModal,private categoriasaservice:CategoriaService) { }
+  constructor(private modalCategoria: NgbModal, private categoriasaservice: CategoriaService, private formBuilder: FormBuilder) {
+    this.categoriaForm = this.formBuilder.group({
+      id_cat: [''],
+      nomb_cat: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      observ_cat: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      estado_cat: ['', Validators.required, Validators.minLength(3), Validators.maxLength(1)],
+    });
+  }
 
   ngOnInit(): void {
     this.getCategorias();
   }
-  getCategorias(){
-    this.categoriasaservice.getallCategorias().subscribe(categorias=> this.categorias=categorias);
+  getCategorias() {
+    this.categoriasaservice.getallCategorias().subscribe(categorias => this.categorias = categorias);
   }
   // Boton para abrir ventana modal
   open(content: any) {
@@ -47,10 +50,12 @@ export class CategoriaComponent implements OnInit {
     }
   }
   public editCategoria(categoria: any) {
-    this.categoria.id_cat = categoria.id_cat;
-    this.categoria.nomb_cat = categoria.nomb_cat;
-    this.categoria.observ_cat = categoria.observ_cat,
-      this.categoria.estado_cat = categoria.estado_cat;
+    this.categoriaForm.setValue({
+      id_cat: categoria.id_cat,
+      nomb_cat: categoria.nomb_cat,
+      observ_cat: categoria.observ_cat,
+      estado_cat: categoria.estado_cat
+    });
     this.edit = true;
     this.open(this.modal);
   }
@@ -65,34 +70,31 @@ export class CategoriaComponent implements OnInit {
     (this.edit ? this.updateCategoria() : this.storeCategoria());
   }
   public updateCategoria() {
-    this.categoriasaservice.updateCategoria(this.categoria).subscribe((res: any) => {
+    this.categoriasaservice.updateCategoria(this.categoriaForm.value).subscribe((res: any) => {
       this.modalCategoria.dismissAll();
       this.getCategorias();
       this.limpiar();
       Swal.fire({
-        title:'Categoria',
-        text:'Categoria Actualizada Exitosamente',
-        icon:'success'
+        title: 'Categoria',
+        text: 'Categoria Actualizada Exitosamente',
+        icon: 'success'
       });
     })
 
   }
   public storeCategoria() {
-    this.categoriasaservice.saveCategoria(this.categoria).subscribe((res: any) => {
+    this.categoriasaservice.saveCategoria(this.categoriaForm.value).subscribe((res: any) => {
       this.modalCategoria.dismissAll();
       this.getCategorias();
       this.limpiar();
       Swal.fire({
-        title:'Categoria',
-        text:'Categoria Creada Exitosamente',
-        icon:'success'
+        title: 'Categoria',
+        text: 'Categoria Creada Exitosamente',
+        icon: 'success'
       });
     })
   }
-  private limpiar(){
-    this.categoria.id_cat = 0;
-    this.categoria.nomb_cat = "";
-    this.categoria.observ_cat = "",
-      this.categoria.estado_cat = "";
+  private limpiar() {
+    this.categoriaForm.reset();
   }
 }

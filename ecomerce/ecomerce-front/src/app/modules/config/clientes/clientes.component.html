@@ -9,9 +9,10 @@
   </div><!-- /.container-fluid -->
 </div>
 <button class="btn btn-primary mb-4" (click)="open(clienteModal)">Nuevo</button>
-  <br>
-  <!—Ventana Modal -->
-    <ng-template #clienteModal let-modal>
+<br>
+<!—Ventana Modal -->
+  <ng-template #clienteModal let-modal>
+    <form [formGroup]="clienteForm" (ngSubmit)="saveCliente()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Cliente</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -19,145 +20,147 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="">Nombres</label>
-            <input type="text" name="nombre_persona" [(ngModel)]="persona.nombre_persona" class="form-control"
-              placeholder="Ingrese nombre de la cliente">
-          </div>
-          <div class="form-group">
-            <label for="">Apellidos</label>
-            <input type="text" name="apellido_persona" [(ngModel)]="persona.apellido_persona" class="form-control"
-              placeholder="Ingrese apellidos del cliente">
-          </div>
-          <div class="form-group">
-            <label for="">Tipo de Identificacion</label>
-            <select name="tipoidentificacion" id="" [(ngModel)]="persona.id_tipo_ident" class="form-control" >
-              <option  *ngFor="let tipoIdentificacion  of tiposIdentificacion" value="{{tipoIdentificacion.id_tipo_ident}}">{{tipoIdentificacion.nombre_tipo_ident}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="">Número de Identificación</label>
-            <input type="text" name="dni" [(ngModel)]="persona.dni" class="form-control"
-              placeholder="Ingrese numero de identificacion">
-          </div>
-          <div class="form-group">
-            <label for="">email</label>
-            <input type="email" name="email" [(ngModel)]="cliente.email" class="form-control"
-              placeholder="Ingrese su email">
-          </div>
-          <div class="form-group">
-            <label for="">Tipo de cliente</label>
-            <input type="text" name="tipo_cli" [(ngModel)]="cliente.tipo_cli" class="form-control"
-              placeholder="Ingrese tipo de cliente">
-          </div>
-          <div class="form-group">
-            <label for="">Pais</label>
-            <select name="pais" id="" [(ngModel)]="id_pais" class="form-control"  (change)="onChangePais($event.target)">
-              <option  *ngFor="let pais of paises" value="{{pais.id_pais}}">{{pais.nombre_pais}}</option>
-            </select>
-          </div>
-          <div *ngIf="id_pais>0" class="form-group">
-            <label for="">Provincia</label>
-            <select name="provincia" id="" [(ngModel)]="id_provincia" class="form-control"  (change)="onChangeProvincia($event.target)">
-              <option  *ngFor="let provincia of provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia	}}</option>
-            </select>
-          </div>
-          <div *ngIf="id_provincia>0" class="form-group">
-            <label for="">Ciudad</label>
-            <select name="ciudad" id="" [(ngModel)]="cliente.id_ciudad" class="form-control" >
-              <option  *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="">Direcccion</label>
-            <input type="text" name="direccion" [(ngModel)]="cliente.direcion" class="form-control"
-              placeholder="Ingrese numero de dni">
-          </div>
-          <div class="form-group">
-            <label for="">Calle principal</label>
-            <input type="text" name="calle_principal" [(ngModel)]="cliente.calle" class="form-control"
-              placeholder="Ingrese numero de dni">
-          </div>
-          <div class="form-group">
-            <label for="">Número de Calle</label>
-            <input type="text" name="num_calle" [(ngModel)]="cliente.numero" class="form-control"
-              placeholder="Ingrese numero de dni">
-          </div>
-          <div class="form-group">
-            <label for="">Piso</label>
-            <input type="text" name="piso" [(ngModel)]="cliente.piso" class="form-control"
-              placeholder="Ingrese numero de dni">
-          </div>
-          <div class="form-group">
-            <label for="">Telefono</label>
-            <input type="text" name="telefono" [(ngModel)]="cliente.telefono" class="form-control"
-              placeholder="Ingrese numero de dni">
-          </div>
-          <div class="form-group">
-            <label for="">Movil</label>
-            <input type="text" name="movil" [(ngModel)]="cliente.movil" class="form-control"
-              placeholder="Ingrese numero de dni">
-          </div>
-          <div class="form-group">
-            <label for="">Fecha de Inicio</label>
-            <input type="date" name="fechaini_cargo" [(ngModel)]="cliente.fecha_inicio" class="form-control"
-              placeholder="Ingrese fecha de inicio">
-          </div>
-          <div class="form-group">
-            <label for="">Fecha de Fin</label>
-            <input type="date" name="fechafin_cargo" [(ngModel)]="cliente.fecha_fin" class="form-control"
-              placeholder="Ingrese fecha de fin">
-          </div>
-          <div class="form-group">
-            <label for="">Estado</label>
-            <select name="estado_cli" id="" [(ngModel)]="cliente.estado_cli" class="form-control" >
-              <option value="A">Activo</option>
-              <option value="P">Pendiente</option>
-              <option value="I">Inactivo</option>
-            </select>
-          </div>
-        </form>
+
+        <div class="form-group">
+          <label for="">Nombres</label>
+          <input type="text" name="nombre_persona" [(ngModel)]="persona.nombre_persona" class="form-control"
+            placeholder="Ingrese nombre de la cliente">
+        </div>
+        <div class="form-group">
+          <label for="">Apellidos</label>
+          <input type="text" name="apellido_persona" [(ngModel)]="persona.apellido_persona" class="form-control"
+            placeholder="Ingrese apellidos del cliente">
+        </div>
+        <div class="form-group">
+          <label for="">Tipo de Identificacion</label>
+          <select name="tipoidentificacion" id="" [(ngModel)]="persona.id_tipo_ident" class="form-control">
+            <option *ngFor="let tipoIdentificacion  of tiposIdentificacion"
+              value="{{tipoIdentificacion.id_tipo_ident}}">{{tipoIdentificacion.nombre_tipo_ident}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Número de Identificación</label>
+          <input type="text" name="dni" [(ngModel)]="persona.dni" class="form-control"
+            placeholder="Ingrese numero de identificacion">
+        </div>
+        <div class="form-group">
+          <label for="">email</label>
+          <input type="email" name="email" formControlName="email" class="form-control" placeholder="Ingrese su email">
+        </div>
+        <div class="form-group">
+          <label for="">Tipo de cliente</label>
+          <input type="text" name="tipo_cli" formControlName="tipo_cli" class="form-control"
+            placeholder="Ingrese tipo de cliente">
+        </div>
+        <div class="form-group">
+          <label for="">Pais</label>
+          <select name="pais" id="" formControlName="id_pais" class="form-control"
+            (change)="onChangePais($event.target)">
+            <option *ngFor="let pais of paises" value="{{pais.id_pais}}">{{pais.nombre_pais}}</option>
+          </select>
+        </div>
+        <div *ngIf="id_pais>0" class="form-group">
+          <label for="">Provincia</label>
+          <select name="provincia" id="" formControlName="id_provincia" class="form-control"
+            (change)="onChangeProvincia($event.target)">
+            <option *ngFor="let provincia of provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia
+              }}</option>
+          </select>
+        </div>
+        <div *ngIf="id_provincia>0" class="form-group">
+          <label for="">Ciudad</label>
+          <select name="ciudad" id="" formControlName="id_ciudad" class="form-control">
+            <option *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Direcccion</label>
+          <input type="text" name="direccion" formControlName="direcion" class="form-control"
+            placeholder="Ingrese numero de dni">
+        </div>
+        <div class="form-group">
+          <label for="">Calle principal</label>
+          <input type="text" name="calle_principal" formControlName="calle" class="form-control"
+            placeholder="Ingrese numero de dni">
+        </div>
+        <div class="form-group">
+          <label for="">Número de Calle</label>
+          <input type="text" name="num_calle" formControlName="numero" class="form-control"
+            placeholder="Ingrese numero de dni">
+        </div>
+        <div class="form-group">
+          <label for="">Piso</label>
+          <input type="text" name="piso" formControlName="piso" class="form-control"
+            placeholder="Ingrese numero de dni">
+        </div>
+        <div class="form-group">
+          <label for="">Telefono</label>
+          <input type="text" name="telefono" formControlName="telefono" class="form-control"
+            placeholder="Ingrese numero de dni">
+        </div>
+        <div class="form-group">
+          <label for="">Movil</label>
+          <input type="text" name="movil" formControlName="movil" class="form-control"
+            placeholder="Ingrese numero de dni">
+        </div>
+        <div class="form-group">
+          <label for="">Fecha de Inicio</label>
+          <input type="date" name="fechaini_cargo" formControlName="fecha_inicio" class="form-control"
+            placeholder="Ingrese fecha de inicio">
+        </div>
+        <div class="form-group">
+          <label for="">Fecha de Fin</label>
+          <input type="date" name="fechafin_cargo" formControlName="fecha_fin" class="form-control"
+            placeholder="Ingrese fecha de fin">
+        </div>
+        <div class="form-group">
+          <label for="">Estado</label>
+          <select name="estado_cli" id="" formControlName="estado_cli" class="form-control">
+            <option value="A">Activo</option>
+            <option value="P">Pendiente</option>
+            <option value="I">Inactivo</option>
+          </select>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveCliente()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
-    </ng-template>
-    <!--Cierre Ventana Modal  -->
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">DNI</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Tipo de Cliente</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Opciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
-        <tr *ngFor="let cliente of clientes">
-          <td>{{cliente.persona.dni}}</td>
-          <td>{{cliente.persona.nombre_persona}}</td>
-          <td>{{cliente.persona.apellido_persona}}</td>
-          <td>{{cliente.tipo_cli}}</td>
-          <td>
-            <div *ngIf="cliente.estado_cli=='I'" class="badge badge-danger">Inactivo</div>
-            <div *ngIf="cliente.estado_cli=='P'" class="badge badge-warning">Pendiente</div>
-            <div *ngIf="cliente.estado_cli=='A'"class="badge badge-success">Activo</div>
-          </td>
-          <td>
-            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
-            <button class="btn btn-warning" (click)="editCliente(cliente)"><i class="fa fa-edit"></i></button>
-            &nbsp;
-            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
-            <button class="btn btn-danger" (click)="borrarCliente(cliente.id_cliente)"><i
-                class="fa fa-trash-alt"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
+    </form>
+  </ng-template>
+  <!--Cierre Ventana Modal  -->
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">DNI</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Tipo de Cliente</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+      <tr *ngFor="let cliente of clientes">
+        <td>{{cliente.persona.dni}}</td>
+        <td>{{cliente.persona.nombre_persona}}</td>
+        <td>{{cliente.persona.apellido_persona}}</td>
+        <td>{{cliente.tipo_cli}}</td>
+        <td>
+          <div *ngIf="cliente.estado_cli=='I'" class="badge badge-danger">Inactivo</div>
+          <div *ngIf="cliente.estado_cli=='P'" class="badge badge-warning">Pendiente</div>
+          <div *ngIf="cliente.estado_cli=='A'" class="badge badge-success">Activo</div>
+        </td>
+        <td>
+          <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+          <button class="btn btn-warning" (click)="editCliente(cliente)"><i class="fa fa-edit"></i></button>
+          &nbsp;
+          <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+          <button class="btn btn-danger" (click)="borrarCliente(cliente.id_cliente)"><i
+              class="fa fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

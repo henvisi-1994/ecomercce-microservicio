@@ -6,6 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ICargo } from './cargo.metadata'
 import { CargoService } from '@data/services/api/cargo.service'
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cargo',
@@ -13,21 +14,23 @@ import Swal from 'sweetalert2';
   styleUrls: ['./cargo.component.css'],
 })
 export class CargoComponent implements OnInit {
-  closeResult: string | undefined
-  cargo: ICargo = {
-    id_cargo: 0,
-    id_emp:  environment.id_empresa,
-    nomb_cargo: '',
-    observ_cargo: '',
-    estado_cargo: '',
-    fecha_inicio: '',
-    fecha_fin: '',
-  }
-  cargos:any = [];
-  empresas:any = [];
+  closeResult: string | undefined;
+  public cargoForm: FormGroup;
+  cargos: any = [];
+  empresas: any = [];
   @ViewChild('cargoModal', { static: false }) modal: ElementRef | undefined
   edit = false
-  constructor(private modalCargo: NgbModal, private cargoservice:CargoService, private empresaservice:EmpresaService) {}
+  constructor(private modalCargo: NgbModal, private cargoservice: CargoService, private empresaservice: EmpresaService, private formBuilder: FormBuilder) {
+    this.cargoForm = this.formBuilder.group({
+      id_cargo: [''],
+      id_emp: environment.id_empresa,
+      nomb_cargo: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      observ_cargo: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      estado_cargo: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      fecha_inicio: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+      fecha_fin: ['', Validators.required, Validators.minLength(3), Validators.maxLength(255)],
+    });
+  }
 
   ngOnInit(): void {
     this.getCargos();
@@ -36,8 +39,8 @@ export class CargoComponent implements OnInit {
   getCargos() {
     this.cargoservice.getallCargos().subscribe(cargos => this.cargos = cargos);
   }
-  getEmpresas(){
-    this.empresaservice.getallEmpresas().subscribe(empresas=> this.empresas=empresas);
+  getEmpresas() {
+    this.empresaservice.getallEmpresas().subscribe(empresas => this.empresas = empresas);
   }
   // Boton para abrir ventana modal
   open(content: any) {
@@ -63,12 +66,14 @@ export class CargoComponent implements OnInit {
     }
   }
   public editCargo(cargo: any) {
-    this.cargo.id_cargo = cargo.id_cargo
-    this.cargo.nomb_cargo = cargo.nomb_cargo
-   this.cargo.observ_cargo = cargo.observ_cargo
-   this.cargo.fecha_inicio=cargo.fecha_inicio
-   this.cargo.fecha_fin=cargo.fecha_fin
-    this.cargo.estado_cargo = cargo.estado_cargo
+    this.cargoForm.setValue({
+      id_cargo: cargo.id_cargo,
+      nomb_cargo: cargo.nomb_cargo,
+      observ_cargo: cargo.observ_cargo,
+      fecha_inicio: cargo.fecha_inicio,
+      fecha_fin: cargo.fecha_fin,
+      estado_cargo: cargo.estado_cargo
+    });
     this.edit = true
     this.open(this.modal)
   }
@@ -83,35 +88,30 @@ export class CargoComponent implements OnInit {
     this.edit ? this.updateCargo() : this.storeCargo()
   }
   public updateCargo() {
-    this.cargoservice.updateCargo(this.cargo).subscribe((res: any) => {
+    this.cargoservice.updateCargo(this.cargoForm.value).subscribe((res: any) => {
       this.modalCargo.dismissAll();
       this.getCargos();
       this.limpiar();
       Swal.fire({
-        title:'Cargo',
-        text:'Cargo Actualizado Exitosamente',
-        icon:'success'
+        title: 'Cargo',
+        text: 'Cargo Actualizado Exitosamente',
+        icon: 'success'
       });
     })
   }
   public storeCargo() {
-    this.cargoservice.saveCargo(this.cargo).subscribe((res: any) => {
+    this.cargoservice.saveCargo(this.cargoForm.value).subscribe((res: any) => {
       this.modalCargo.dismissAll();
       this.getCargos();
       this.limpiar();
       Swal.fire({
-        title:'Cargo',
-        text:'Cargo Creado Exitosamente',
-        icon:'success'
+        title: 'Cargo',
+        text: 'Cargo Creado Exitosamente',
+        icon: 'success'
       });
     })
   }
   private limpiar() {
-    this.cargo.id_cargo = 0
-    this.cargo.nomb_cargo = ''
-    this.cargo.observ_cargo = ''
-    this.cargo.fecha_inicio=''
-    this.cargo.fecha_fin=''
-    this.cargo.estado_cargo = ''
+    this.cargoForm.reset();
   }
 }
