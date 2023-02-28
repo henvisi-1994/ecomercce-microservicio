@@ -2,6 +2,7 @@ import { EmpresaService } from './../../../data/services/api/empresa.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
 import { IEmpresa } from './empresa.metadata'
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-empresa',
@@ -10,20 +11,22 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 })
 export class EmpresaComponent implements OnInit {
   closeResult: string | undefined
-  empresa: IEmpresa = {
-    id_empresa: 0,
-    razon_social: '',
-    codigo_envio: '',
-    nombre_comercial: '',
-    ruc: '',
-    fecha_inicio: '',
-    fecha_fin: '',
-    estado_empresa: '',
-  }
   empresas:any = [ ]
   @ViewChild('empresaModal', { static: false }) modal: ElementRef | undefined
   edit = false
-  constructor(private modalEmpresa: NgbModal,private empresaservice: EmpresaService) {}
+  public empresaForm: FormGroup;
+  constructor(private modalEmpresa: NgbModal,private empresaservice: EmpresaService,private formBuilder: FormBuilder) {
+    this.empresaForm = this.formBuilder.group({
+      id_empresa: [''],
+      razon_social: ['', Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      codigo_envio: ['', Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      nombre_comercial: ['', Validators.required,Validators.minLength(1), Validators.maxLength(255)],
+      ruc: ['', Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      fecha_inicio: ['', Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      fecha_fin: ['', Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      estado_empresa: ['', Validators.required, Validators.minLength(1), Validators.maxLength(1)],
+    });
+  }
 
   ngOnInit(): void {
     this.geEmpresas();
@@ -55,14 +58,14 @@ export class EmpresaComponent implements OnInit {
     }
   }
   public editEmpresa(empresa: any) {
-    this.empresa.id_empresa = empresa.id_empresa
-    this.empresa.razon_social = empresa.razon_social
-    this.empresa.codigo_envio = empresa.codigo_envio
-    this.empresa.nombre_comercial = empresa.nombre_comercial
-    this.empresa.ruc = empresa.ruc
-    this.empresa.fecha_inicio = empresa.fecha_inicio
-    this.empresa.fecha_fin = empresa.fecha_fin
-    this.empresa.estado_empresa = empresa.estado_empresa
+    this.empresaForm.setValue({ id_empresa : empresa.id_empresa,
+    razon_social : empresa.razon_social,
+    codigo_envio : empresa.codigo_envio,
+    nombre_comercial : empresa.nombre_comercial,
+    ruc : empresa.ruc,
+    fecha_inicio : empresa.fecha_inicio,
+    fecha_fin : empresa.fecha_fin,
+    estado_empresa : empresa.estado_empresa});
     this.edit = true
     this.open(this.modal)
   }
@@ -77,27 +80,20 @@ export class EmpresaComponent implements OnInit {
     this.edit ? this.updateEmpresa() : this.storeEmpresa()
   }
   public updateEmpresa() {
-    this.empresaservice.updateEmpresa(this.empresa).subscribe((res: any) => {
+    this.empresaservice.updateEmpresa(this.empresaForm.value).subscribe((res: any) => {
       this.modalEmpresa.dismissAll();
       this.geEmpresas();
       this.limpiar();
     })
   }
   public storeEmpresa() {
-    this.empresaservice.saveEmpresa(this.empresa).subscribe((res: any) => {
+    this.empresaservice.saveEmpresa(this.empresaForm.value).subscribe((res: any) => {
       this.modalEmpresa.dismissAll();
       this.geEmpresas();
       this.limpiar();
     })
   }
   private limpiar() {
-    this.empresa.id_empresa = 0
-    this.empresa.razon_social = ''
-    this.empresa.codigo_envio =''
-    this.empresa.nombre_comercial = ''
-    this.empresa.ruc = ''
-    this.empresa.fecha_inicio =''
-    this.empresa.fecha_fin =''
-    this.empresa.estado_empresa = ''
+    this.empresaForm.reset();
   }
 }

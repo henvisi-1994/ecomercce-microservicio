@@ -4,6 +4,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { IProvincia } from './provincia.metadata';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-provincia',
@@ -12,17 +13,20 @@ import Swal from 'sweetalert2';
 })
 export class ProvinciaComponent implements OnInit {
   closeResult: string | undefined;
-  provincia:IProvincia={
-    id_provincia:0,
-    nombre_provincia:'',
-    estado_prov:'',
-    id_pais:0
-  }
+  public provinciaForm: FormGroup;
   provincias:any=[];
   paises:any = [];
   @ViewChild('provinciaModal', { static: false }) modal: ElementRef | undefined;
   edit = false;
-  constructor(private modalProvincia: NgbModal, private paisservice:PaisService, private provinciaservice:ProvinciaService) { }
+  constructor(private modalProvincia: NgbModal, private paisservice:PaisService, private provinciaservice:ProvinciaService,private formBuilder: FormBuilder) {
+    this.provinciaForm = this.formBuilder.group({
+      id_provincia: [''],
+      nombre_provincia: ['', Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      estado_prov: ['', Validators.required, Validators.minLength(1), Validators.maxLength(1)],
+      id_pais:['', Validators.required]
+    });
+
+   }
 
   ngOnInit(): void {
     this.getProvincias();
@@ -53,10 +57,10 @@ export class ProvinciaComponent implements OnInit {
       }
     }
     public editProvincia(provincia: any) {
-      this.provincia.id_provincia = provincia.id_provincia;
-      this.provincia.nombre_provincia = provincia.nombre_provincia;
-      this.provincia.id_pais=provincia.id_pais;
-      this.provincia.estado_prov = provincia.estado_prov;
+      this.provinciaForm.setValue({id_provincia : provincia.id_provincia,
+      nombre_provincia : provincia.nombre_provincia,
+      id_pais:provincia.id_pais,
+      estado_prov : provincia.estado_prov});
       this.edit = true;
       this.open(this.modal);
     }
@@ -71,7 +75,7 @@ export class ProvinciaComponent implements OnInit {
       (this.edit ? this.updateProvincia() : this.storeProvincia());
     }
     public updateProvincia() {
-      this.provinciaservice.updateProvincia(this.provincia).subscribe((res: any) => {
+      this.provinciaservice.updateProvincia(this.provinciaForm.value).subscribe((res: any) => {
         this.modalProvincia.dismissAll();
         this.getProvincias();
         this.limpiar();
@@ -84,7 +88,7 @@ export class ProvinciaComponent implements OnInit {
 
     }
     public storeProvincia() {
-      this.provinciaservice.saveProvincia(this.provincia).subscribe((res: any) => {
+      this.provinciaservice.saveProvincia(this.provinciaForm.value).subscribe((res: any) => {
         this.modalProvincia.dismissAll();
         this.getProvincias();
         this.limpiar();
@@ -96,9 +100,7 @@ export class ProvinciaComponent implements OnInit {
       })
     }
     private limpiar() {
-      this.provincia.id_provincia = 0;
-      this.provincia.nombre_provincia = "";
-      this.provincia.estado_prov = "";
+      this.provinciaForm.reset();
     }
 
 

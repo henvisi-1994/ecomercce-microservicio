@@ -2,6 +2,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #paisModal let-modal>
+      <form [formGroup]="paisForm" (ngSubmit)="savePais()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Pais</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -9,27 +10,26 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
           <div class="form-group">
             <label for="">Nombre</label>
-            <input type="text" name="nombre_pais	" [(ngModel)]="pais.nombre_pais	" class="form-control"
+            <input type="text" name="nombre_pais	" formControlName="nombre_pais	" class="form-control"
               placeholder="Ingrese nombre del pais">
           </div>
 
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="pais" id="" [(ngModel)]="pais.estado_pais" class="form-control" >
+            <select name="pais" id="" formControlName="estado_pais" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="savePais()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+      </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">

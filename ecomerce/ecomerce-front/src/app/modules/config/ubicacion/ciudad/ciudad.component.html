@@ -1,7 +1,8 @@
 <button class="btn btn-primary mb-4" (click)="open(ciudadModal)">Nuevo</button>
-  <br>
-  <!—Ventana Modal -->
-    <ng-template #ciudadModal let-modal>
+<br>
+<!—Ventana Modal -->
+  <ng-template #ciudadModal let-modal>
+    <form [formGroup]="ciudadForm" (ngSubmit)="saveCiudad()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Ciudad</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -9,60 +10,59 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="">Nombre</label>
-            <input type="text" name="nombre_ciudad	" [(ngModel)]="ciudad.nombre_ciudad	" class="form-control"
-              placeholder="Ingrese nombre de la ciudad">
-          </div>
-          <div class="form-group">
-            <label for="">Provincias</label>
-            <select name="provincias" id="" [(ngModel)]="ciudad.id_provincia" class="form-control" >
-              <option  *ngFor="let provincia of provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="">Estado</label>
-            <select name="ciudad" id="" [(ngModel)]="ciudad.estado_ciudad" class="form-control" >
-              <option value="A">Activo</option>
-              <option value="P">Pendiente</option>
-              <option value="I">Inactivo</option>
-            </select>
-          </div>
-        </form>
+        <div class="form-group">
+          <label for="">Nombre</label>
+          <input type="text" name="nombre_ciudad	" formControlName="nombre_ciudad	" class="form-control"
+            placeholder="Ingrese nombre de la ciudad">
+        </div>
+        <div class="form-group">
+          <label for="">Provincias</label>
+          <select name="provincias" id="" formControlName="id_provincia" class="form-control">
+            <option *ngFor="let provincia of provincias" value="{{provincia.id_provincia}}">
+              {{provincia.nombre_provincia}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Estado</label>
+          <select name="ciudad" id="" formControlName="estado_ciudad" class="form-control">
+            <option value="A">Activo</option>
+            <option value="P">Pendiente</option>
+            <option value="I">Inactivo</option>
+          </select>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveCiudad()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
-    </ng-template>
-    <!--Cierre Ventana Modal  -->
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Opciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
-        <tr *ngFor="let ciudad of ciudades">
-          <td>{{ciudad.nombre_ciudad}}</td>
-          <td>
-            <div *ngIf="ciudad.estado_ciudad=='I'" class="badge badge-danger">Inactivo</div>
-            <div *ngIf="ciudad.estado_ciudad=='P'" class="badge badge-warning">Pendiente</div>
-            <div *ngIf="ciudad.estado_ciudad=='A'"class="badge badge-success">Activo</div>
-          </td>
-          <td>
-            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
-            <button class="btn btn-warning" (click)="editCiudad(ciudad)"><i class="fa fa-edit"></i></button>
-            &nbsp;
-            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
-            <button class="btn btn-danger" (click)="borrarCiudad(ciudad.id_ciudad)"><i
-                class="fa fa-trash-alt"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+    </form>
+  </ng-template>
+  <!--Cierre Ventana Modal  -->
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+      <tr *ngFor="let ciudad of ciudades">
+        <td>{{ciudad.nombre_ciudad}}</td>
+        <td>
+          <div *ngIf="ciudad.estado_ciudad=='I'" class="badge badge-danger">Inactivo</div>
+          <div *ngIf="ciudad.estado_ciudad=='P'" class="badge badge-warning">Pendiente</div>
+          <div *ngIf="ciudad.estado_ciudad=='A'" class="badge badge-success">Activo</div>
+        </td>
+        <td>
+          <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+          <button class="btn btn-warning" (click)="editCiudad(ciudad)"><i class="fa fa-edit"></i></button>
+          &nbsp;
+          <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+          <button class="btn btn-danger" (click)="borrarCiudad(ciudad.id_ciudad)"><i
+              class="fa fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

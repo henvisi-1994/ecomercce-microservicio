@@ -4,6 +4,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ICiudad } from './ciudad.metadata';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ciudad',
@@ -12,17 +13,19 @@ import Swal from 'sweetalert2';
 })
 export class CiudadComponent implements OnInit {
   closeResult: string | undefined;
-  ciudad:ICiudad={
-    id_ciudad:0,
-    nombre_ciudad:'',
-    estado_ciudad:'',
-    id_provincia:0,
-  }
+  public ciudadForm: FormGroup;
   ciudades:any=[];
   provincias:any=[];
   @ViewChild('ciudadModal', { static: false }) modal: ElementRef | undefined;
   edit = false;
-  constructor(private modalCiudad: NgbModal, private ciudadservice: CiudadService, private provinciasservices:ProvinciaService) { }
+  constructor(private modalCiudad: NgbModal, private ciudadservice: CiudadService, private provinciasservices:ProvinciaService,private formBuilder: FormBuilder) {
+    this.ciudadForm = this.formBuilder.group({
+      id_ciudad: [''],
+      nombre_ciudad: ['',Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      estado_ciudad: ['', Validators.required, Validators.minLength(1), Validators.maxLength(1)],
+      id_provincia: ['', Validators.required]
+    });
+   }
 
   ngOnInit(): void {
     this.getCiudades();
@@ -53,10 +56,10 @@ export class CiudadComponent implements OnInit {
     }
   }
   public editCiudad(ciudad: any) {
-    this.ciudad.id_ciudad = ciudad.id_ciudad;
-    this.ciudad.nombre_ciudad = ciudad.nombre_ciudad;
-    this.ciudad.estado_ciudad = ciudad.estado_ciudad;
-    this.ciudad.id_provincia = ciudad.id_provincia;
+    this.ciudadForm.setValue({id_ciudad : ciudad.id_ciudad,
+    nombre_ciudad : ciudad.nombre_ciudad,
+    estado_ciudad : ciudad.estado_ciudad,
+    id_provincia : ciudad.id_provincia});
     this.edit = true;
     this.open(this.modal);
   }
@@ -71,7 +74,7 @@ export class CiudadComponent implements OnInit {
     (this.edit ? this.updateCiudad() : this.storeCiudad());
   }
   public updateCiudad() {
-    this.ciudadservice.updateCiudad(this.ciudad).subscribe((res: any) => {
+    this.ciudadservice.updateCiudad(this.ciudadForm.value).subscribe((res: any) => {
       this.modalCiudad.dismissAll();
       this.getCiudades();
       this.limpiar();
@@ -84,7 +87,7 @@ export class CiudadComponent implements OnInit {
 
   }
   public storeCiudad() {
-    this.ciudadservice.saveCiudad(this.ciudad).subscribe((res: any) => {
+    this.ciudadservice.saveCiudad(this.ciudadForm.value).subscribe((res: any) => {
       this.modalCiudad.dismissAll();
       this.getCiudades();
       this.limpiar();
@@ -96,10 +99,7 @@ export class CiudadComponent implements OnInit {
     })
   }
   private limpiar() {
-    this.ciudad.id_ciudad = 0;
-    this.ciudad.nombre_ciudad = "";
-    this.ciudad.estado_ciudad = "";
-    this.ciudad.id_provincia=0;
+    this.ciudadForm.reset();
   }
 
 }

@@ -12,6 +12,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #empresaModal let-modal>
+      <form [formGroup]="empresaForm" (ngSubmit)="saveEmpresa()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Empresa</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -19,51 +20,51 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+
           <div class="form-group">
             <label for="">Razon Social</label>
-            <input type="text" name="razon_social" [(ngModel)]="empresa.razon_social" class="form-control"
+            <input type="text" name="razon_social" formControlName="razon_social" class="form-control"
               placeholder="Ingrese nombre de la empresa">
           </div>
           <div class="form-group">
             <label for="">Codigo de Envio</label>
-            <input type="text" name="codigo_envio" [(ngModel)]="empresa.codigo_envio" class="form-control"
+            <input type="text" name="codigo_envio" formControlName="codigo_envio" class="form-control"
               placeholder="Ingrese codigo de envio">
           </div>
           <div class="form-group">
             <label for="">Nombre Comercial</label>
-            <input type="text" name="nombre_comercial" [(ngModel)]="empresa.nombre_comercial" class="form-control"
+            <input type="text" name="nombre_comercial" formControlName="nombre_comercial" class="form-control"
               placeholder="Ingrese nombre comercial">
           </div>
           <div class="form-group">
             <label for="">RUC</label>
-            <input type="text" name="ruc" [(ngModel)]="empresa.ruc" class="form-control"
+            <input type="text" name="ruc" formControlName="ruc" class="form-control"
               placeholder="Ingrese ruc de la empresa">
           </div>
           <div class="form-group">
             <label for="">Fecha de Inicio</label>
-            <input type="date" name="fecha_inicio" [(ngModel)]="empresa.fecha_inicio" class="form-control"
+            <input type="date" name="fecha_inicio" formControlName="fecha_inicio" class="form-control"
               placeholder="Ingrese fecha de inicio">
           </div>
           <div class="form-group">
             <label for="">Fecha de Fin</label>
-            <input type="date" name="fecha_fin" [(ngModel)]="empresa.fecha_fin" class="form-control"
+            <input type="date" name="fecha_fin" formControlName="fecha_fin" class="form-control"
               placeholder="Ingrese fecha de fin">
           </div>
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="empresa" id="" [(ngModel)]="empresa.estado_empresa" class="form-control" >
+            <select name="empresa" id="" formControlName="estado_empresa" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveEmpresa()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+    </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">

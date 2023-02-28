@@ -3,6 +3,7 @@ import { IMarca } from './marca.metadata';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-marca',
@@ -11,16 +12,18 @@ import Swal from 'sweetalert2';
 })
 export class MarcaComponent implements OnInit {
   closeResult: string | undefined;
-  marca: IMarca = {
-    id_marca: 0,
-    nomb_marca: '',
-    observ_marca: '',
-    estado_marca: ''
-  }
   marcas: any = [];
   @ViewChild('marcaModal', { static: false }) modal: ElementRef | undefined;
   edit = false;
-  constructor(private modalMarca: NgbModal, private marcaservice: MarcaService) { }
+  public marcaForm: FormGroup;
+  constructor(private modalMarca: NgbModal, private marcaservice: MarcaService,private formBuilder: FormBuilder) {
+    this.marcaForm = this.formBuilder.group({
+      id_marca: [''],
+      nomb_marca: ['', Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      observ_marca: ['',  Validators.minLength(1), Validators.maxLength(255)],
+      estado_marca: ['', Validators.required, Validators.minLength(1), Validators.maxLength(1)],
+    });
+  }
 
   ngOnInit(): void {
     this.geMarcas();
@@ -47,10 +50,10 @@ export class MarcaComponent implements OnInit {
     }
   }
   public editMarca(marca: any) {
-    this.marca.id_marca = marca.id_marca;
-    this.marca.nomb_marca = marca.nomb_marca;
-    this.marca.observ_marca = marca.observ_marca,
-      this.marca.estado_marca = marca.estado_marca;
+    this.marcaForm.setValue({id_marca : marca.id_marca,
+    nomb_marca : marca.nomb_marca,
+    observ_marca : marca.observ_marca,
+     estado_marca : marca.estado_marca});
     this.edit = true;
     this.open(this.modal);
   }
@@ -65,7 +68,7 @@ export class MarcaComponent implements OnInit {
     (this.edit ? this.updateMarca() : this.storeMarca());
   }
   public updateMarca() {
-    this.marcaservice.updateMarca(this.marca).subscribe((res: any) => {
+    this.marcaservice.updateMarca(this.marcaForm.value).subscribe((res: any) => {
       Swal.fire({
         title:'Marca',
         text:'Marca Actualizada Exitosamente',
@@ -78,7 +81,7 @@ export class MarcaComponent implements OnInit {
 
   }
   public storeMarca() {
-    this.marcaservice.saveMarca(this.marca).subscribe((res: any) => {
+    this.marcaservice.saveMarca(this.marcaForm.value).subscribe((res: any) => {
       Swal.fire({
         title:'Marca',
         text:'Marca Creada Exitosamente',
@@ -90,9 +93,6 @@ export class MarcaComponent implements OnInit {
     })
   }
   private limpiar() {
-    this.marca.id_marca = 0;
-    this.marca.nomb_marca = "";
-    this.marca.observ_marca = "",
-      this.marca.estado_marca = "";
+    this.marcaForm.reset();
   }
 }

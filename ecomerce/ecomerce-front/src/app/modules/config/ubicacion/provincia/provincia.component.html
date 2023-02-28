@@ -2,6 +2,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #provinciaModal let-modal>
+      <form [formGroup]="provinciaForm" (ngSubmit)="saveProvincia()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Provincia</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -9,32 +10,32 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
           <div class="form-group">
             <label for="">Nombre</label>
-            <input type="text" name="nombre_provincia	" [(ngModel)]="provincia.nombre_provincia	" class="form-control"
+            <input type="text" name="nombre_provincia	" formControlName="nombre_provincia	" class="form-control"
               placeholder="Ingrese nombre de la provincia">
           </div>
           <div class="form-group">
             <label for="">Pais</label>
-            <select name="pais" id="" [(ngModel)]="provincia.id_pais" class="form-control" >
+            <select name="pais" id="" formControlName="id_pais" class="form-control" >
               <option  *ngFor="let pais of paises" value="{{pais.id_pais}}">{{pais.nombre_pais}}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="provincia" id="" [(ngModel)]="provincia.estado_prov" class="form-control" >
+            <select name="provincia" id="" formControlName="estado_prov" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
           </div>
-        </form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveProvincia()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+    </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">

@@ -2,6 +2,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #direccionModal let-modal>
+      <form [formGroup]="direccionForm" (ngSubmit)="saveDireccion()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Direccion</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -9,57 +10,56 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
           <div class="form-group">
             <label for="">Direccion</label>
-            <input type="text" name="direcion	" [(ngModel)]="direccion.direcion	" class="form-control"
+            <input type="text" name="direcion	" formControlName="direcion	" class="form-control"
               placeholder="Ingrese nombre de la direccion">
           </div>
           <div class="form-group">
             <label for="">Calle</label>
-            <input type="text" name="calle	" [(ngModel)]="direccion.calle	" class="form-control"
+            <input type="text" name="calle	" formControlName="calle	" class="form-control"
               placeholder="Ingrese calle ">
           </div>
           <div class="form-group">
             <label for="">Numero</label>
-            <input type="text" name="numero	" [(ngModel)]="direccion.numero	" class="form-control"
+            <input type="text" name="numero	" formControlName="numero	" class="form-control"
               placeholder="Ingrese numero de la direccion">
           </div>
           <div class="form-group">
             <label for="">Piso</label>
-            <input type="text" name="piso	" [(ngModel)]="direccion.piso	" class="form-control"
+            <input type="text" name="piso	" formControlName="piso	" class="form-control"
               placeholder="Ingrese número de piso ">
           </div>
           <div class="form-group">
             <label for="">Telefono</label>
-            <input type="text" name="telefono	" [(ngModel)]="direccion.telefono	" class="form-control"
+            <input type="text" name="telefono	" formControlName="telefono	" class="form-control"
               placeholder="Ingrese telefono de la direccion">
           </div>
           <div class="form-group">
             <label for="">Movil</label>
-            <input type="text" name="movil	" [(ngModel)]="direccion.movil	" class="form-control"
+            <input type="text" name="movil	" formControlName="movil	" class="form-control"
               placeholder="Ingrese numero de movil">
           </div>
           <div class="form-group">
             <label for="">Cuidad</label>
-            <select name="ciudad" id="" [(ngModel)]="direccion.id_ciudad" class="form-control" >
+            <select name="ciudad" id="" formControlName="id_ciudad" class="form-control" >
               <option  *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="direccion" id="" [(ngModel)]="direccion.estado_direccion" class="form-control" >
+            <select name="direccion" id="" formControlName="estado_direccion" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveDireccion()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+    </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">

@@ -12,6 +12,7 @@
   <br>
   <!—Ventana Modal -->
     <ng-template #empleadoModal let-modal>
+      <form [formGroup]="empleadoForm" (ngSubmit)="saveEmpleado()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Empleado</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -19,7 +20,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
           <div class="form-group">
             <label for="">Nombres</label>
             <input type="text" name="nombre_persona" [(ngModel)]="persona.nombre_persona" class="form-control"
@@ -43,29 +43,29 @@
           </div>
           <div class="form-group">
             <label for="">email</label>
-            <input type="email" name="email" [(ngModel)]="empleado.email" class="form-control"
+            <input type="email" name="email" formControlName="empleado.email" class="form-control"
               placeholder="Ingrese su email">
           </div>
           <div class="form-group">
             <label for="">Cargo</label>
-            <select name="cargo" id="" [(ngModel)]="empleado.id_cargo" class="form-control" >
+            <select name="cargo" id="" formControlName="empleado.id_cargo" class="form-control" >
               <option  *ngFor="let cargo of cargos" value="{{cargo.id_cargo}}">{{cargo.nomb_cargo}}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="">Estado</label>
-            <select name="estado_empl" id="" [(ngModel)]="empleado.estado_empl" class="form-control" >
+            <select name="estado_empl" id="" formControlName="empleado.estado_empl" class="form-control" >
               <option value="A">Activo</option>
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
-        <button type="button" class="btn  btn-primary"(click)="saveEmpleado()">Guardar</button>
+        <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
+    </form>
     </ng-template>
     <!--Cierre Ventana Modal  -->
     <table class="table">
