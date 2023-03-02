@@ -110,6 +110,9 @@ export class ProductoComponent implements OnInit {
       return `with: ${reason}`
     }
   }
+  get f(){
+    return this.productoForm.controls;
+  }
   public editProducto(producto: any) {
     this.productoForm.setValue({id_prod : producto.id_prod,
       codigo_prod : producto.codigo_prod,

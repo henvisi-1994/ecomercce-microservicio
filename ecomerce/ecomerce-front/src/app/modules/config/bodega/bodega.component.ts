@@ -85,6 +85,9 @@ export class BodegaComponent implements OnInit {
   this.edit = true;
   this.open(this.modal);
 }
+get f(){
+  return this.bodegaForm.controls;
+}
   public borrarBodega(id_bod: number) {
     this.bodegaservice.deleteBodega(id_bod).subscribe((res: any) => {
       this.modalBodega.dismissAll();

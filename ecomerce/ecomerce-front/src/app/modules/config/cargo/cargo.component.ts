@@ -84,6 +84,9 @@ export class CargoComponent implements OnInit {
       this.limpiar();
     })
   }
+  get f(){
+    return this.cargoForm.controls;
+  }
   public saveCargo() {
     this.edit ? this.updateCargo() : this.storeCargo()
   }

@@ -87,6 +87,9 @@ export class ProvinciaComponent implements OnInit {
       })
 
     }
+    get f(){
+      return this.provinciaForm.controls;
+    }
     public storeProvincia() {
       this.provinciaservice.saveProvincia(this.provinciaForm.value).subscribe((res: any) => {
         this.modalProvincia.dismissAll();

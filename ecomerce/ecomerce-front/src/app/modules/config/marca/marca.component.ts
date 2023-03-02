@@ -31,6 +31,7 @@ export class MarcaComponent implements OnInit {
   geMarcas() {
     this.marcaservice.getallMarcas().subscribe(marcas => this.marcas = marcas);
   }
+
   // Boton para abrir ventana modal
   open(content: any) {
     this.modalMarca.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -63,6 +64,9 @@ export class MarcaComponent implements OnInit {
       this.geMarcas();
       this.limpiar();
     })
+  }
+  get f(){
+    return this.marcaForm.controls;
   }
   public saveMarca() {
     (this.edit ? this.updateMarca() : this.storeMarca());

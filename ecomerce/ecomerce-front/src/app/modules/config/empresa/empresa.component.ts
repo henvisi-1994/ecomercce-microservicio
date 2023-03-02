@@ -86,6 +86,9 @@ export class EmpresaComponent implements OnInit {
       this.limpiar();
     })
   }
+  get f(){
+    return this.empresaForm.controls;
+  }
   public storeEmpresa() {
     this.empresaservice.saveEmpresa(this.empresaForm.value).subscribe((res: any) => {
       this.modalEmpresa.dismissAll();

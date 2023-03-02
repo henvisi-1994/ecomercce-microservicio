@@ -118,6 +118,9 @@ export class EmpleadosComponent implements OnInit {
     this.edit = true;
     this.open(this.modal);
   }
+  get f(){
+    return this.empleadoForm.controls;
+  }
   public borrarEmpleado(id_empleado: number) {
     this.empleadoService.deleteEmpleado(id_empleado).subscribe((res: any) => {
       this.getEmpleados();

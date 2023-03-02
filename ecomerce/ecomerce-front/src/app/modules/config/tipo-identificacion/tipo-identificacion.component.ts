@@ -55,6 +55,9 @@ export class TipoIdentificacionComponent implements OnInit {
     this.edit = true;
     this.open(this.modal);
   }
+  get f(){
+    return this.tipoIdentificacionForm.controls;
+  }
   public borrarTipoIdentificacion(id_tipo_ident: number) {
     this.tipoidentificacionservice.deleteTipoIdentificacion(id_tipo_ident).subscribe((res: any) => {
       this.modalTipoIdentificacion.dismissAll();

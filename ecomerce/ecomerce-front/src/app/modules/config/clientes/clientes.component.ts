@@ -113,7 +113,9 @@ export class ClientesComponent implements OnInit {
   public getProvincias() {
     this.provinciaservice.getallProvinciaes().subscribe(provincias => this.provincias_data = provincias);
   }
-
+  get f(){
+    return this.clienteForm.controls;
+  }
   // Boton para abrir ventana modal
   open(content: any) {
     this.modalCliente.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {

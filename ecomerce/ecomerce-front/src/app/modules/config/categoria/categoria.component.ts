@@ -49,6 +49,9 @@ export class CategoriaComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+  get f(){
+    return this.categoriaForm.controls;
+  }
   public editCategoria(categoria: any) {
     this.categoriaForm.setValue({
       id_cat: categoria.id_cat,

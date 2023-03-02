@@ -75,6 +75,9 @@ export class DireccionComponent implements OnInit {
     this.edit = true;
     this.open(this.modal);
   }
+  get f(){
+    return this.direccionForm.controls;
+  }
   public borrarDireccion(id_direcion: number) {
     this.direccionesservice.deleteDireccion(id_direcion).subscribe((res: any) => {
       this.modalDireccion.dismissAll();

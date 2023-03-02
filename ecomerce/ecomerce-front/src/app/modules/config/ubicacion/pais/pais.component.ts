@@ -96,5 +96,8 @@ export class PaisComponent implements OnInit {
   private limpiar() {
     this.paisForm.reset();
   }
+  get f(){
+    return this.paisForm.controls;
+  }
 
 }

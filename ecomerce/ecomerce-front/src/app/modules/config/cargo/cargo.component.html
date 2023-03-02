@@ -25,6 +25,17 @@
             <label for="">Nombre</label>
             <input type="text" name="nomb_cargo" formControlName="nomb_cargo" class="form-control"
               placeholder="Ingrese nombre de la cargo">
+              <span class="text-danger" *ngIf="
+              (f['nomb_cargo'].dirty || f['nomb_cargo'].touched) &&
+              f['nomb_cargo'].errors
+            ">
+            <div [ngSwitch]="f['nomb_cargo'].value">
+              <div *ngSwitchCase="''">El nombre del Cargo es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El nombre del Cargo debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Observacion</label>
@@ -35,11 +46,33 @@
             <label for="">Fecha de Inicio</label>
             <input type="date" name="fechaini_cargo" formControlName="fecha_inicio" class="form-control"
               placeholder="Ingrese fecha de inicio">
+              <span class="text-danger" *ngIf="
+              (f['fecha_inicio'].dirty || f['fecha_inicio'].touched) &&
+              f['fecha_inicio'].errors
+            ">
+            <div [ngSwitch]="f['fecha_inicio'].value">
+              <div *ngSwitchCase="''">La fecha de inicio es Requerida</div>
+              <div *ngSwitchDefault="''">
+                La fecha de inicio Cargo debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Fecha de Fin</label>
             <input type="date" name="fechafin_cargo" formControlName="fecha_fin" class="form-control"
               placeholder="Ingrese fecha de fin">
+              <span class="text-danger" *ngIf="
+              (f['fecha_fin'].dirty || f['fecha_fin'].touched) &&
+              f['fecha_fin'].errors
+            ">
+            <div [ngSwitch]="f['fecha_fin'].value">
+              <div *ngSwitchCase="''">La fecha de fin es Requerida</div>
+              <div *ngSwitchDefault="''">
+                La fecha de fin Cargo debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Estado</label>
@@ -48,6 +81,17 @@
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['estado_cargo'].dirty || f['estado_cargo'].touched) &&
+            f['estado_cargo'].errors
+          ">
+          <div [ngSwitch]="f['estado_cargo'].value">
+            <div *ngSwitchCase="''">El estado del Cargo es Requerida</div>
+            <div *ngSwitchDefault="''">
+              El estado del Cargo  debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
       </div>
       <div class="modal-footer">

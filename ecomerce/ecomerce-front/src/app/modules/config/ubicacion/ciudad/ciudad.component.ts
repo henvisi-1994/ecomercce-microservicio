@@ -70,6 +70,9 @@ export class CiudadComponent implements OnInit {
       this.limpiar();
     })
   }
+  get f(){
+    return this.ciudadForm.controls;
+  }
   public saveCiudad() {
     (this.edit ? this.updateCiudad() : this.storeCiudad());
   }

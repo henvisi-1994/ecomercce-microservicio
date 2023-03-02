@@ -9,10 +9,10 @@
   </div><!-- /.container-fluid -->
 </div>
 <button class="btn btn-primary mb-4" (click)="open(bodegaModal)">Nuevo</button>
-  <br>
-  <!—Ventana Modal -->
-    <ng-template #bodegaModal let-modal>
-      <form  [formGroup]="bodegaForm" (ngSubmit)="saveBodega()">
+<br>
+<!—Ventana Modal -->
+  <ng-template #bodegaModal let-modal>
+    <form [formGroup]="bodegaForm" (ngSubmit)="saveBodega()">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Bodega</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -20,99 +20,196 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-            <label for="">Nombre</label>
-            <input type="text" name="nombre_bod" formControlName="nombre_bod" class="form-control"
-              placeholder="Ingrese nombre de la bodega">
+        <div class="form-group">
+          <label for="">Nombre</label>
+          <input type="text" name="nombre_bod" formControlName="nombre_bod" class="form-control"
+            placeholder="Ingrese nombre de la bodega">
+          <span class="text-danger" *ngIf="
+              (f['nombre_bod'].dirty || f['nombre_bod'].touched) &&
+              f['nombre_bod'].errors
+            ">
+            <div [ngSwitch]="f['nombre_bod'].value">
+              <div *ngSwitchCase="''">El nombre de la bodega es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El nombre de la bodega debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">Telefono</label>
+          <input type="text" name="telef_bod" formControlName="telef_bod" class="form-control"
+            placeholder="Ingrese telefono">
+          <span class="text-danger" *ngIf="
+            (f['telef_bod'].dirty || f['telef_bod'].touched) &&
+            f['telef_bod'].errors
+          ">
+            <div [ngSwitch]="f['telef_bod'].value">
+              <div *ngSwitchCase="''">El numero de telefono es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El numero de telefono debe tener maximo 13 y minimo 10 caracteres
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">Celular</label>
+          <input type="text" name="cel_bod" formControlName="cel_bod" class="form-control"
+            placeholder="Ingrese numero de celular">
+          <span class="text-danger" *ngIf="
+            (f['cel_bod'].dirty || f['cel_bod'].touched) &&
+            f['cel_bod'].errors
+          ">
+            <div [ngSwitch]="f['cel_bod'].value">
+              <div *ngSwitchCase="''">El numero de celular es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El numero de celular debe tener maximo 13 y minimo 10 caracteres
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">Nombre de Contacto</label>
+          <input type="text" name="nomb_contac_bod" formControlName="nomb_contac_bod" class="form-control"
+            placeholder="Ingrese nombre de contacto de bodega">
+            <span class="text-danger" *ngIf="
+            (f['nomb_contac_bod'].dirty || f['nomb_contac_bod'].touched) &&
+            f['nomb_contac_bod'].errors
+          ">
+            <div [ngSwitch]="f['nomb_contac_bod'].value">
+              <div *ngSwitchCase="''">El nombre del contacto de bodega es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El nombre del contacto de bodega debe tener maximo 255 y minimo 10 caracteres
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">Fecha de Inicio</label>
+          <input type="date" name="fechaini_bod" formControlName="fechaini_bod" class="form-control"
+            placeholder="Ingrese fecha de Inicio">
+            <span class="text-danger" *ngIf="
+            (f['fechaini_bod'].dirty || f['fechaini_bod'].touched) &&
+            f['fechaini_bod'].errors
+          ">
+            <div [ngSwitch]="f['fechaini_bod'].value">
+              <div *ngSwitchCase="''">La fecha de inicio de bodega es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La fecha de inicio de bodega debe tener maximo 255 y minimo 10 caracteres
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">Feacha de Fin</label>
+          <input type="date" name="fechafin_bod" formControlName="fechafin_bod" class="form-control"
+            placeholder="Ingrese fecha de fin">
+            <span class="text-danger" *ngIf="
+            (f['fechafin_bod'].dirty || f['fechafin_bod'].touched) &&
+            f['fechafin_bod'].errors
+          ">
+            <div [ngSwitch]="f['fechafin_bod'].value">
+              <div *ngSwitchCase="''">La fecha de finalizacion de bodega es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La fecha de finalizacion de bodega debe tener maximo 255 y minimo 10 caracteres
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">Cuidad</label>
+          <select name="ciudad" id="" formControlName="id_ciudad" class="form-control">
+            <option *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
+          </select>
+          <span class="text-danger" *ngIf="
+          (f['id_ciudad'].dirty || f['id_ciudad'].touched) &&
+          f['id_ciudad'].errors
+        ">
+          <div [ngSwitch]="f['id_ciudad'].value">
+            <div *ngSwitchCase="''">La ciudad deubicacion bodega es Requerido</div>
+            <div *ngSwitchDefault="''">
+              La ciudad de bodega debe tener maximo 255 cacteres
+            </div>
           </div>
-          <div class="form-group">
-            <label for="">Telefono</label>
-            <input type="text" name="telef_bod" formControlName="telef_bod" class="form-control"
-              placeholder="Ingrese telefono">
+        </span>
+        </div>
+        <div class="form-group">
+          <label for="">Direcion</label>
+          <input type="text" name="direccion_bod" formControlName="direccion_bod" class="form-control"
+            placeholder="Ingrese direccion de bodega">
+            <span class="text-danger" *ngIf="
+            (f['direccion_bod'].dirty || f['direccion_bod'].touched) &&
+            f['direccion_bod'].errors
+          ">
+            <div [ngSwitch]="f['direccion_bod'].value">
+              <div *ngSwitchCase="''">La direccion de ubicacion bodega es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La direccion de ubicacion bodega debe tener maximo 255 cacteres
+              </div>
+            </div>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="">Estado</label>
+          <select name="estado" id="" formControlName="estado_bod" class="form-control">
+            <option value="A">Activo</option>
+            <option value="P">Pendiente</option>
+            <option value="I">Inactivo</option>
+          </select>
+          <span class="text-danger" *ngIf="
+          (f['estado_bod'].dirty || f['estado_bod'].touched) &&
+          f['estado_bod'].errors
+        ">
+          <div [ngSwitch]="f['estado_bod'].value">
+            <div *ngSwitchCase="''">El estado de la bodega es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El estado de labodega debe tener maximo 255 cacteres
+            </div>
           </div>
-          <div class="form-group">
-            <label for="">Celular</label>
-            <input type="text" name="cel_bod" formControlName="cel_bod" class="form-control"
-              placeholder="Ingrese numero de celular">
-          </div>
-          <div class="form-group">
-            <label for="">Nombre de Contacto</label>
-            <input type="text" name="nomb_contac_bod" formControlName="nomb_contac_bod" class="form-control"
-              placeholder="Ingrese nombre de contacto de bodega">
-          </div>
-          <div class="form-group">
-            <label for="">Fecha de Inicio</label>
-            <input type="date" name="fechaini_bod" formControlName="fechaini_bod" class="form-control"
-              placeholder="Ingrese fecha de Inicio">
-          </div>
-          <div class="form-group">
-            <label for="">Feacha de Fin</label>
-            <input type="date" name="fechafin_bod" formControlName="fechafin_bod" class="form-control"
-              placeholder="Ingrese fecha de fin">
-          </div>
-          <div class="form-group">
-            <label for="">Cuidad</label>
-            <select name="ciudad" id="" formControlName="id_ciudad" class="form-control" >
-              <option  *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="">Direcion</label>
-            <input type="text" name="direccion_bod" formControlName="direccion_bod" class="form-control"
-              placeholder="Ingrese direccion de bodega">
-          </div>
-          <div class="form-group">
-            <label for="">Estado</label>
-            <select name="estado" id="" formControlName="estado_bod" class="form-control" >
-              <option value="A">Activo</option>
-              <option value="P">Pendiente</option>
-              <option value="I">Inactivo</option>
-            </select>
-          </div>
+        </span>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn  btn-primary" (click)="modal.close('Save click')">Cerrar</button>
         <button type="submit" class="btn  btn-primary">Guardar</button>
       </div>
     </form>
-    </ng-template>
-    <!--Cierre Ventana Modal  -->
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Celular</th>
-          <th scope="col">Contacto</th>
-          <th scope="col">Fecha de Inicio</th>
-          <th scope="col">Fecha de Fin</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Opciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
-        <tr *ngFor="let bodega of bodegas">
-          <td>{{bodega.nombre_bod}}</td>
-          <td>{{bodega.telef_bod}}</td>
-          <td>{{bodega.cel_bod}}</td>
-          <td>{{bodega.nomb_contac_bod}}</td>
-          <td>{{bodega.fecha_inicio}}</td>
-          <td>{{bodega.fecha_fin}}</td>
-          <td>
-            <div *ngIf="bodega.estado_bod=='I'" class="badge badge-danger">Inactivo</div>
-            <div *ngIf="bodega.estado_bod=='P'" class="badge badge-warning">Pendiente</div>
-            <div *ngIf="bodega.estado_bod=='A'"class="badge badge-success">Activo</div>
-          </td>
-          <td>
-            <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
-            <button class="btn btn-warning" (click)="editBodega(bodega)"><i class="fa fa-edit"></i></button>
-            &nbsp;
-            <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
-            <button class="btn btn-danger" (click)="borrarBodega(bodega.id_bod)"><i
-                class="fa fa-trash-alt"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+  </ng-template>
+  <!--Cierre Ventana Modal  -->
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Celular</th>
+        <th scope="col">Contacto</th>
+        <th scope="col">Fecha de Inicio</th>
+        <th scope="col">Fecha de Fin</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Recorre arreglo de aportes almacenándola en variable  producto desde productos -->
+      <tr *ngFor="let bodega of bodegas">
+        <td>{{bodega.nombre_bod}}</td>
+        <td>{{bodega.telef_bod}}</td>
+        <td>{{bodega.cel_bod}}</td>
+        <td>{{bodega.nomb_contac_bod}}</td>
+        <td>{{bodega.fecha_inicio}}</td>
+        <td>{{bodega.fecha_fin}}</td>
+        <td>
+          <div *ngIf="bodega.estado_bod=='I'" class="badge badge-danger">Inactivo</div>
+          <div *ngIf="bodega.estado_bod=='P'" class="badge badge-warning">Pendiente</div>
+          <div *ngIf="bodega.estado_bod=='A'" class="badge badge-success">Activo</div>
+        </td>
+        <td>
+          <!-- Envia datos de determinado producto desde arreglo a NgModel de producto -->
+          <button class="btn btn-warning" (click)="editBodega(bodega)"><i class="fa fa-edit"></i></button>
+          &nbsp;
+          <!-- Elimina producto obteniendo id desde arreglo a NgModel de producto -->
+          <button class="btn btn-danger" (click)="borrarBodega(bodega.id_bod)"><i class="fa fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

@@ -25,31 +25,97 @@
             <label for="">Razon Social</label>
             <input type="text" name="razon_social" formControlName="razon_social" class="form-control"
               placeholder="Ingrese nombre de la empresa">
+              <span class="text-danger" *ngIf="
+              (f['razon_social'].dirty || f['razon_social'].touched) &&
+              f['razon_social'].errors
+            ">
+            <div [ngSwitch]="f['razon_social'].value">
+              <div *ngSwitchCase="''">La razon social es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La razon social debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Codigo de Envio</label>
             <input type="text" name="codigo_envio" formControlName="codigo_envio" class="form-control"
               placeholder="Ingrese codigo de envio">
+              <span class="text-danger" *ngIf="
+              (f['codigo_envio'].dirty || f['codigo_envio'].touched) &&
+              f['codigo_envio'].errors
+            ">
+            <div [ngSwitch]="f['codigo_envio'].value">
+              <div *ngSwitchCase="''">El codigo de empresa es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El codigo de empresa debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Nombre Comercial</label>
             <input type="text" name="nombre_comercial" formControlName="nombre_comercial" class="form-control"
               placeholder="Ingrese nombre comercial">
+              <span class="text-danger" *ngIf="
+              (f['nombre_comercial'].dirty || f['nombre_comercial'].touched) &&
+              f['nombre_comercial'].errors
+            ">
+            <div [ngSwitch]="f['nombre_comercial'].value">
+              <div *ngSwitchCase="''">El nombre comercial es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El nombre comercial debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">RUC</label>
             <input type="text" name="ruc" formControlName="ruc" class="form-control"
               placeholder="Ingrese ruc de la empresa">
+              <span class="text-danger" *ngIf="
+              (f['ruc'].dirty || f['ruc'].touched) &&
+              f['ruc'].errors
+            ">
+            <div [ngSwitch]="f['ruc'].value">
+              <div *ngSwitchCase="''">El numero de ruc es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El numero de ruc debe ser de 13 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Fecha de Inicio</label>
             <input type="date" name="fecha_inicio" formControlName="fecha_inicio" class="form-control"
               placeholder="Ingrese fecha de inicio">
+              <span class="text-danger" *ngIf="
+              (f['fecha_inicio'].dirty || f['fecha_inicio'].touched) &&
+              f['fecha_inicio'].errors
+            ">
+            <div [ngSwitch]="f['fecha_inicio'].value">
+              <div *ngSwitchCase="''">La fecha de inicio es Requerida</div>
+              <div *ngSwitchDefault="''">
+                La fecha de inicio debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Fecha de Fin</label>
             <input type="date" name="fecha_fin" formControlName="fecha_fin" class="form-control"
               placeholder="Ingrese fecha de fin">
+              <span class="text-danger" *ngIf="
+              (f['fecha_fin'].dirty || f['fecha_fin'].touched) &&
+              f['fecha_fin'].errors
+            ">
+            <div [ngSwitch]="f['fecha_fin'].value">
+              <div *ngSwitchCase="''">La fecha de finalizacion es Requerida</div>
+              <div *ngSwitchDefault="''">
+                La fecha de finalizacion debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Estado</label>
@@ -58,6 +124,17 @@
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['estado_empresa'].dirty || f['estado_empresa'].touched) &&
+            f['estado_empresa'].errors
+          ">
+          <div [ngSwitch]="f['estado_empresa'].value">
+            <div *ngSwitchCase="''">El estado de la empresa es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El estado de la empresa debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
       </div>
       <div class="modal-footer">

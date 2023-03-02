@@ -25,6 +25,7 @@
           <label for="">Nombres</label>
           <input type="text" name="nombre_persona" [(ngModel)]="persona.nombre_persona" class="form-control"
             placeholder="Ingrese nombre de la cliente">
+
         </div>
         <div class="form-group">
           <label for="">Apellidos</label>
@@ -46,11 +47,33 @@
         <div class="form-group">
           <label for="">email</label>
           <input type="email" name="email" formControlName="email" class="form-control" placeholder="Ingrese su email">
+          <span class="text-danger" *ngIf="
+          (f['email'].dirty || f['email'].touched) &&
+          f['email'].errors
+        ">
+            <div [ngSwitch]="f['email'].value">
+              <div *ngSwitchCase="''">El email del cliente es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El email del cliente debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
         </div>
         <div class="form-group">
           <label for="">Tipo de cliente</label>
           <input type="text" name="tipo_cli" formControlName="tipo_cli" class="form-control"
             placeholder="Ingrese tipo de cliente">
+          <span class="text-danger" *ngIf="
+          (f['tipo_cli'].dirty || f['tipo_cli'].touched) &&
+          f['tipo_cli'].errors
+        ">
+            <div [ngSwitch]="f['tipo_cli'].value">
+              <div *ngSwitchCase="''">El tipo del cliente del cliente es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El tipo del cliente del cliente debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
         </div>
         <div class="form-group">
           <label for="">Pais</label>
@@ -58,6 +81,17 @@
             (change)="onChangePais($event.target)">
             <option *ngFor="let pais of paises" value="{{pais.id_pais}}">{{pais.nombre_pais}}</option>
           </select>
+          <span class="text-danger" *ngIf="
+          (f['id_pais'].dirty || f['id_pais'].touched) &&
+          f['id_pais'].errors
+        ">
+            <div [ngSwitch]="f['id_pais'].value">
+              <div *ngSwitchCase="''">El nombre del pais es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El nombre del pais debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
         </div>
         <div *ngIf="id_pais>0" class="form-group">
           <label for="">Provincia</label>
@@ -66,52 +100,162 @@
             <option *ngFor="let provincia of provincias" value="{{provincia.id_provincia}}">{{provincia.nombre_provincia
               }}</option>
           </select>
+          <span class="text-danger" *ngIf="
+          (f['id_provincia'].dirty || f['id_provincia'].touched) &&
+          f['id_provincia'].errors
+        ">
+            <div [ngSwitch]="f['id_provincia'].value">
+              <div *ngSwitchCase="''">La provincia es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La provincia debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
         </div>
         <div *ngIf="id_provincia>0" class="form-group">
           <label for="">Ciudad</label>
           <select name="ciudad" id="" formControlName="id_ciudad" class="form-control">
             <option *ngFor="let ciudad of ciudades" value="{{ciudad.id_ciudad}}">{{ciudad.nombre_ciudad}}</option>
           </select>
+          <span class="text-danger" *ngIf="
+          (f['id_ciudad'].dirty || f['id_ciudad'].touched) &&
+          f['id_ciudad'].errors
+        ">
+            <div [ngSwitch]="f['id_ciudad'].value">
+              <div *ngSwitchCase="''">La ciudad es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La ciudad debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
         </div>
         <div class="form-group">
           <label for="">Direcccion</label>
           <input type="text" name="direccion" formControlName="direcion" class="form-control"
             placeholder="Ingrese numero de dni">
+            <span class="text-danger" *ngIf="
+            (f['direcion'].dirty || f['direcion'].touched) &&
+            f['direcion'].errors
+          ">
+          <div [ngSwitch]="f['direcion'].value">
+            <div *ngSwitchCase="''">La direccion es Requerido</div>
+            <div *ngSwitchDefault="''">
+              La direccion debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Calle principal</label>
           <input type="text" name="calle_principal" formControlName="calle" class="form-control"
-            placeholder="Ingrese numero de dni">
+            placeholder="Ingrese calle principal">
+            <span class="text-danger" *ngIf="
+            (f['calle'].dirty || f['calle'].touched) &&
+            f['calle'].errors
+          ">
+          <div [ngSwitch]="f['calle'].value">
+            <div *ngSwitchCase="''">La calle del cliente es Requerido</div>
+            <div *ngSwitchDefault="''">
+              La calle del cliente debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Número de Calle</label>
           <input type="text" name="num_calle" formControlName="numero" class="form-control"
-            placeholder="Ingrese numero de dni">
+            placeholder="Ingrese numero de calle">
+            <span class="text-danger" *ngIf="
+            (f['numero'].dirty || f['numero'].touched) &&
+            f['numero'].errors
+          ">
+          <div [ngSwitch]="f['numero'].value">
+            <div *ngSwitchCase="''">El número de calle es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El número de calle debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Piso</label>
           <input type="text" name="piso" formControlName="piso" class="form-control"
-            placeholder="Ingrese numero de dni">
+            placeholder="Ingrese numero de piso">
+            <span class="text-danger" *ngIf="
+            (f['piso'].dirty || f['piso'].touched) &&
+            f['piso'].errors
+          ">
+          <div [ngSwitch]="f['piso'].value">
+            <div *ngSwitchCase="''">El número de piso es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El número de piso debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Telefono</label>
           <input type="text" name="telefono" formControlName="telefono" class="form-control"
             placeholder="Ingrese numero de dni">
+            <span class="text-danger" *ngIf="
+            (f['telefono'].dirty || f['telefono'].touched) &&
+            f['telefono'].errors
+          ">
+          <div [ngSwitch]="f['telefono'].value">
+            <div *ngSwitchCase="''">El número de telefono es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El número de telefono debe tener maximo 13 y minimo 10 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Movil</label>
           <input type="text" name="movil" formControlName="movil" class="form-control"
             placeholder="Ingrese numero de dni">
+            <span class="text-danger" *ngIf="
+            (f['telefono'].dirty || f['telefono'].touched) &&
+            f['telefono'].errors
+          ">
+          <div [ngSwitch]="f['telefono'].value">
+            <div *ngSwitchCase="''">El número de telefono es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El número de telefono debe tener maximo 13 y minimo 10 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Fecha de Inicio</label>
           <input type="date" name="fechaini_cargo" formControlName="fecha_inicio" class="form-control"
             placeholder="Ingrese fecha de inicio">
+            <span class="text-danger" *ngIf="
+            (f['fecha_inicio'].dirty || f['fecha_inicio'].touched) &&
+            f['fecha_inicio'].errors
+          ">
+          <div [ngSwitch]="f['fecha_inicio'].value">
+            <div *ngSwitchCase="''"> La fecha de inicio es Requerido</div>
+            <div *ngSwitchDefault="''">
+              La fecha de inicio debe tener maximo 13 y minimo 10 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Fecha de Fin</label>
           <input type="date" name="fechafin_cargo" formControlName="fecha_fin" class="form-control"
             placeholder="Ingrese fecha de fin">
+            <span class="text-danger" *ngIf="
+            (f['fecha_fin'].dirty || f['fecha_fin'].touched) &&
+            f['fecha_fin'].errors
+          ">
+          <div [ngSwitch]="f['fecha_fin'].value">
+            <div *ngSwitchCase="''">La fecha de finalizacion es Requerida</div>
+            <div *ngSwitchDefault="''">
+              La fecha de finalizacion debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Estado</label>
@@ -120,6 +264,17 @@
             <option value="P">Pendiente</option>
             <option value="I">Inactivo</option>
           </select>
+          <span class="text-danger" *ngIf="
+          (f['estado_cli'].dirty || f['estado_cli'].touched) &&
+          f['estado_cli'].errors
+        ">
+        <div [ngSwitch]="f['estado_cli'].value">
+          <div *ngSwitchCase="''">El estado del cliente es Requerida</div>
+          <div *ngSwitchDefault="''">
+            El estado del cliente debe tener maximo 100 caracteres
+          </div>
+        </div>
+      </span>
         </div>
 
       </div>
