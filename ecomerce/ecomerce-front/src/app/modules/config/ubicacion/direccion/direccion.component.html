@@ -14,31 +14,97 @@
             <label for="">Direccion</label>
             <input type="text" name="direcion	" formControlName="direcion	" class="form-control"
               placeholder="Ingrese nombre de la direccion">
+              <span class="text-danger" *ngIf="
+              (f['direcion'].dirty || f['direcion'].touched) &&
+              f['direcion'].errors
+            ">
+            <div [ngSwitch]="f['direcion'].value">
+              <div *ngSwitchCase="''">La direccion es Requerida</div>
+              <div *ngSwitchDefault="''">
+                La direccion del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Calle</label>
             <input type="text" name="calle	" formControlName="calle	" class="form-control"
               placeholder="Ingrese calle ">
+              <span class="text-danger" *ngIf="
+              (f['calle'].dirty || f['calle'].touched) &&
+              f['calle'].errors
+            ">
+            <div [ngSwitch]="f['calle'].value">
+              <div *ngSwitchCase="''">El nombre de calle es Requerida</div>
+              <div *ngSwitchDefault="''">
+                El nombre de la  calle  debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Numero</label>
             <input type="text" name="numero	" formControlName="numero	" class="form-control"
               placeholder="Ingrese numero de la direccion">
+              <span class="text-danger" *ngIf="
+              (f['numero'].dirty || f['numero'].touched) &&
+              f['numero'].errors
+            ">
+            <div [ngSwitch]="f['numero'].value">
+              <div *ngSwitchCase="''">El número de la dirección es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El número de la direccióndebe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Piso</label>
             <input type="text" name="piso	" formControlName="piso	" class="form-control"
               placeholder="Ingrese número de piso ">
+              <span class="text-danger" *ngIf="
+              (f['piso'].dirty || f['piso'].touched) &&
+              f['piso'].errors
+            ">
+            <div [ngSwitch]="f['piso'].value">
+              <div *ngSwitchCase="''">El número de piso es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El número de piso debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Telefono</label>
             <input type="text" name="telefono	" formControlName="telefono	" class="form-control"
               placeholder="Ingrese telefono de la direccion">
+              <span class="text-danger" *ngIf="
+              (f['telefono'].dirty || f['telefono'].touched) &&
+              f['telefono'].errors
+            ">
+            <div [ngSwitch]="f['telefono'].value">
+              <div *ngSwitchCase="''">El telefono de la direcion es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El telefono de la direcion debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Movil</label>
             <input type="text" name="movil	" formControlName="movil	" class="form-control"
               placeholder="Ingrese numero de movil">
+              <span class="text-danger" *ngIf="
+              (f['movil'].dirty || f['movil'].touched) &&
+              f['movil'].errors
+            ">
+            <div [ngSwitch]="f['movil'].value">
+              <div *ngSwitchCase="''">El número de movil es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El número de movil debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Cuidad</label>
@@ -53,6 +119,17 @@
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['estado_direccion'].dirty || f['estado_direccion'].touched) &&
+            f['estado_direccion'].errors
+          ">
+          <div [ngSwitch]="f['estado_direccion'].value">
+            <div *ngSwitchCase="''">El estado de la direccion es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El estado de la direccion debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
       </div>
       <div class="modal-footer">

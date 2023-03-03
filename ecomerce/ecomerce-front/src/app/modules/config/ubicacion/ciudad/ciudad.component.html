@@ -14,6 +14,17 @@
           <label for="">Nombre</label>
           <input type="text" name="nombre_ciudad	" formControlName="nombre_ciudad	" class="form-control"
             placeholder="Ingrese nombre de la ciudad">
+            <span class="text-danger" *ngIf="
+            (f['nombre_ciudad'].dirty || f['nombre_ciudad'].touched) &&
+            f['nombre_ciudad'].errors
+          ">
+          <div [ngSwitch]="f['nombre_ciudad'].value">
+            <div *ngSwitchCase="''">El nombre de la ciudad es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El nombre de la ciudad debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
         </div>
         <div class="form-group">
           <label for="">Provincias</label>
@@ -21,6 +32,17 @@
             <option *ngFor="let provincia of provincias" value="{{provincia.id_provincia}}">
               {{provincia.nombre_provincia}}</option>
           </select>
+          <span class="text-danger" *ngIf="
+          (f['id_provincia'].dirty || f['id_provincia'].touched) &&
+          f['id_provincia'].errors
+        ">
+        <div [ngSwitch]="f['id_provincia'].value">
+          <div *ngSwitchCase="''">La proincia es Requerido</div>
+          <div *ngSwitchDefault="''">
+            La proincia debe tener maximo 100 caracteres
+          </div>
+        </div>
+      </span>
         </div>
         <div class="form-group">
           <label for="">Estado</label>
@@ -29,6 +51,17 @@
             <option value="P">Pendiente</option>
             <option value="I">Inactivo</option>
           </select>
+          <span class="text-danger" *ngIf="
+          (f['estado_ciudad'].dirty || f['estado_ciudad'].touched) &&
+          f['estado_ciudad'].errors
+        ">
+        <div [ngSwitch]="f['estado_ciudad'].value">
+          <div *ngSwitchCase="''">El estado de la ciudad Requerido</div>
+          <div *ngSwitchDefault="''">
+            El estado de la ciudad debe tener maximo 100 caracteres
+          </div>
+        </div>
+      </span>
         </div>
       </div>
       <div class="modal-footer">

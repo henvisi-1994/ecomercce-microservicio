@@ -14,12 +14,34 @@
             <label for="">Nombre</label>
             <input type="text" name="nombre_provincia	" formControlName="nombre_provincia	" class="form-control"
               placeholder="Ingrese nombre de la provincia">
+              <span class="text-danger" *ngIf="
+              (f['nombre_provincia'].dirty || f['nombre_provincia'].touched) &&
+              f['nombre_provincia'].errors
+            ">
+            <div [ngSwitch]="f['nombre_provincia'].value">
+              <div *ngSwitchCase="''">El nombre de la provincia es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El nombre de la provincia debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Pais</label>
             <select name="pais" id="" formControlName="id_pais" class="form-control" >
               <option  *ngFor="let pais of paises" value="{{pais.id_pais}}">{{pais.nombre_pais}}</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['id_pais'].dirty || f['id_pais'].touched) &&
+            f['id_pais'].errors
+          ">
+          <div [ngSwitch]="f['id_pais'].value">
+            <div *ngSwitchCase="''">El pais de la provincia es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El pais de la provincia debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
           <div class="form-group">
             <label for="">Estado</label>
@@ -28,6 +50,17 @@
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['estado_prov'].dirty || f['estado_prov'].touched) &&
+            f['estado_prov'].errors
+          ">
+          <div [ngSwitch]="f['estado_prov'].value">
+            <div *ngSwitchCase="''">El estado  de la provincia es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El estado  de la provincia debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
 
       </div>

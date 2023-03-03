@@ -25,11 +25,33 @@
             <label for="">Codigo</label>
             <input type="text" name="codigo_prod" formControlName="codigo_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['codigo_prod'].dirty || f['codigo_prod'].touched) &&
+              f['codigo_prod'].errors
+            ">
+            <div [ngSwitch]="f['codigo_prod'].value">
+              <div *ngSwitchCase="''">El codigo del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El codigo del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Codigo de Barras</label>
             <input type="text" name="codbarra_prod" formControlName="codbarra_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['codbarra_prod'].dirty || f['codbarra_prod'].touched) &&
+              f['codbarra_prod'].errors
+            ">
+            <div [ngSwitch]="f['codbarra_prod'].value">
+              <div *ngSwitchCase="''">El codigo de barras delproducto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El codigo de barras producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Imagen</label>
@@ -42,36 +64,113 @@
             <label for="">Descripcion</label>
             <input type="text" name="descripcion_prod" formControlName="descripcion_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['descripcion_prod'].dirty || f['descripcion_prod'].touched) &&
+              f['descripcion_prod'].errors
+            ">
+            <div [ngSwitch]="f['descripcion_prod'].value">
+              <div *ngSwitchCase="''">La descripcion del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La descripcion del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Presentación</label>
             <input type="text" name="present_prod" formControlName="present_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['present_prod'].dirty || f['present_prod'].touched) &&
+              f['present_prod'].errors
+            ">
+            <div [ngSwitch]="f['present_prod'].value">
+              <div *ngSwitchCase="''">La presentación del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La presentación del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Precio</label>
             <input type="text" name="precio_prod" formControlName="precio_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['precio_prod'].dirty || f['precio_prod'].touched) &&
+              f['precio_prod'].errors
+            ">
+            <div [ngSwitch]="f['precio_prod'].value">
+              <div *ngSwitchCase="''">El precio del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El precio del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Stock Minimo</label>
             <input type="text" name="stockmin_prod" formControlName="stockmin_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['stockmin_prod'].dirty || f['stockmin_prod'].touched) &&
+              f['stockmin_prod'].errors
+            ">
+            <div [ngSwitch]="f['stockmin_prod'].value">
+              <div *ngSwitchCase="''">El stock minimo del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El stock minimo del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Stock Maximo</label>
             <input type="text" name="stockmax_prod" formControlName="stockmax_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['stockmax_prod'].dirty || f['stockmax_prod'].touched) &&
+              f['stockmax_prod'].errors
+            ">
+            <div [ngSwitch]="f['stockmax_prod'].value">
+              <div *ngSwitchCase="''">El stock maximo del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El stock maximo del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Stock </label>
             <input type="text" name="stock_prod" formControlName="stock_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['stock_prod'].dirty || f['stock_prod'].touched) &&
+              f['stock_prod'].errors
+            ">
+            <div [ngSwitch]="f['stock_prod'].value">
+              <div *ngSwitchCase="''">El stock  del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El stock  del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Fecha de Ingreso </label>
             <input type="date" name="fechaing_prod" formControlName="fechaing_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['fechaing_prod'].dirty || f['fechaing_prod'].touched) &&
+              f['fechaing_prod'].errors
+            ">
+            <div [ngSwitch]="f['fechaing_prod'].value">
+              <div *ngSwitchCase="''">La fecha de ingreso del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La fecha de ingreso del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Fecha de Elaboración </label>
@@ -86,26 +185,65 @@
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="aplicaiva_prod" name="aplicaiva_prod" formControlName="aplicaiva_prod">
             <label class="form-check-label" for="exampleCheck1">IVA</label>
+            <span class="text-danger" *ngIf="
+            (f['aplicaiva_prod'].dirty || f['aplicaiva_prod'].touched) &&
+            f['aplicaiva_prod'].errors
+          ">
+          <div [ngSwitch]="f['aplicaiva_prod'].value">
+            <div *ngSwitchCase="''">Especifica si tiene IVA</div>
+          </div>
+        </span>
           </div>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="aplicaice_prod" name="aplicaice_prod" formControlName="aplicaice_prod">
             <label class="form-check-label" for="exampleCheck1">ICE</label>
+            <span class="text-danger" *ngIf="
+            (f['aplicaice_prod'].dirty || f['aplicaice_prod'].touched) &&
+            f['aplicaice_prod'].errors
+          ">
+          <div [ngSwitch]="f['aplicaice_prod'].value">
+            <div *ngSwitchCase="''">Especifica si tiene ICE</div>
+          </div>
+        </span>
           </div>
           <div class="form-group">
             <label for="">Utilidad </label>
             <input type="text" name="util_prod	" formControlName="util_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['util_prod'].dirty || f['util_prod'].touched) &&
+              f['util_prod'].errors
+            ">
+            <div [ngSwitch]="f['util_prod'].value">
+              <div *ngSwitchCase="''">La Utilidad del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La Utilidad del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Comision </label>
             <input type="text" name="comision_prod	" formControlName="comision_prod" class="form-control"
               placeholder="Ingrese nombre de la producto">
+              <span class="text-danger" *ngIf="
+              (f['comision_prod'].dirty || f['comision_prod'].touched) &&
+              f['comision_prod'].errors
+            ">
+            <div [ngSwitch]="f['comision_prod'].value">
+              <div *ngSwitchCase="''">La comision del producto es Requerido</div>
+              <div *ngSwitchDefault="''">
+                La comision del producto debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
 
           <div class="form-group">
             <label for="">Observacion</label>
             <input type="text" name="apellido" formControlName="observ_prod" class="form-control"
               placeholder="Ingrese Observacion">
+
           </div>
           <div class="form-group">
             <label for="">Estado</label>
@@ -114,18 +252,51 @@
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['estado_prod'].dirty || f['estado_prod'].touched) &&
+            f['estado_prod'].errors
+          ">
+          <div [ngSwitch]="f['estado_prod'].value">
+            <div *ngSwitchCase="''">El estado del del producto es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El estado del del producto debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
           <div class="form-group">
             <label for="">Marca</label>
             <select name="bodega" id="" formControlName="id_marca" class="form-control" >
               <option  *ngFor="let marca of marcas" value="{{marca.id_marca}}">{{marca.nomb_marca		}}</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['id_marca'].dirty || f['id_marca'].touched) &&
+            f['id_marca'].errors
+          ">
+          <div [ngSwitch]="f['id_marca'].value">
+            <div *ngSwitchCase="''">La marca del producto es Requerido</div>
+            <div *ngSwitchDefault="''">
+              La marca del producto debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
           <div class="form-group">
             <label for="">Categoria</label>
             <select name="bodega" id="" formControlName="id_cat" class="form-control" >
               <option  *ngFor="let categoria of categorias" value="{{categoria.id_cat}}">{{categoria.nomb_cat	}}</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['id_cat'].dirty || f['id_cat'].touched) &&
+            f['id_cat'].errors
+          ">
+          <div [ngSwitch]="f['id_cat'].value">
+            <div *ngSwitchCase="''">La Categoria del producto es Requerido</div>
+            <div *ngSwitchDefault="''">
+              La Categoria del producto debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
       </div>
       <div class="modal-footer">

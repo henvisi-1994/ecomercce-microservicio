@@ -24,6 +24,17 @@
             <label for="">Nombre</label>
             <input type="text" name="nombre_tipo_ident" formControlName="nombre_tipo_ident" class="form-control"
               placeholder="Ingrese tipo de identificacion">
+              <span class="text-danger" *ngIf="
+              (f['nombre_tipo_ident'].dirty || f['nombre_tipo_ident'].touched) &&
+              f['nombre_tipo_ident'].errors
+            ">
+            <div [ngSwitch]="f['nombre_tipo_ident'].value">
+              <div *ngSwitchCase="''">El nombre del tipo de identificacion es Requerido</div>
+              <div *ngSwitchDefault="''">
+                El nombre del tipo de identificacion debe tener maximo 100 caracteres
+              </div>
+            </div>
+          </span>
           </div>
           <div class="form-group">
             <label for="">Estado</label>
@@ -32,6 +43,17 @@
               <option value="P">Pendiente</option>
               <option value="I">Inactivo</option>
             </select>
+            <span class="text-danger" *ngIf="
+            (f['estado_tipo_ident'].dirty || f['estado_tipo_ident'].touched) &&
+            f['estado_tipo_ident'].errors
+          ">
+          <div [ngSwitch]="f['estado_tipo_ident'].value">
+            <div *ngSwitchCase="''">El estado del tipo de identificacion es Requerido</div>
+            <div *ngSwitchDefault="''">
+              El estado del tipo de identificacion debe tener maximo 100 caracteres
+            </div>
+          </div>
+        </span>
           </div>
       </div>
       <div class="modal-footer">
