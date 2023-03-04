@@ -70,7 +70,13 @@ export class CategoriaComponent implements OnInit {
     })
   }
   public saveCategoria() {
-    (this.edit ? this.updateCategoria() : this.storeCategoria());
+    if (!this.categoriaForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateCategoria() : this.storeCategoria());
+    }
+
   }
   public updateCategoria() {
     this.categoriasaservice.updateCategoria(this.categoriaForm.value).subscribe((res: any) => {

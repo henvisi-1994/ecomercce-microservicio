@@ -66,7 +66,12 @@ export class TipoIdentificacionComponent implements OnInit {
     })
   }
   public saveTipoIdentificacion() {
-    (this.edit ? this.updateTipoIdentificacion() : this.storeTipoIdentificacion());
+    if (!this.tipoIdentificacionForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateTipoIdentificacion() : this.storeTipoIdentificacion());
+    }
   }
   public updateTipoIdentificacion() {
     this.tipoidentificacionservice.updateTipoIdentificacion(this.tipoIdentificacionForm.value).subscribe((res: any) => {

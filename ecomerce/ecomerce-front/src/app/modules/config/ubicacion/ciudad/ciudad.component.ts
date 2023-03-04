@@ -74,7 +74,12 @@ export class CiudadComponent implements OnInit {
     return this.ciudadForm.controls;
   }
   public saveCiudad() {
-    (this.edit ? this.updateCiudad() : this.storeCiudad());
+    if (!this.ciudadForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateCiudad() : this.storeCiudad());
+    }
   }
   public updateCiudad() {
     this.ciudadservice.updateCiudad(this.ciudadForm.value).subscribe((res: any) => {

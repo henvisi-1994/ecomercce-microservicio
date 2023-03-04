@@ -77,7 +77,12 @@ export class EmpresaComponent implements OnInit {
     })
   }
   public saveEmpresa() {
-    this.edit ? this.updateEmpresa() : this.storeEmpresa()
+    if (!this.empresaForm.valid) {
+      return;
+    }
+    else {
+      this.edit ? this.updateEmpresa() : this.storeEmpresa()
+    }
   }
   public updateEmpresa() {
     this.empresaservice.updateEmpresa(this.empresaForm.value).subscribe((res: any) => {

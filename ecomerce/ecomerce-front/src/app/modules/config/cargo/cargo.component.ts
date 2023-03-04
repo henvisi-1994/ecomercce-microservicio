@@ -88,7 +88,12 @@ export class CargoComponent implements OnInit {
     return this.cargoForm.controls;
   }
   public saveCargo() {
-    this.edit ? this.updateCargo() : this.storeCargo()
+    if (!this.cargoForm.valid) {
+      return;
+    }
+    else {
+      this.edit ? this.updateCargo() : this.storeCargo()
+    }
   }
   public updateCargo() {
     this.cargoservice.updateCargo(this.cargoForm.value).subscribe((res: any) => {

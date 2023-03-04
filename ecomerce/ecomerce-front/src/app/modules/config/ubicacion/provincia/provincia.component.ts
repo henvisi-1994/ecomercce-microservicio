@@ -72,7 +72,12 @@ export class ProvinciaComponent implements OnInit {
       })
     }
     public saveProvincia() {
-      (this.edit ? this.updateProvincia() : this.storeProvincia());
+      if (!this.provinciaForm.valid) {
+        return;
+      }
+      else {
+        (this.edit ? this.updateProvincia() : this.storeProvincia());
+      }
     }
     public updateProvincia() {
       this.provinciaservice.updateProvincia(this.provinciaForm.value).subscribe((res: any) => {

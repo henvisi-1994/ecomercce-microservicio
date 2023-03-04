@@ -96,7 +96,12 @@ get f(){
     })
   }
   public saveBodega() {
-    (this.edit ? this.updateBodega() : this.storeBodega());
+     if (!this.bodegaForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateBodega() : this.storeBodega());
+    }
   }
   public updateBodega() {
     this.bodegaservice.updateBodega(this.bodegaForm.value).subscribe((res: any) => {

@@ -170,7 +170,12 @@ export class ClientesComponent implements OnInit {
 
   }
   public saveCliente() {
-    (this.edit ? this.updateCliente() : this.storeCliente());
+    if (!this.clienteForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateCliente() : this.storeCliente());
+    }
   }
   public updateCliente() {
     this.personaservice.updatePersona(this.persona).subscribe((res: any) => {

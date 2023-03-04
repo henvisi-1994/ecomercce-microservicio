@@ -86,7 +86,12 @@ export class DireccionComponent implements OnInit {
     })
   }
   public saveDireccion() {
-    (this.edit ? this.updateDireccion() : this.storeDireccion());
+    if (!this.direccionForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateDireccion() : this.storeDireccion());
+    }
   }
   public updateDireccion() {
     this.direccionesservice.updateDireccion(this.direccionForm.value).subscribe((res: any) => {

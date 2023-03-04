@@ -148,10 +148,10 @@ export class ProductoComponent implements OnInit {
     })
   }
   public saveProducto() {
-    if(!this.productoForm.valid){
+    if (!this.productoForm.valid) {
       return;
     }
-    else{
+    else {
       (this.edit ? this.updateProducto() : this.storeProducto());
     }
   }

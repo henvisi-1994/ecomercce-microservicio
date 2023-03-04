@@ -133,7 +133,13 @@ export class EmpleadosComponent implements OnInit {
 
   }
   public saveEmpleado() {
-    (this.edit ? this.updateEmpleado() : this.storeEmpleado());
+
+    if (!this.empleadoForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateEmpleado() : this.storeEmpleado());
+    }
   }
   public updateEmpleado() {
     this.personaservice.updatePersona(this.persona).subscribe((res: any) => {

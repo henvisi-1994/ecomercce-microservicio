@@ -69,7 +69,12 @@ export class MarcaComponent implements OnInit {
     return this.marcaForm.controls;
   }
   public saveMarca() {
-    (this.edit ? this.updateMarca() : this.storeMarca());
+    if (!this.marcaForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updateMarca() : this.storeMarca());
+    }
   }
   public updateMarca() {
     this.marcaservice.updateMarca(this.marcaForm.value).subscribe((res: any) => {

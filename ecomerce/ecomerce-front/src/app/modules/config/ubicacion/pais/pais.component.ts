@@ -66,7 +66,12 @@ export class PaisComponent implements OnInit {
     })
   }
   public savePais() {
-    (this.edit ? this.updatePais() : this.storePais());
+    if (!this.paisForm.valid) {
+      return;
+    }
+    else {
+      (this.edit ? this.updatePais() : this.storePais());
+    }
   }
   public updatePais() {
     this.paisservice.updatePais(this.paisForm.value).subscribe((res: any) => {
